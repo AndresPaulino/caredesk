@@ -1,0 +1,2322 @@
+[
+ {
+  "code": "QALY",
+  "system": "LOINC",
+  "description": "QALY",
+  "category": "",
+  "units": "a",
+  "type": "numeric",
+  "count": 10704,
+  "numeric": {
+   "p05": 56.9,
+   "p25": 71.0,
+   "p50": 87.1,
+   "p75": 107.8,
+   "p95": 125.3,
+   "mean": 89.13
+  }
+ },
+ {
+  "code": "DALY",
+  "system": "LOINC",
+  "description": "DALY",
+  "category": "",
+  "units": "a",
+  "type": "numeric",
+  "count": 10704,
+  "numeric": {
+   "p05": 0.1,
+   "p25": 0.6,
+   "p50": 2.2,
+   "p75": 8.8,
+   "p95": 26.8,
+   "mean": 6.57
+  }
+ },
+ {
+  "code": "QOLS",
+  "system": "LOINC",
+  "description": "QOLS",
+  "category": "",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 10704,
+  "numeric": {
+   "p05": 0.6,
+   "p25": 0.8,
+   "p50": 0.9,
+   "p75": 1.0,
+   "p95": 1.0,
+   "mean": 0.89
+  }
+ },
+ {
+  "code": "71490-7",
+  "system": "LOINC",
+  "description": "Left eye Diabetic retinopathy severity level by Ophthalmoscopy",
+  "category": "exam",
+  "units": "",
+  "type": "text",
+  "count": 3842,
+  "values": [
+   {
+    "value": "Proliferative retinopathy",
+    "count": 1699
+   },
+   {
+    "value": "Severe non-proliferative retinopathy",
+    "count": 796
+   },
+   {
+    "value": "Moderate non-proliferative retinopathy",
+    "count": 677
+   },
+   {
+    "value": "No apparent retinopathy",
+    "count": 509
+   },
+   {
+    "value": "Mild non-proliferative retinopathy",
+    "count": 161
+   }
+  ]
+ },
+ {
+  "code": "71491-5",
+  "system": "LOINC",
+  "description": "Right eye Diabetic retinopathy severity level by Ophthalmoscopy",
+  "category": "exam",
+  "units": "",
+  "type": "text",
+  "count": 3842,
+  "values": [
+   {
+    "value": "Proliferative retinopathy",
+    "count": 1699
+   },
+   {
+    "value": "Severe non-proliferative retinopathy",
+    "count": 796
+   },
+   {
+    "value": "Moderate non-proliferative retinopathy",
+    "count": 677
+   },
+   {
+    "value": "No apparent retinopathy",
+    "count": 509
+   },
+   {
+    "value": "Mild non-proliferative retinopathy",
+    "count": 161
+   }
+  ]
+ },
+ {
+  "code": "413077008",
+  "system": "LOINC",
+  "description": "LogMAR visual acuity left eye (observable entity)",
+  "category": "exam",
+  "units": "{logmar}",
+  "type": "text",
+  "count": 3727,
+  "numeric": {
+   "p05": 0.3,
+   "p25": 0.3,
+   "p50": 0.3,
+   "p75": 0.3,
+   "p95": 0.3,
+   "mean": 0.3
+  },
+  "values": [
+   {
+    "value": "0",
+    "count": 2252
+   }
+  ]
+ },
+ {
+  "code": "413078003",
+  "system": "LOINC",
+  "description": "LogMAR visual acuity right eye (observable entity)",
+  "category": "exam",
+  "units": "{logmar}",
+  "type": "text",
+  "count": 3727,
+  "numeric": {
+   "p05": 0.3,
+   "p25": 0.3,
+   "p50": 0.3,
+   "p75": 0.3,
+   "p95": 0.3,
+   "mean": 0.3
+  },
+  "values": [
+   {
+    "value": "0",
+    "count": 2252
+   }
+  ]
+ },
+ {
+  "code": "79819-9",
+  "system": "LOINC",
+  "description": "Study observation Left retina by OCT",
+  "category": "imaging",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 3313,
+  "values": [
+   {
+    "value": "No abnormal findings",
+    "count": 3313
+   }
+  ]
+ },
+ {
+  "code": "79818-1",
+  "system": "LOINC",
+  "description": "Study observation Right retina by OCT",
+  "category": "imaging",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 3313,
+  "values": [
+   {
+    "value": "No abnormal findings",
+    "count": 3313
+   }
+  ]
+ },
+ {
+  "code": "33914-3",
+  "system": "LOINC",
+  "description": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+  "category": "laboratory",
+  "units": "mL/min/{1.73_m2}",
+  "type": "numeric",
+  "count": 51527,
+  "numeric": {
+   "p05": 9.6,
+   "p25": 25.5,
+   "p50": 45.1,
+   "p75": 70.0,
+   "p95": 108.01,
+   "mean": 49.79
+  }
+ },
+ {
+  "code": "2514-8",
+  "system": "LOINC",
+  "description": "Ketones [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34500,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.07
+  },
+  "values": [
+   {
+    "value": "Urine ketone test = ++ (finding)",
+    "count": 14815
+   },
+   {
+    "value": "Urine ketone test = +++ (finding)",
+    "count": 9173
+   },
+   {
+    "value": "Urine ketone test = + (finding)",
+    "count": 7818
+   },
+   {
+    "value": "Urine ketone test = trace (finding)",
+    "count": 2265
+   },
+   {
+    "value": "Urine ketones not detected (finding)",
+    "count": 61
+   }
+  ]
+ },
+ {
+  "code": "5811-5",
+  "system": "LOINC",
+  "description": "Specific gravity of Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "numeric",
+  "count": 34500,
+  "numeric": {
+   "p05": 1.0,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "p95": 1.0,
+   "mean": 1.0
+  }
+ },
+ {
+  "code": "5803-2",
+  "system": "LOINC",
+  "description": "pH of Urine by Test strip",
+  "category": "laboratory",
+  "units": "pH",
+  "type": "numeric",
+  "count": 34500,
+  "numeric": {
+   "p05": 5.1,
+   "p25": 5.5,
+   "p50": 6.0,
+   "p75": 6.5,
+   "p95": 6.9,
+   "mean": 6.01
+  }
+ },
+ {
+  "code": "5802-4",
+  "system": "LOINC",
+  "description": "Nitrite [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34500,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.07
+  },
+  "values": [
+   {
+    "value": "Nitrite not detected in urine (finding)",
+    "count": 34071
+   },
+   {
+    "value": "Nitrite detected in urine (finding)",
+    "count": 61
+   }
+  ]
+ },
+ {
+  "code": "5794-3",
+  "system": "LOINC",
+  "description": "Hemoglobin [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34500,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 0.0,
+   "mean": 0.0
+  },
+  "values": [
+   {
+    "value": "Blood not detected in urine (finding)",
+    "count": 34059
+   },
+   {
+    "value": "Urine blood test = + (finding)",
+    "count": 61
+   },
+   {
+    "value": "Blood in urine (finding)",
+    "count": 12
+   }
+  ]
+ },
+ {
+  "code": "5799-2",
+  "system": "LOINC",
+  "description": "Leukocyte esterase [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34500,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 0.0,
+   "mean": 0.0
+  },
+  "values": [
+   {
+    "value": "Urine leukocytes not detected (finding)",
+    "count": 34071
+   },
+   {
+    "value": "Urine leukocyte test one plus (finding)",
+    "count": 61
+   }
+  ]
+ },
+ {
+  "code": "25428-4",
+  "system": "LOINC",
+  "description": "Glucose [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34439,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.07
+  },
+  "values": [
+   {
+    "value": "Urine glucose test = ++ (finding)",
+    "count": 34071
+   }
+  ]
+ },
+ {
+  "code": "5770-3",
+  "system": "LOINC",
+  "description": "Bilirubin.total [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34439,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.07
+  },
+  "values": [
+   {
+    "value": "Finding of bilirubin in urine (finding)",
+    "count": 34071
+   }
+  ]
+ },
+ {
+  "code": "20454-5",
+  "system": "LOINC",
+  "description": "Protein [Presence] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34439,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.07
+  },
+  "values": [
+   {
+    "value": "Urine protein test = ++ (finding)",
+    "count": 22633
+   },
+   {
+    "value": "Urine protein test = +++ (finding)",
+    "count": 9173
+   },
+   {
+    "value": "Urine protein test = + (finding)",
+    "count": 2265
+   }
+  ]
+ },
+ {
+  "code": "4548-4",
+  "system": "LOINC",
+  "description": "Hemoglobin A1c/Hemoglobin.total in Blood",
+  "category": "laboratory",
+  "units": "%",
+  "type": "numeric",
+  "count": 34309,
+  "numeric": {
+   "p05": 2.4,
+   "p25": 3.0,
+   "p50": 3.9,
+   "p75": 4.53,
+   "p95": 6.2,
+   "mean": 3.98
+  }
+ },
+ {
+  "code": "5767-9",
+  "system": "LOINC",
+  "description": "Appearance of Urine",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34230,
+  "values": [
+   {
+    "value": "Cloudy urine (finding)",
+    "count": 34071
+   },
+   {
+    "value": "Urine smell ammoniacal (finding)",
+    "count": 159
+   }
+  ]
+ },
+ {
+  "code": "5792-7",
+  "system": "LOINC",
+  "description": "Glucose [Mass/volume] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 34132,
+  "numeric": {
+   "p05": 0.6,
+   "p25": 1.0,
+   "p50": 1.5,
+   "p75": 2.0,
+   "p95": 2.4,
+   "mean": 1.52
+  }
+ },
+ {
+  "code": "5804-0",
+  "system": "LOINC",
+  "description": "Protein [Mass/volume] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 34132,
+  "numeric": {
+   "p05": 120.7,
+   "p25": 237.28,
+   "p50": 292.4,
+   "p75": 348.92,
+   "p95": 407.8,
+   "mean": 286.89
+  }
+ },
+ {
+  "code": "32167-9",
+  "system": "LOINC",
+  "description": "Clarity of Urine",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34071,
+  "values": [
+   {
+    "value": "Translucent (qualifier value)",
+    "count": 34059
+   },
+   {
+    "value": "Cloudy urine (finding)",
+    "count": 12
+   }
+  ]
+ },
+ {
+  "code": "5778-6",
+  "system": "LOINC",
+  "description": "Color of Urine",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 34071,
+  "values": [
+   {
+    "value": "Brown color (qualifier value)",
+    "count": 34059
+   },
+   {
+    "value": "Reddish color urine (finding)",
+    "count": 12
+   }
+  ]
+ },
+ {
+  "code": "20505-4",
+  "system": "LOINC",
+  "description": "Bilirubin.total [Mass/volume] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 34071,
+  "numeric": {
+   "p05": 0.3,
+   "p25": 0.5,
+   "p50": 0.8,
+   "p75": 1.2,
+   "p95": 1.4,
+   "mean": 0.85
+  }
+ },
+ {
+  "code": "5797-6",
+  "system": "LOINC",
+  "description": "Ketones [Mass/volume] in Urine by Test strip",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 34071,
+  "numeric": {
+   "p05": 1.1,
+   "p25": 5.0,
+   "p50": 9.9,
+   "p75": 15.0,
+   "p95": 19.0,
+   "mean": 9.95
+  }
+ },
+ {
+  "code": "34533-0",
+  "system": "LOINC",
+  "description": "Odor of Urine",
+  "category": "laboratory",
+  "units": "{nominal}",
+  "type": "text",
+  "count": 33912,
+  "values": [
+   {
+    "value": "Urine smell ammoniacal (finding)",
+    "count": 33900
+   },
+   {
+    "value": "Foul smelling urine (finding)",
+    "count": 12
+   }
+  ]
+ },
+ {
+  "code": "2339-0",
+  "system": "LOINC",
+  "description": "Glucose [Mass/volume] in Blood",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 66.4,
+   "p25": 76.0,
+   "p50": 87.9,
+   "p75": 99.7,
+   "p95": 121.9,
+   "mean": 90.42
+  }
+ },
+ {
+  "code": "6299-2",
+  "system": "LOINC",
+  "description": "Urea nitrogen [Mass/volume] in Blood",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 7.7,
+   "p25": 10.1,
+   "p50": 13.5,
+   "p75": 16.8,
+   "p95": 19.3,
+   "mean": 13.46
+  }
+ },
+ {
+  "code": "38483-4",
+  "system": "LOINC",
+  "description": "Creatinine [Mass/volume] in Blood",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 0.2,
+   "p25": 0.7,
+   "p50": 1.8,
+   "p75": 3.0,
+   "p95": 5.6,
+   "mean": 2.44
+  }
+ },
+ {
+  "code": "49765-1",
+  "system": "LOINC",
+  "description": "Calcium [Mass/volume] in Blood",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 8.6,
+   "p25": 8.9,
+   "p50": 9.3,
+   "p75": 9.8,
+   "p95": 10.1,
+   "mean": 9.35
+  }
+ },
+ {
+  "code": "2947-0",
+  "system": "LOINC",
+  "description": "Sodium [Moles/volume] in Blood",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 136.4,
+   "p25": 138.1,
+   "p50": 139.9,
+   "p75": 141.9,
+   "p95": 143.6,
+   "mean": 139.98
+  }
+ },
+ {
+  "code": "6298-4",
+  "system": "LOINC",
+  "description": "Potassium [Moles/volume] in Blood",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 3.8,
+   "p25": 4.1,
+   "p50": 4.4,
+   "p75": 4.8,
+   "p95": 5.1,
+   "mean": 4.45
+  }
+ },
+ {
+  "code": "2069-3",
+  "system": "LOINC",
+  "description": "Chloride [Moles/volume] in Blood",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 101.5,
+   "p25": 103.6,
+   "p50": 106.1,
+   "p75": 108.6,
+   "p95": 110.5,
+   "mean": 106.09
+  }
+ },
+ {
+  "code": "20565-8",
+  "system": "LOINC",
+  "description": "Carbon dioxide  total [Moles/volume] in Blood",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 33015,
+  "numeric": {
+   "p05": 20.4,
+   "p25": 22.1,
+   "p50": 24.4,
+   "p75": 26.7,
+   "p95": 28.6,
+   "mean": 24.43
+  }
+ },
+ {
+  "code": "2345-7",
+  "system": "LOINC",
+  "description": "Glucose [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 66.7,
+   "p25": 76.8,
+   "p50": 89.1,
+   "p75": 103.5,
+   "p95": 122.6,
+   "mean": 91.96
+  }
+ },
+ {
+  "code": "3094-0",
+  "system": "LOINC",
+  "description": "Urea nitrogen [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 7.7,
+   "p25": 10.1,
+   "p50": 13.5,
+   "p75": 16.8,
+   "p95": 19.4,
+   "mean": 13.51
+  }
+ },
+ {
+  "code": "2160-0",
+  "system": "LOINC",
+  "description": "Creatinine [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 1.6,
+   "p25": 1.9,
+   "p50": 2.0,
+   "p75": 2.1,
+   "p95": 2.4,
+   "mean": 2.02
+  }
+ },
+ {
+  "code": "17861-6",
+  "system": "LOINC",
+  "description": "Calcium [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 8.6,
+   "p25": 8.9,
+   "p50": 9.4,
+   "p75": 9.8,
+   "p95": 10.1,
+   "mean": 9.37
+  }
+ },
+ {
+  "code": "2951-2",
+  "system": "LOINC",
+  "description": "Sodium [Moles/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 136.4,
+   "p25": 138.1,
+   "p50": 140.0,
+   "p75": 142.0,
+   "p95": 143.6,
+   "mean": 140.01
+  }
+ },
+ {
+  "code": "2823-3",
+  "system": "LOINC",
+  "description": "Potassium [Moles/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 3.8,
+   "p25": 4.1,
+   "p50": 4.5,
+   "p75": 4.8,
+   "p95": 5.1,
+   "mean": 4.45
+  }
+ },
+ {
+  "code": "2075-0",
+  "system": "LOINC",
+  "description": "Chloride [Moles/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 101.5,
+   "p25": 103.5,
+   "p50": 106.2,
+   "p75": 108.6,
+   "p95": 110.5,
+   "mean": 106.07
+  }
+ },
+ {
+  "code": "2028-9",
+  "system": "LOINC",
+  "description": "Carbon dioxide  total [Moles/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mmol/L",
+  "type": "numeric",
+  "count": 30534,
+  "numeric": {
+   "p05": 20.4,
+   "p25": 22.2,
+   "p50": 24.6,
+   "p75": 26.8,
+   "p95": 28.5,
+   "mean": 24.49
+  }
+ },
+ {
+  "code": "2093-3",
+  "system": "LOINC",
+  "description": "Cholesterol [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 19762,
+  "numeric": {
+   "p05": 135.2,
+   "p25": 168.6,
+   "p50": 198.7,
+   "p75": 219.4,
+   "p95": 251.3,
+   "mean": 195.06
+  }
+ },
+ {
+  "code": "2571-8",
+  "system": "LOINC",
+  "description": "Triglyceride [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 19762,
+  "numeric": {
+   "p05": 104.4,
+   "p25": 123.6,
+   "p50": 145.9,
+   "p75": 173.1,
+   "p95": 196.8,
+   "mean": 152.71
+  }
+ },
+ {
+  "code": "18262-6",
+  "system": "LOINC",
+  "description": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by Direct assay",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 19762,
+  "numeric": {
+   "p05": 57.3,
+   "p25": 94.78,
+   "p50": 121.2,
+   "p75": 139.2,
+   "p95": 163.3,
+   "mean": 117.16
+  }
+ },
+ {
+  "code": "2085-9",
+  "system": "LOINC",
+  "description": "Cholesterol in HDL [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 19762,
+  "numeric": {
+   "p05": 29.4,
+   "p25": 44.7,
+   "p50": 51.7,
+   "p75": 57.0,
+   "p95": 68.8,
+   "mean": 50.43
+  }
+ },
+ {
+  "code": "14959-1",
+  "system": "LOINC",
+  "description": "Microalbumin/Creatinine [Mass Ratio] in Urine",
+  "category": "laboratory",
+  "units": "mg/g",
+  "type": "numeric",
+  "count": 13087,
+  "numeric": {
+   "p05": 3.7,
+   "p25": 17.68,
+   "p50": 57.35,
+   "p75": 228.93,
+   "p95": 489.14,
+   "mean": 137.57
+  }
+ },
+ {
+  "code": "2885-2",
+  "system": "LOINC",
+  "description": "Protein [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "g/dL",
+  "type": "numeric",
+  "count": 8304,
+  "numeric": {
+   "p05": 6.1,
+   "p25": 6.5,
+   "p50": 7.0,
+   "p75": 7.5,
+   "p95": 7.9,
+   "mean": 6.99
+  }
+ },
+ {
+  "code": "1751-7",
+  "system": "LOINC",
+  "description": "Albumin [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "g/dL",
+  "type": "numeric",
+  "count": 8304,
+  "numeric": {
+   "p05": 3.6,
+   "p25": 4.0,
+   "p50": 4.5,
+   "p75": 5.0,
+   "p95": 5.4,
+   "mean": 4.49
+  }
+ },
+ {
+  "code": "6768-6",
+  "system": "LOINC",
+  "description": "Alkaline phosphatase [Enzymatic activity/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "U/L",
+  "type": "numeric",
+  "count": 8304,
+  "numeric": {
+   "p05": 26.5,
+   "p25": 51.27,
+   "p50": 80.0,
+   "p75": 109.2,
+   "p95": 133.7,
+   "mean": 80.22
+  }
+ },
+ {
+  "code": "1742-6",
+  "system": "LOINC",
+  "description": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "U/L",
+  "type": "numeric",
+  "count": 8304,
+  "numeric": {
+   "p05": 20.7,
+   "p25": 29.0,
+   "p50": 39.0,
+   "p75": 49.5,
+   "p95": 58.1,
+   "mean": 38.97
+  }
+ },
+ {
+  "code": "1920-8",
+  "system": "LOINC",
+  "description": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "U/L",
+  "type": "numeric",
+  "count": 8304,
+  "numeric": {
+   "p05": 7.4,
+   "p25": 14.4,
+   "p50": 22.7,
+   "p75": 31.5,
+   "p95": 38.3,
+   "mean": 22.94
+  }
+ },
+ {
+  "code": "1975-2",
+  "system": "LOINC",
+  "description": "Bilirubin.total [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 8302,
+  "numeric": {
+   "p05": 0.2,
+   "p25": 0.4,
+   "p50": 0.7,
+   "p75": 1.0,
+   "p95": 6.9,
+   "mean": 1.21
+  }
+ },
+ {
+  "code": "10834-0",
+  "system": "LOINC",
+  "description": "Globulin [Mass/volume] in Serum by calculation",
+  "category": "laboratory",
+  "units": "g/L",
+  "type": "numeric",
+  "count": 7751,
+  "numeric": {
+   "p05": 2.1,
+   "p25": 2.4,
+   "p50": 2.8,
+   "p75": 3.1,
+   "p95": 3.4,
+   "mean": 2.75
+  }
+ },
+ {
+  "code": "718-7",
+  "system": "LOINC",
+  "description": "Hemoglobin [Mass/volume] in Blood",
+  "category": "laboratory",
+  "units": "g/dL",
+  "type": "numeric",
+  "count": 3349,
+  "numeric": {
+   "p05": 12.0,
+   "p25": 13.1,
+   "p50": 14.4,
+   "p75": 16.0,
+   "p95": 17.2,
+   "mean": 14.5
+  }
+ },
+ {
+  "code": "6690-2",
+  "system": "LOINC",
+  "description": "Leukocytes [#/volume] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "10*3/uL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 3.5,
+   "p25": 4.7,
+   "p50": 6.7,
+   "p75": 8.5,
+   "p95": 10.1,
+   "mean": 6.65
+  }
+ },
+ {
+  "code": "789-8",
+  "system": "LOINC",
+  "description": "Erythrocytes [#/volume] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "10*6/uL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 4.0,
+   "p25": 4.3,
+   "p50": 4.7,
+   "p75": 5.1,
+   "p95": 5.5,
+   "mean": 4.7
+  }
+ },
+ {
+  "code": "787-2",
+  "system": "LOINC",
+  "description": "MCV [Entitic mean volume] in Red Blood Cells by Automated count",
+  "category": "laboratory",
+  "units": "fL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 80.7,
+   "p25": 83.8,
+   "p50": 87.6,
+   "p75": 91.5,
+   "p95": 94.5,
+   "mean": 87.65
+  }
+ },
+ {
+  "code": "785-6",
+  "system": "LOINC",
+  "description": "MCH [Entitic mass] by Automated count",
+  "category": "laboratory",
+  "units": "pg",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 27.3,
+   "p25": 28.5,
+   "p50": 30.0,
+   "p75": 31.5,
+   "p95": 32.7,
+   "mean": 29.99
+  }
+ },
+ {
+  "code": "786-4",
+  "system": "LOINC",
+  "description": "MCHC [Entitic Mass/volume] in Red Blood Cells by Automated count",
+  "category": "laboratory",
+  "units": "g/dL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 32.8,
+   "p25": 33.6,
+   "p50": 34.4,
+   "p75": 35.2,
+   "p95": 35.8,
+   "mean": 34.35
+  }
+ },
+ {
+  "code": "788-0",
+  "system": "LOINC",
+  "description": "Erythrocyte [DistWidth] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "fL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 13.3,
+   "p25": 39.7,
+   "p50": 41.8,
+   "p75": 44.0,
+   "p95": 45.6,
+   "mean": 37.81
+  }
+ },
+ {
+  "code": "777-3",
+  "system": "LOINC",
+  "description": "Platelets [#/volume] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "10*3/uL",
+  "type": "numeric",
+  "count": 3347,
+  "numeric": {
+   "p05": 129.7,
+   "p25": 203.95,
+   "p50": 284.5,
+   "p75": 367.95,
+   "p95": 432.5,
+   "mean": 284.23
+  }
+ },
+ {
+  "code": "4544-3",
+  "system": "LOINC",
+  "description": "Hematocrit [Volume Fraction] of Blood by Automated count",
+  "category": "laboratory",
+  "units": "%",
+  "type": "numeric",
+  "count": 3333,
+  "numeric": {
+   "p05": 35.5,
+   "p25": 38.6,
+   "p50": 42.2,
+   "p75": 45.9,
+   "p95": 49.2,
+   "mean": 42.21
+  }
+ },
+ {
+  "code": "32207-3",
+  "system": "LOINC",
+  "description": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "fL",
+  "type": "numeric",
+  "count": 2798,
+  "numeric": {
+   "p05": 167.87,
+   "p25": 242.4,
+   "p50": 331.35,
+   "p75": 428.7,
+   "p95": 503.94,
+   "mean": 334.72
+  }
+ },
+ {
+  "code": "32623-1",
+  "system": "LOINC",
+  "description": "Platelet [Entitic mean volume] in Blood by Automated count",
+  "category": "laboratory",
+  "units": "fL",
+  "type": "numeric",
+  "count": 2798,
+  "numeric": {
+   "p05": 9.6,
+   "p25": 10.1,
+   "p50": 10.8,
+   "p75": 11.6,
+   "p95": 12.1,
+   "mean": 10.84
+  }
+ },
+ {
+  "code": "6301-6",
+  "system": "LOINC",
+  "description": "INR in Platelet poor plasma by Coagulation assay",
+  "category": "laboratory",
+  "units": "{INR}",
+  "type": "numeric",
+  "count": 450,
+  "numeric": {
+   "p05": 0.85,
+   "p25": 1.0,
+   "p50": 1.1,
+   "p75": 1.2,
+   "p95": 2.6,
+   "mean": 1.26
+  }
+ },
+ {
+  "code": "19123-9",
+  "system": "LOINC",
+  "description": "Magnesium [Mass/volume] in Serum or Plasma",
+  "category": "laboratory",
+  "units": "mg/dL",
+  "type": "numeric",
+  "count": 366,
+  "numeric": {
+   "p05": 1.6,
+   "p25": 1.7,
+   "p50": 1.9,
+   "p75": 2.1,
+   "p95": 2.2,
+   "mean": 1.92
+  }
+ },
+ {
+  "code": "5902-2",
+  "system": "LOINC",
+  "description": "Prothrombin time (PT)",
+  "category": "laboratory",
+  "units": "s",
+  "type": "numeric",
+  "count": 308,
+  "numeric": {
+   "p05": 9.3,
+   "p25": 10.0,
+   "p50": 10.7,
+   "p75": 11.6,
+   "p95": 12.6,
+   "mean": 10.8
+  }
+ },
+ {
+  "code": "19926-5",
+  "system": "LOINC",
+  "description": "FEV1/FVC",
+  "category": "procedure",
+  "units": "%",
+  "type": "numeric",
+  "count": 372,
+  "numeric": {
+   "p05": 11.86,
+   "p25": 19.35,
+   "p50": 27.65,
+   "p75": 57.73,
+   "p95": 74.14,
+   "mean": 37.23
+  }
+ },
+ {
+  "code": "72166-2",
+  "system": "LOINC",
+  "description": "Tobacco smoking status",
+  "category": "social-history",
+  "units": "",
+  "type": "text",
+  "count": 30134,
+  "values": [
+   {
+    "value": "Never smoked tobacco (finding)",
+    "count": 19477
+   },
+   {
+    "value": "Ex-smoker (finding)",
+    "count": 10657
+   }
+  ]
+ },
+ {
+  "code": "71802-3",
+  "system": "LOINC",
+  "description": "Housing status",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30129,
+  "values": [
+   {
+    "value": "I have housing",
+    "count": 29886
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 116
+   },
+   {
+    "value": "I do not have housing (staying with others  in a hotel  in a shelter  living outside on the street  on a beach  in a car  or in a park)",
+    "count": 77
+   },
+   {
+    "value": "Patient is homeless",
+    "count": 50
+   }
+  ]
+ },
+ {
+  "code": "76501-6",
+  "system": "LOINC",
+  "description": "Within the last year  have you been afraid of your partner or ex-partner",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 28508
+   },
+   {
+    "value": "Yes",
+    "count": 1571
+   }
+  ]
+ },
+ {
+  "code": "93026-3",
+  "system": "LOINC",
+  "description": "Do you feel physically and emotionally safe where you currently live [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "Yes",
+    "count": 28095
+   },
+   {
+    "value": "No",
+    "count": 1692
+   },
+   {
+    "value": "Unsure",
+    "count": 231
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 61
+   }
+  ]
+ },
+ {
+  "code": "93027-1",
+  "system": "LOINC",
+  "description": "Are you a refugee",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 25952
+   },
+   {
+    "value": "Yes",
+    "count": 3995
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 132
+   }
+  ]
+ },
+ {
+  "code": "93028-9",
+  "system": "LOINC",
+  "description": "Have you spent more than 2 nights in a row in a jail  prison  detention center  or juvenile correctional facility in past 1 year [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "Yes",
+    "count": 24110
+   },
+   {
+    "value": "No",
+    "count": 5948
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 21
+   }
+  ]
+ },
+ {
+  "code": "93038-8",
+  "system": "LOINC",
+  "description": "Stress level",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "Not at all",
+    "count": 12560
+   },
+   {
+    "value": "A little bit",
+    "count": 7877
+   },
+   {
+    "value": "Somewhat",
+    "count": 5652
+   },
+   {
+    "value": "Quite a bit",
+    "count": 2360
+   },
+   {
+    "value": "Very much",
+    "count": 1423
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 207
+   }
+  ]
+ },
+ {
+  "code": "93029-7",
+  "system": "LOINC",
+  "description": "How often do you see or talk to people that you care about and feel close to [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "5 or more times a week",
+    "count": 11569
+   },
+   {
+    "value": "3 to 5 times a week",
+    "count": 11433
+   },
+   {
+    "value": "1 or 2 times a week",
+    "count": 3555
+   },
+   {
+    "value": "Less than once a week",
+    "count": 3360
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 162
+   }
+  ]
+ },
+ {
+  "code": "93030-5",
+  "system": "LOINC",
+  "description": "Has lack of transportation kept you from medical appointments  meetings  work  or from getting things needed for daily living",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 26500
+   },
+   {
+    "value": "Yes  it has kept me from medical appointments or from getting my medications",
+    "count": 1823
+   },
+   {
+    "value": "Yes  it has kept me from non-medical meetings  appointments  work  or from getting things that I need",
+    "count": 1756
+   }
+  ]
+ },
+ {
+  "code": "93031-3",
+  "system": "LOINC",
+  "description": "Have you or any family members you live with been unable to get any of the following when it was really needed in past 1 year [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "I choose not to answer this question",
+    "count": 17723
+   },
+   {
+    "value": "Food",
+    "count": 4641
+   },
+   {
+    "value": "Medicine or Any Health Care (Medical  Dental  Mental Health  Vision)",
+    "count": 3178
+   },
+   {
+    "value": "Utilities",
+    "count": 2638
+   },
+   {
+    "value": "Other",
+    "count": 504
+   },
+   {
+    "value": "Child care",
+    "count": 477
+   },
+   {
+    "value": "Clothing",
+    "count": 459
+   },
+   {
+    "value": "Phone",
+    "count": 459
+   }
+  ]
+ },
+ {
+  "code": "63586-2",
+  "system": "LOINC",
+  "description": "What was your best estimate of the total income of all family members from all sources  before taxes  in last year [PhenX]",
+  "category": "survey",
+  "units": "/a",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "28618",
+    "count": 200
+   },
+   {
+    "value": "71909",
+    "count": 167
+   },
+   {
+    "value": "49413",
+    "count": 134
+   },
+   {
+    "value": "54967",
+    "count": 107
+   },
+   {
+    "value": "74009",
+    "count": 81
+   },
+   {
+    "value": "35065",
+    "count": 74
+   },
+   {
+    "value": "128381",
+    "count": 65
+   },
+   {
+    "value": "18086",
+    "count": 57
+   },
+   {
+    "value": "94731",
+    "count": 53
+   },
+   {
+    "value": "484317",
+    "count": 25
+   }
+  ]
+ },
+ {
+  "code": "76437-3",
+  "system": "LOINC",
+  "description": "Primary insurance",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "Medicare",
+    "count": 23625
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 4839
+   },
+   {
+    "value": "Medicaid",
+    "count": 627
+   },
+   {
+    "value": "None/uninsured",
+    "count": 524
+   },
+   {
+    "value": "Private insurance",
+    "count": 464
+   }
+  ]
+ },
+ {
+  "code": "67875-5",
+  "system": "LOINC",
+  "description": "Employment status - current",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "Full-time work",
+    "count": 19773
+   },
+   {
+    "value": "Part-time or temporary work",
+    "count": 5608
+   },
+   {
+    "value": "Otherwise unemployed but not seeking work (ex: student  retired  disabled  unpaid primary care giver)",
+    "count": 2854
+   },
+   {
+    "value": "Unemployed",
+    "count": 1515
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 329
+   }
+  ]
+ },
+ {
+  "code": "82589-3",
+  "system": "LOINC",
+  "description": "Highest level of education",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "More than high school",
+    "count": 17466
+   },
+   {
+    "value": "High school diploma or GED",
+    "count": 8458
+   },
+   {
+    "value": "Less than high school degree",
+    "count": 4011
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 144
+   }
+  ]
+ },
+ {
+  "code": "56799-0",
+  "system": "LOINC",
+  "description": "Address",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "474 Roberts Divide",
+    "count": 200
+   },
+   {
+    "value": "190 Jaskolski Gateway Apt 0",
+    "count": 167
+   },
+   {
+    "value": "335 Wehner Bridge",
+    "count": 134
+   },
+   {
+    "value": "786 Graham Forge",
+    "count": 107
+   },
+   {
+    "value": "199 Murray Drive Apt 44",
+    "count": 81
+   },
+   {
+    "value": "173 Kohler Corner Unit 34",
+    "count": 74
+   },
+   {
+    "value": "253 Hane Fort Suite 31",
+    "count": 65
+   },
+   {
+    "value": "164 Douglas Union",
+    "count": 57
+   },
+   {
+    "value": "628 Collins Throughway",
+    "count": 53
+   },
+   {
+    "value": "494 Effertz Trailer Suite 80",
+    "count": 25
+   }
+  ]
+ },
+ {
+  "code": "93033-9",
+  "system": "LOINC",
+  "description": "Are you worried about losing your housing [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 25467
+   },
+   {
+    "value": "Yes",
+    "count": 4480
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 132
+   }
+  ]
+ },
+ {
+  "code": "63512-8",
+  "system": "LOINC",
+  "description": "How many people are living or staying at this address [#]",
+  "category": "survey",
+  "units": "{#}",
+  "type": "numeric",
+  "count": 30079,
+  "numeric": {
+   "p05": 1.0,
+   "p25": 3.0,
+   "p50": 4.0,
+   "p75": 6.0,
+   "p95": 8.0,
+   "mean": 4.42
+  }
+ },
+ {
+  "code": "54899-0",
+  "system": "LOINC",
+  "description": "Preferred language",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "English",
+    "count": 26697
+   },
+   {
+    "value": "Language other than English",
+    "count": 3382
+   }
+  ]
+ },
+ {
+  "code": "93034-7",
+  "system": "LOINC",
+  "description": "Discharged from the U.S. Armed Forces",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 23631
+   },
+   {
+    "value": "Yes",
+    "count": 6326
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 122
+   }
+  ]
+ },
+ {
+  "code": "93035-4",
+  "system": "LOINC",
+  "description": "Has season or migrant farm work been your or your family's main source of income at any point in past 2 years [PRAPARE]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 29661
+   },
+   {
+    "value": "Yes",
+    "count": 287
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 131
+   }
+  ]
+ },
+ {
+  "code": "32624-9",
+  "system": "LOINC",
+  "description": "Race",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "White",
+    "count": 24871
+   },
+   {
+    "value": "Black/African American",
+    "count": 2312
+   },
+   {
+    "value": "Asian",
+    "count": 1755
+   },
+   {
+    "value": "Pacific Islander",
+    "count": 690
+   },
+   {
+    "value": "Other",
+    "count": 221
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 159
+   },
+   {
+    "value": "American Indian/Alaskan Native",
+    "count": 71
+   }
+  ]
+ },
+ {
+  "code": "56051-6",
+  "system": "LOINC",
+  "description": "Hispanic or Latino",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 30079,
+  "values": [
+   {
+    "value": "No",
+    "count": 29939
+   },
+   {
+    "value": "I choose not to answer this question",
+    "count": 140
+   }
+  ]
+ },
+ {
+  "code": "55758-7",
+  "system": "LOINC",
+  "description": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 23947,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 2.0,
+   "p95": 4.0,
+   "mean": 1.21
+  }
+ },
+ {
+  "code": "59460-6",
+  "system": "LOINC",
+  "description": "Fall risk total [Morse Fall Scale]",
+  "category": "survey",
+  "units": "{#}",
+  "type": "numeric",
+  "count": 20323,
+  "numeric": {
+   "p05": 3.0,
+   "p25": 19.0,
+   "p50": 36.0,
+   "p75": 72.0,
+   "p95": 115.0,
+   "mean": 46.19
+  }
+ },
+ {
+  "code": "59461-4",
+  "system": "LOINC",
+  "description": "Fall risk level [Morse Fall Scale]",
+  "category": "survey",
+  "units": "",
+  "type": "text",
+  "count": 20323,
+  "values": [
+   {
+    "value": "High Risk (MFS Score 50+)",
+    "count": 6963
+   },
+   {
+    "value": "Low Risk (MFS Score 0 - 24)",
+    "count": 6734
+   },
+   {
+    "value": "Moderate Risk (MFS Score 25 - 45)",
+    "count": 6626
+   }
+  ]
+ },
+ {
+  "code": "70274-6",
+  "system": "LOINC",
+  "description": "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 14629,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 1.0,
+   "p50": 2.0,
+   "p75": 4.0,
+   "p95": 12.0,
+   "mean": 3.37
+  }
+ },
+ {
+  "code": "76504-0",
+  "system": "LOINC",
+  "description": "Total score [HARK]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 8946,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "mean": 0.14
+  }
+ },
+ {
+  "code": "75626-2",
+  "system": "LOINC",
+  "description": "Total score [AUDIT-C]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 8639,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 2.0,
+   "p95": 3.0,
+   "mean": 1.4
+  }
+ },
+ {
+  "code": "82667-7",
+  "system": "LOINC",
+  "description": "Total score [DAST-10]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 8600,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 0.0,
+   "p50": 1.0,
+   "p75": 2.0,
+   "p95": 2.0,
+   "mean": 1.02
+  }
+ },
+ {
+  "code": "44261-6",
+  "system": "LOINC",
+  "description": "Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]",
+  "category": "survey",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 1496,
+  "numeric": {
+   "p05": 3.0,
+   "p25": 6.0,
+   "p50": 13.0,
+   "p75": 20.0,
+   "p95": 26.0,
+   "mean": 13.29
+  }
+ },
+ {
+  "code": "72514-3",
+  "system": "LOINC",
+  "description": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+  "category": "vital-signs",
+  "units": "{score}",
+  "type": "numeric",
+  "count": 57261,
+  "numeric": {
+   "p05": 0.0,
+   "p25": 2.0,
+   "p50": 3.0,
+   "p75": 4.0,
+   "p95": 6.0,
+   "mean": 2.94
+  }
+ },
+ {
+  "code": "8462-4",
+  "system": "LOINC",
+  "description": "Diastolic Blood Pressure",
+  "category": "vital-signs",
+  "units": "mm[Hg]",
+  "type": "numeric",
+  "count": 30655,
+  "numeric": {
+   "p05": 54.0,
+   "p25": 67.0,
+   "p50": 76.0,
+   "p75": 87.0,
+   "p95": 101.05,
+   "mean": 76.79
+  }
+ },
+ {
+  "code": "8480-6",
+  "system": "LOINC",
+  "description": "Systolic Blood Pressure",
+  "category": "vital-signs",
+  "units": "mm[Hg]",
+  "type": "numeric",
+  "count": 30655,
+  "numeric": {
+   "p05": 85.0,
+   "p25": 102.0,
+   "p50": 115.0,
+   "p75": 127.0,
+   "p95": 144.0,
+   "mean": 114.72
+  }
+ },
+ {
+  "code": "29463-7",
+  "system": "LOINC",
+  "description": "Body Weight",
+  "category": "vital-signs",
+  "units": "kg",
+  "type": "numeric",
+  "count": 30403,
+  "numeric": {
+   "p05": 66.4,
+   "p25": 75.6,
+   "p50": 83.1,
+   "p75": 90.1,
+   "p95": 99.9,
+   "mean": 83.17
+  }
+ },
+ {
+  "code": "8867-4",
+  "system": "LOINC",
+  "description": "Heart rate",
+  "category": "vital-signs",
+  "units": "/min",
+  "type": "numeric",
+  "count": 30386,
+  "numeric": {
+   "p05": 62.0,
+   "p25": 70.0,
+   "p50": 80.0,
+   "p75": 90.0,
+   "p95": 98.0,
+   "mean": 80.21
+  }
+ },
+ {
+  "code": "9279-1",
+  "system": "LOINC",
+  "description": "Respiratory rate",
+  "category": "vital-signs",
+  "units": "/min",
+  "type": "numeric",
+  "count": 30386,
+  "numeric": {
+   "p05": 12.0,
+   "p25": 13.0,
+   "p50": 14.0,
+   "p75": 15.0,
+   "p95": 16.0,
+   "mean": 14.08
+  }
+ },
+ {
+  "code": "8302-2",
+  "system": "LOINC",
+  "description": "Body Height",
+  "category": "vital-signs",
+  "units": "cm",
+  "type": "numeric",
+  "count": 30134,
+  "numeric": {
+   "p05": 154.2,
+   "p25": 164.5,
+   "p50": 172.0,
+   "p75": 178.3,
+   "p95": 186.0,
+   "mean": 171.2
+  }
+ },
+ {
+  "code": "39156-5",
+  "system": "LOINC",
+  "description": "Body mass index (BMI) [Ratio]",
+  "category": "vital-signs",
+  "units": "kg/m2",
+  "type": "numeric",
+  "count": 30134,
+  "numeric": {
+   "p05": 27.1,
+   "p25": 27.6,
+   "p50": 27.9,
+   "p75": 28.4,
+   "p95": 32.31,
+   "mean": 28.41
+  }
+ },
+ {
+  "code": "74006-8",
+  "system": "LOINC",
+  "description": "Weight difference [Mass difference] --pre dialysis - post dialysis",
+  "category": "vital-signs",
+  "units": "kg",
+  "type": "numeric",
+  "count": 26783,
+  "numeric": {
+   "p05": 1.2,
+   "p25": 2.0,
+   "p50": 3.0,
+   "p75": 4.0,
+   "p95": 4.8,
+   "mean": 3.0
+  }
+ },
+ {
+  "code": "79893-4",
+  "system": "LOINC",
+  "description": "Left eye Intraocular pressure",
+  "category": "vital-signs",
+  "units": "mm[Hg]",
+  "type": "numeric",
+  "count": 3842,
+  "numeric": {
+   "p05": 14.0,
+   "p25": 15.0,
+   "p50": 16.0,
+   "p75": 17.0,
+   "p95": 18.0,
+   "mean": 16.02
+  }
+ },
+ {
+  "code": "79892-6",
+  "system": "LOINC",
+  "description": "Right eye Intraocular pressure",
+  "category": "vital-signs",
+  "units": "mm[Hg]",
+  "type": "numeric",
+  "count": 3842,
+  "numeric": {
+   "p05": 14.0,
+   "p25": 15.0,
+   "p50": 16.0,
+   "p75": 17.0,
+   "p95": 18.0,
+   "mean": 16.02
+  }
+ },
+ {
+  "code": "8310-5",
+  "system": "LOINC",
+  "description": "Body temperature",
+  "category": "vital-signs",
+  "units": "Cel",
+  "type": "numeric",
+  "count": 1008,
+  "numeric": {
+   "p05": 37.1,
+   "p25": 37.4,
+   "p50": 37.7,
+   "p75": 38.4,
+   "p95": 41.26,
+   "mean": 38.16
+  }
+ },
+ {
+  "code": "2708-6",
+  "system": "LOINC",
+  "description": "Oxygen saturation in Arterial blood",
+  "category": "vital-signs",
+  "units": "%",
+  "type": "numeric",
+  "count": 560,
+  "numeric": {
+   "p05": 76.5,
+   "p25": 81.78,
+   "p50": 90.0,
+   "p75": 95.0,
+   "p95": 98.0,
+   "mean": 88.38
+  }
+ }
+]

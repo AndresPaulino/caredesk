@@ -1,0 +1,1442 @@
+[
+ {
+  "code": "66383009",
+  "system": "SNOMED-CT",
+  "description": "Gingivitis (disorder)",
+  "patients_ever": 998,
+  "patients_active": 977,
+  "active_share": 0.977,
+  "chronic": true
+ },
+ {
+  "code": "162864005",
+  "system": "SNOMED-CT",
+  "description": "Body mass index 30+ - obesity (finding)",
+  "patients_ever": 821,
+  "patients_active": 821,
+  "active_share": 0.821,
+  "chronic": true
+ },
+ {
+  "code": "274531002",
+  "system": "SNOMED-CT",
+  "description": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)",
+  "patients_ever": 781,
+  "patients_active": 781,
+  "active_share": 0.781,
+  "chronic": true
+ },
+ {
+  "code": "414545008",
+  "system": "SNOMED-CT",
+  "description": "Ischemic heart disease (disorder)",
+  "patients_ever": 776,
+  "patients_active": 776,
+  "active_share": 0.776,
+  "chronic": true
+ },
+ {
+  "code": "714628002",
+  "system": "SNOMED-CT",
+  "description": "Prediabetes (finding)",
+  "patients_ever": 660,
+  "patients_active": 660,
+  "active_share": 0.66,
+  "chronic": true
+ },
+ {
+  "code": "271737000",
+  "system": "SNOMED-CT",
+  "description": "Anemia (disorder)",
+  "patients_ever": 582,
+  "patients_active": 580,
+  "active_share": 0.58,
+  "chronic": true
+ },
+ {
+  "code": "59621000",
+  "system": "SNOMED-CT",
+  "description": "Essential hypertension (disorder)",
+  "patients_ever": 571,
+  "patients_active": 571,
+  "active_share": 0.571,
+  "chronic": true
+ },
+ {
+  "code": "237602007",
+  "system": "SNOMED-CT",
+  "description": "Metabolic syndrome X (disorder)",
+  "patients_ever": 428,
+  "patients_active": 428,
+  "active_share": 0.428,
+  "chronic": true
+ },
+ {
+  "code": "40055000",
+  "system": "SNOMED-CT",
+  "description": "Chronic sinusitis (disorder)",
+  "patients_ever": 425,
+  "patients_active": 422,
+  "active_share": 0.422,
+  "chronic": true
+ },
+ {
+  "code": "64859006",
+  "system": "SNOMED-CT",
+  "description": "Osteoporosis (disorder)",
+  "patients_ever": 413,
+  "patients_active": 413,
+  "active_share": 0.413,
+  "chronic": true
+ },
+ {
+  "code": "55822004",
+  "system": "SNOMED-CT",
+  "description": "Hyperlipidemia (disorder)",
+  "patients_ever": 397,
+  "patients_active": 397,
+  "active_share": 0.397,
+  "chronic": true
+ },
+ {
+  "code": "127013003",
+  "system": "SNOMED-CT",
+  "description": "Disorder of kidney due to diabetes mellitus (disorder)",
+  "patients_ever": 379,
+  "patients_active": 379,
+  "active_share": 0.379,
+  "chronic": true
+ },
+ {
+  "code": "161744009",
+  "system": "SNOMED-CT",
+  "description": "Past pregnancy history of miscarriage (situation)",
+  "patients_ever": 352,
+  "patients_active": 352,
+  "active_share": 0.352,
+  "chronic": true
+ },
+ {
+  "code": "90781000119102",
+  "system": "SNOMED-CT",
+  "description": "Microalbuminuria due to type 2 diabetes mellitus (disorder)",
+  "patients_ever": 351,
+  "patients_active": 351,
+  "active_share": 0.351,
+  "chronic": true
+ },
+ {
+  "code": "399261000",
+  "system": "SNOMED-CT",
+  "description": "History of coronary artery bypass grafting (situation)",
+  "patients_ever": 321,
+  "patients_active": 321,
+  "active_share": 0.321,
+  "chronic": true
+ },
+ {
+  "code": "82423001",
+  "system": "SNOMED-CT",
+  "description": "Chronic pain (finding)",
+  "patients_ever": 315,
+  "patients_active": 315,
+  "active_share": 0.315,
+  "chronic": true
+ },
+ {
+  "code": "157141000119108",
+  "system": "SNOMED-CT",
+  "description": "Proteinuria due to type 2 diabetes mellitus (disorder)",
+  "patients_ever": 292,
+  "patients_active": 292,
+  "active_share": 0.292,
+  "chronic": true
+ },
+ {
+  "code": "399211009",
+  "system": "SNOMED-CT",
+  "description": "History of myocardial infarction (situation)",
+  "patients_ever": 252,
+  "patients_active": 252,
+  "active_share": 0.252,
+  "chronic": true
+ },
+ {
+  "code": "431855005",
+  "system": "SNOMED-CT",
+  "description": "Chronic kidney disease stage 1 (disorder)",
+  "patients_ever": 293,
+  "patients_active": 236,
+  "active_share": 0.236,
+  "chronic": true
+ },
+ {
+  "code": "278860009",
+  "system": "SNOMED-CT",
+  "description": "Chronic low back pain (finding)",
+  "patients_ever": 230,
+  "patients_active": 230,
+  "active_share": 0.23,
+  "chronic": true
+ },
+ {
+  "code": "431856006",
+  "system": "SNOMED-CT",
+  "description": "Chronic kidney disease stage 2 (disorder)",
+  "patients_ever": 271,
+  "patients_active": 207,
+  "active_share": 0.207,
+  "chronic": true
+ },
+ {
+  "code": "302870006",
+  "system": "SNOMED-CT",
+  "description": "Hypertriglyceridemia (disorder)",
+  "patients_ever": 202,
+  "patients_active": 202,
+  "active_share": 0.202,
+  "chronic": true
+ },
+ {
+  "code": "44054006",
+  "system": "SNOMED-CT",
+  "description": "Diabetes mellitus type 2 (disorder)",
+  "patients_ever": 197,
+  "patients_active": 197,
+  "active_share": 0.197,
+  "chronic": true
+ },
+ {
+  "code": "161665007",
+  "system": "SNOMED-CT",
+  "description": "History of renal transplant (situation)",
+  "patients_ever": 193,
+  "patients_active": 193,
+  "active_share": 0.193,
+  "chronic": true
+ },
+ {
+  "code": "267020005",
+  "system": "SNOMED-CT",
+  "description": "History of tubal ligation (situation)",
+  "patients_ever": 189,
+  "patients_active": 189,
+  "active_share": 0.189,
+  "chronic": true
+ },
+ {
+  "code": "401314000",
+  "system": "SNOMED-CT",
+  "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+  "patients_ever": 148,
+  "patients_active": 148,
+  "active_share": 0.148,
+  "chronic": true
+ },
+ {
+  "code": "1121000119107",
+  "system": "SNOMED-CT",
+  "description": "Chronic neck pain (finding)",
+  "patients_ever": 145,
+  "patients_active": 145,
+  "active_share": 0.145,
+  "chronic": true
+ },
+ {
+  "code": "433144002",
+  "system": "SNOMED-CT",
+  "description": "Chronic kidney disease stage 3 (disorder)",
+  "patients_ever": 195,
+  "patients_active": 129,
+  "active_share": 0.129,
+  "chronic": true
+ },
+ {
+  "code": "1187604002",
+  "system": "SNOMED-CT",
+  "description": "Serving in military service (finding)",
+  "patients_ever": 128,
+  "patients_active": 128,
+  "active_share": 0.128,
+  "chronic": true
+ },
+ {
+  "code": "239873007",
+  "system": "SNOMED-CT",
+  "description": "Osteoarthritis of knee (disorder)",
+  "patients_ever": 126,
+  "patients_active": 126,
+  "active_share": 0.126,
+  "chronic": true
+ },
+ {
+  "code": "49436004",
+  "system": "SNOMED-CT",
+  "description": "Atrial fibrillation (disorder)",
+  "patients_ever": 120,
+  "patients_active": 120,
+  "active_share": 0.12,
+  "chronic": true
+ },
+ {
+  "code": "126906006",
+  "system": "SNOMED-CT",
+  "description": "Neoplasm of prostate (disorder)",
+  "patients_ever": 119,
+  "patients_active": 119,
+  "active_share": 0.119,
+  "chronic": true
+ },
+ {
+  "code": "92691004",
+  "system": "SNOMED-CT",
+  "description": "Carcinoma in situ of prostate (disorder)",
+  "patients_ever": 119,
+  "patients_active": 119,
+  "active_share": 0.119,
+  "chronic": true
+ },
+ {
+  "code": "1551000119108",
+  "system": "SNOMED-CT",
+  "description": "Nonproliferative diabetic retinopathy due to type II diabetes mellitus",
+  "patients_ever": 119,
+  "patients_active": 119,
+  "active_share": 0.119,
+  "chronic": true
+ },
+ {
+  "code": "26929004",
+  "system": "SNOMED-CT",
+  "description": "Alzheimer's disease (disorder)",
+  "patients_ever": 102,
+  "patients_active": 102,
+  "active_share": 0.102,
+  "chronic": true
+ },
+ {
+  "code": "39898005",
+  "system": "SNOMED-CT",
+  "description": "Sleep disorder (disorder)",
+  "patients_ever": 97,
+  "patients_active": 97,
+  "active_share": 0.097,
+  "chronic": true
+ },
+ {
+  "code": "368581000119106",
+  "system": "SNOMED-CT",
+  "description": "Neuropathy due to type 2 diabetes mellitus (disorder)",
+  "patients_ever": 97,
+  "patients_active": 97,
+  "active_share": 0.097,
+  "chronic": true
+ },
+ {
+  "code": "80394007",
+  "system": "SNOMED-CT",
+  "description": "Hyperglycemia (disorder)",
+  "patients_ever": 96,
+  "patients_active": 96,
+  "active_share": 0.096,
+  "chronic": true
+ },
+ {
+  "code": "401303003",
+  "system": "SNOMED-CT",
+  "description": "Acute ST segment elevation myocardial infarction (disorder)",
+  "patients_ever": 93,
+  "patients_active": 93,
+  "active_share": 0.093,
+  "chronic": true
+ },
+ {
+  "code": "68496003",
+  "system": "SNOMED-CT",
+  "description": "Polyp of colon (disorder)",
+  "patients_ever": 137,
+  "patients_active": 92,
+  "active_share": 0.092,
+  "chronic": true
+ },
+ {
+  "code": "60573004",
+  "system": "SNOMED-CT",
+  "description": "Aortic valve stenosis (disorder)",
+  "patients_ever": 90,
+  "patients_active": 90,
+  "active_share": 0.09,
+  "chronic": true
+ },
+ {
+  "code": "1231000119100",
+  "system": "SNOMED-CT",
+  "description": "History of aortic valve replacement (situation)",
+  "patients_ever": 90,
+  "patients_active": 90,
+  "active_share": 0.09,
+  "chronic": true
+ },
+ {
+  "code": "197927001",
+  "system": "SNOMED-CT",
+  "description": "Recurrent urinary tract infection (disorder)",
+  "patients_ever": 81,
+  "patients_active": 81,
+  "active_share": 0.081,
+  "chronic": true
+ },
+ {
+  "code": "6525002",
+  "system": "SNOMED-CT",
+  "description": "Dependent drug abuse (disorder)",
+  "patients_ever": 81,
+  "patients_active": 81,
+  "active_share": 0.081,
+  "chronic": true
+ },
+ {
+  "code": "428251008",
+  "system": "SNOMED-CT",
+  "description": "History of appendectomy (situation)",
+  "patients_ever": 77,
+  "patients_active": 77,
+  "active_share": 0.077,
+  "chronic": true
+ },
+ {
+  "code": "78275009",
+  "system": "SNOMED-CT",
+  "description": "Obstructive sleep apnea syndrome (disorder)",
+  "patients_ever": 72,
+  "patients_active": 72,
+  "active_share": 0.072,
+  "chronic": true
+ },
+ {
+  "code": "196416002",
+  "system": "SNOMED-CT",
+  "description": "Impacted molars (disorder)",
+  "patients_ever": 71,
+  "patients_active": 71,
+  "active_share": 0.071,
+  "chronic": true
+ },
+ {
+  "code": "124171000119105",
+  "system": "SNOMED-CT",
+  "description": "Chronic intractable migraine without aura (disorder)",
+  "patients_ever": 62,
+  "patients_active": 62,
+  "active_share": 0.062,
+  "chronic": true
+ },
+ {
+  "code": "254837009",
+  "system": "SNOMED-CT",
+  "description": "Malignant neoplasm of breast (disorder)",
+  "patients_ever": 59,
+  "patients_active": 59,
+  "active_share": 0.059,
+  "chronic": true
+ },
+ {
+  "code": "91302008",
+  "system": "SNOMED-CT",
+  "description": "Sepsis (disorder)",
+  "patients_ever": 54,
+  "patients_active": 54,
+  "active_share": 0.054,
+  "chronic": true
+ },
+ {
+  "code": "713197008",
+  "system": "SNOMED-CT",
+  "description": "Recurrent rectal polyp (disorder)",
+  "patients_ever": 58,
+  "patients_active": 51,
+  "active_share": 0.051,
+  "chronic": true
+ },
+ {
+  "code": "239872002",
+  "system": "SNOMED-CT",
+  "description": "Osteoarthritis of hip (disorder)",
+  "patients_ever": 50,
+  "patients_active": 50,
+  "active_share": 0.05,
+  "chronic": true
+ },
+ {
+  "code": "431857002",
+  "system": "SNOMED-CT",
+  "description": "Chronic kidney disease stage 4 (disorder)",
+  "patients_ever": 113,
+  "patients_active": 46,
+  "active_share": 0.046,
+  "chronic": false
+ },
+ {
+  "code": "201834006",
+  "system": "SNOMED-CT",
+  "description": "Localized  primary osteoarthritis of the hand (disorder)",
+  "patients_ever": 46,
+  "patients_active": 46,
+  "active_share": 0.046,
+  "chronic": true
+ },
+ {
+  "code": "698306007",
+  "system": "SNOMED-CT",
+  "description": "Awaiting transplantation of kidney (situation)",
+  "patients_ever": 111,
+  "patients_active": 44,
+  "active_share": 0.044,
+  "chronic": false
+ },
+ {
+  "code": "48724000",
+  "system": "SNOMED-CT",
+  "description": "Mitral valve regurgitation (disorder)",
+  "patients_ever": 43,
+  "patients_active": 43,
+  "active_share": 0.043,
+  "chronic": true
+ },
+ {
+  "code": "128613002",
+  "system": "SNOMED-CT",
+  "description": "Seizure disorder (disorder)",
+  "patients_ever": 37,
+  "patients_active": 37,
+  "active_share": 0.037,
+  "chronic": true
+ },
+ {
+  "code": "1290882004",
+  "system": "SNOMED-CT",
+  "description": "History of seizure (situation)",
+  "patients_ever": 37,
+  "patients_active": 37,
+  "active_share": 0.037,
+  "chronic": true
+ },
+ {
+  "code": "203646004",
+  "system": "SNOMED-CT",
+  "description": "Adolescent idiopathic scoliosis (disorder)",
+  "patients_ever": 33,
+  "patients_active": 33,
+  "active_share": 0.033,
+  "chronic": true
+ },
+ {
+  "code": "203082005",
+  "system": "SNOMED-CT",
+  "description": "Fibromyalgia (disorder)",
+  "patients_ever": 33,
+  "patients_active": 33,
+  "active_share": 0.033,
+  "chronic": true
+ },
+ {
+  "code": "5602001",
+  "system": "SNOMED-CT",
+  "description": "Opioid abuse",
+  "patients_ever": 31,
+  "patients_active": 31,
+  "active_share": 0.031,
+  "chronic": true
+ },
+ {
+  "code": "386661006",
+  "system": "SNOMED-CT",
+  "description": "Fever (finding)",
+  "patients_ever": 84,
+  "patients_active": 30,
+  "active_share": 0.03,
+  "chronic": false
+ },
+ {
+  "code": "97331000119101",
+  "system": "SNOMED-CT",
+  "description": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)",
+  "patients_ever": 30,
+  "patients_active": 30,
+  "active_share": 0.03,
+  "chronic": true
+ },
+ {
+  "code": "1501000119109",
+  "system": "SNOMED-CT",
+  "description": "Proliferative diabetic retinopathy due to type II diabetes mellitus",
+  "patients_ever": 29,
+  "patients_active": 29,
+  "active_share": 0.029,
+  "chronic": true
+ },
+ {
+  "code": "449868002",
+  "system": "SNOMED-CT",
+  "description": "Smokes tobacco daily (finding)",
+  "patients_ever": 26,
+  "patients_active": 26,
+  "active_share": 0.026,
+  "chronic": true
+ },
+ {
+  "code": "73430006",
+  "system": "SNOMED-CT",
+  "description": "Sleep apnea (disorder)",
+  "patients_ever": 25,
+  "patients_active": 25,
+  "active_share": 0.025,
+  "chronic": true
+ },
+ {
+  "code": "80583007",
+  "system": "SNOMED-CT",
+  "description": "Severe anxiety (panic) (finding)",
+  "patients_ever": 220,
+  "patients_active": 23,
+  "active_share": 0.023,
+  "chronic": false
+ },
+ {
+  "code": "49727002",
+  "system": "SNOMED-CT",
+  "description": "Cough (finding)",
+  "patients_ever": 68,
+  "patients_active": 23,
+  "active_share": 0.023,
+  "chronic": false
+ },
+ {
+  "code": "90560007",
+  "system": "SNOMED-CT",
+  "description": "Gout",
+  "patients_ever": 23,
+  "patients_active": 23,
+  "active_share": 0.023,
+  "chronic": true
+ },
+ {
+  "code": "46177005",
+  "system": "SNOMED-CT",
+  "description": "End-stage renal disease (disorder)",
+  "patients_ever": 34,
+  "patients_active": 20,
+  "active_share": 0.02,
+  "chronic": true
+ },
+ {
+  "code": "83664006",
+  "system": "SNOMED-CT",
+  "description": "Idiopathic atrophic hypothyroidism (disorder)",
+  "patients_ever": 20,
+  "patients_active": 20,
+  "active_share": 0.02,
+  "chronic": true
+ },
+ {
+  "code": "84757009",
+  "system": "SNOMED-CT",
+  "description": "Epilepsy (disorder)",
+  "patients_ever": 20,
+  "patients_active": 20,
+  "active_share": 0.02,
+  "chronic": true
+ },
+ {
+  "code": "60234000",
+  "system": "SNOMED-CT",
+  "description": "Aortic valve regurgitation (disorder)",
+  "patients_ever": 18,
+  "patients_active": 18,
+  "active_share": 0.018,
+  "chronic": true
+ },
+ {
+  "code": "185086009",
+  "system": "SNOMED-CT",
+  "description": "Chronic obstructive bronchitis (disorder)",
+  "patients_ever": 18,
+  "patients_active": 18,
+  "active_share": 0.018,
+  "chronic": true
+ },
+ {
+  "code": "36955009",
+  "system": "SNOMED-CT",
+  "description": "Loss of taste (finding)",
+  "patients_ever": 42,
+  "patients_active": 16,
+  "active_share": 0.016,
+  "chronic": false
+ },
+ {
+  "code": "93143009",
+  "system": "SNOMED-CT",
+  "description": "Leukemia  disease (disorder)",
+  "patients_ever": 16,
+  "patients_active": 16,
+  "active_share": 0.016,
+  "chronic": true
+ },
+ {
+  "code": "7200002",
+  "system": "SNOMED-CT",
+  "description": "Alcoholism (disorder)",
+  "patients_ever": 15,
+  "patients_active": 15,
+  "active_share": 0.015,
+  "chronic": true
+ },
+ {
+  "code": "87433001",
+  "system": "SNOMED-CT",
+  "description": "Pulmonary emphysema (disorder)",
+  "patients_ever": 15,
+  "patients_active": 15,
+  "active_share": 0.015,
+  "chronic": true
+ },
+ {
+  "code": "108631000119101",
+  "system": "SNOMED-CT",
+  "description": "History of autologous bone marrow transplant (situation)",
+  "patients_ever": 12,
+  "patients_active": 12,
+  "active_share": 0.012,
+  "chronic": true
+ },
+ {
+  "code": "84229001",
+  "system": "SNOMED-CT",
+  "description": "Fatigue (finding)",
+  "patients_ever": 31,
+  "patients_active": 11,
+  "active_share": 0.011,
+  "chronic": false
+ },
+ {
+  "code": "127294003",
+  "system": "SNOMED-CT",
+  "description": "Traumatic or nontraumatic brain injury (disorder)",
+  "patients_ever": 11,
+  "patients_active": 11,
+  "active_share": 0.011,
+  "chronic": true
+ },
+ {
+  "code": "4557003",
+  "system": "SNOMED-CT",
+  "description": "Preinfarction syndrome (disorder)",
+  "patients_ever": 11,
+  "patients_active": 11,
+  "active_share": 0.011,
+  "chronic": true
+ },
+ {
+  "code": "427419006",
+  "system": "SNOMED-CT",
+  "description": "Transformed migraine (disorder)",
+  "patients_ever": 10,
+  "patients_active": 10,
+  "active_share": 0.01,
+  "chronic": true
+ },
+ {
+  "code": "408512008",
+  "system": "SNOMED-CT",
+  "description": "Body mass index 40+ - severely obese (finding)",
+  "patients_ever": 10,
+  "patients_active": 10,
+  "active_share": 0.01,
+  "chronic": true
+ },
+ {
+  "code": "248595008",
+  "system": "SNOMED-CT",
+  "description": "Sputum finding (finding)",
+  "patients_ever": 36,
+  "patients_active": 9,
+  "active_share": 0.009,
+  "chronic": false
+ },
+ {
+  "code": "95417003",
+  "system": "SNOMED-CT",
+  "description": "Primary fibromyalgia syndrome (disorder)",
+  "patients_ever": 9,
+  "patients_active": 9,
+  "active_share": 0.009,
+  "chronic": true
+ },
+ {
+  "code": "125605004",
+  "system": "SNOMED-CT",
+  "description": "Fracture of bone (disorder)",
+  "patients_ever": 341,
+  "patients_active": 6,
+  "active_share": 0.006,
+  "chronic": false
+ },
+ {
+  "code": "76571007",
+  "system": "SNOMED-CT",
+  "description": "Septic shock (disorder)",
+  "patients_ever": 7,
+  "patients_active": 6,
+  "active_share": 0.006,
+  "chronic": true
+ },
+ {
+  "code": "69896004",
+  "system": "SNOMED-CT",
+  "description": "Rheumatoid arthritis (disorder)",
+  "patients_ever": 6,
+  "patients_active": 6,
+  "active_share": 0.006,
+  "chronic": true
+ },
+ {
+  "code": "153351000119102",
+  "system": "SNOMED-CT",
+  "description": "History of peripheral stem cell transplant (situation)",
+  "patients_ever": 6,
+  "patients_active": 6,
+  "active_share": 0.006,
+  "chronic": true
+ },
+ {
+  "code": "111287006",
+  "system": "SNOMED-CT",
+  "description": "Tricuspid valve regurgitation (disorder)",
+  "patients_ever": 6,
+  "patients_active": 6,
+  "active_share": 0.006,
+  "chronic": true
+ },
+ {
+  "code": "25064002",
+  "system": "SNOMED-CT",
+  "description": "Headache (finding)",
+  "patients_ever": 15,
+  "patients_active": 5,
+  "active_share": 0.005,
+  "chronic": false
+ },
+ {
+  "code": "43724002",
+  "system": "SNOMED-CT",
+  "description": "Chill (finding)",
+  "patients_ever": 8,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "128188000",
+  "system": "SNOMED-CT",
+  "description": "Cerebral palsy (disorder)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "162573006",
+  "system": "SNOMED-CT",
+  "description": "Suspected lung cancer (situation)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "254637007",
+  "system": "SNOMED-CT",
+  "description": "Non-small cell lung cancer (disorder)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "424132000",
+  "system": "SNOMED-CT",
+  "description": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "109989006",
+  "system": "SNOMED-CT",
+  "description": "Multiple myeloma (disorder)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "88805009",
+  "system": "SNOMED-CT",
+  "description": "Chronic congestive heart failure (disorder)",
+  "patients_ever": 4,
+  "patients_active": 4,
+  "active_share": 0.004,
+  "chronic": true
+ },
+ {
+  "code": "444814009",
+  "system": "SNOMED-CT",
+  "description": "Viral sinusitis (disorder)",
+  "patients_ever": 646,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "267102003",
+  "system": "SNOMED-CT",
+  "description": "Sore throat (finding)",
+  "patients_ever": 17,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "267036007",
+  "system": "SNOMED-CT",
+  "description": "Dyspnea (finding)",
+  "patients_ever": 16,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "56018004",
+  "system": "SNOMED-CT",
+  "description": "Wheezing (finding)",
+  "patients_ever": 16,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "68962001",
+  "system": "SNOMED-CT",
+  "description": "Muscle pain (finding)",
+  "patients_ever": 14,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "57676002",
+  "system": "SNOMED-CT",
+  "description": "Joint pain",
+  "patients_ever": 14,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": false
+ },
+ {
+  "code": "363406005",
+  "system": "SNOMED-CT",
+  "description": "Malignant neoplasm of colon (disorder)",
+  "patients_ever": 6,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "60951000119105",
+  "system": "SNOMED-CT",
+  "description": "Blindness due to type 2 diabetes mellitus (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "221360009",
+  "system": "SNOMED-CT",
+  "description": "Spasticity (finding)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "110359009",
+  "system": "SNOMED-CT",
+  "description": "Intellectual disability (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "235595009",
+  "system": "SNOMED-CT",
+  "description": "Gastroesophageal reflux disease (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "161679004",
+  "system": "SNOMED-CT",
+  "description": "History of artificial joint (situation)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "230265002",
+  "system": "SNOMED-CT",
+  "description": "Familial Alzheimer's disease of early onset (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "6072007",
+  "system": "SNOMED-CT",
+  "description": "Bleeding from anus (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "236077008",
+  "system": "SNOMED-CT",
+  "description": "Protracted diarrhea (finding)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "152621000119105",
+  "system": "SNOMED-CT",
+  "description": "History of allotransplantation of bone marrow (situation)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "370143000",
+  "system": "SNOMED-CT",
+  "description": "Major depressive disorder (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "56786000",
+  "system": "SNOMED-CT",
+  "description": "Pulmonic valve stenosis (disorder)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "161622006",
+  "system": "SNOMED-CT",
+  "description": "History of lower limb amputation (situation)",
+  "patients_ever": 3,
+  "patients_active": 3,
+  "active_share": 0.003,
+  "chronic": true
+ },
+ {
+  "code": "195662009",
+  "system": "SNOMED-CT",
+  "description": "Acute viral pharyngitis (disorder)",
+  "patients_ever": 454,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": false
+ },
+ {
+  "code": "443165006",
+  "system": "SNOMED-CT",
+  "description": "Osteoporotic fracture of bone (disorder)",
+  "patients_ever": 162,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": false
+ },
+ {
+  "code": "58150001",
+  "system": "SNOMED-CT",
+  "description": "Fracture of clavicle (disorder)",
+  "patients_ever": 57,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": false
+ },
+ {
+  "code": "109838007",
+  "system": "SNOMED-CT",
+  "description": "Overlapping malignant neoplasm of colon (disorder)",
+  "patients_ever": 8,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": false
+ },
+ {
+  "code": "267060006",
+  "system": "SNOMED-CT",
+  "description": "Diarrhea symptom (finding)",
+  "patients_ever": 3,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": true
+ },
+ {
+  "code": "67782005",
+  "system": "SNOMED-CT",
+  "description": "Acute respiratory distress syndrome (disorder)",
+  "patients_ever": 2,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": true
+ },
+ {
+  "code": "86406008",
+  "system": "SNOMED-CT",
+  "description": "Human immunodeficiency virus infection (disorder)",
+  "patients_ever": 2,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": true
+ },
+ {
+  "code": "79619009",
+  "system": "SNOMED-CT",
+  "description": "Mitral valve stenosis (disorder)",
+  "patients_ever": 2,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": true
+ },
+ {
+  "code": "10509002",
+  "system": "SNOMED-CT",
+  "description": "Acute bronchitis (disorder)",
+  "patients_ever": 396,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "65966004",
+  "system": "SNOMED-CT",
+  "description": "Fracture of forearm (disorder)",
+  "patients_ever": 130,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "K08.9",
+  "system": "ICD10",
+  "description": "Disorder of teeth and supporting structures  unspecified",
+  "patients_ever": 126,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "312608009",
+  "system": "SNOMED-CT",
+  "description": "Laceration - injury (disorder)",
+  "patients_ever": 122,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "384709000",
+  "system": "SNOMED-CT",
+  "description": "Sprain (morphologic abnormality)",
+  "patients_ever": 108,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "359817006",
+  "system": "SNOMED-CT",
+  "description": "Closed fracture of hip (disorder)",
+  "patients_ever": 65,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "36971009",
+  "system": "SNOMED-CT",
+  "description": "Sinusitis (disorder)",
+  "patients_ever": 58,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "K08.3",
+  "system": "ICD10",
+  "description": "Retained dental root",
+  "patients_ever": 58,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "16114001",
+  "system": "SNOMED-CT",
+  "description": "Fracture of ankle (disorder)",
+  "patients_ever": 56,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "75498004",
+  "system": "SNOMED-CT",
+  "description": "Acute bacterial sinusitis (disorder)",
+  "patients_ever": 53,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "307426000",
+  "system": "SNOMED-CT",
+  "description": "Acute infective cystitis (disorder)",
+  "patients_ever": 52,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "70704007",
+  "system": "SNOMED-CT",
+  "description": "Sprain of wrist (disorder)",
+  "patients_ever": 43,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "48333001",
+  "system": "SNOMED-CT",
+  "description": "Burn injury (morphologic abnormality)",
+  "patients_ever": 42,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "33737001",
+  "system": "SNOMED-CT",
+  "description": "Fracture of rib (disorder)",
+  "patients_ever": 30,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "284549007",
+  "system": "SNOMED-CT",
+  "description": "Laceration of hand (disorder)",
+  "patients_ever": 28,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "403191005",
+  "system": "SNOMED-CT",
+  "description": "Partial thickness burn (disorder)",
+  "patients_ever": 24,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "307731004",
+  "system": "SNOMED-CT",
+  "description": "Injury of tendon of the rotator cuff of shoulder (disorder)",
+  "patients_ever": 14,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "213150003",
+  "system": "SNOMED-CT",
+  "description": "Kidney transplant failure and rejection (disorder)",
+  "patients_ever": 8,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "K01.0",
+  "system": "ICD10",
+  "description": "Embedded teeth",
+  "patients_ever": 3,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": false
+ },
+ {
+  "code": "262521009",
+  "system": "SNOMED-CT",
+  "description": "Traumatic injury of spinal cord and/or vertebral column (disorder)",
+  "patients_ever": 2,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "15724005",
+  "system": "SNOMED-CT",
+  "description": "Fracture of vertebral column without spinal cord injury (disorder)",
+  "patients_ever": 2,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "24079001",
+  "system": "SNOMED-CT",
+  "description": "Atopic dermatitis (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "195967001",
+  "system": "SNOMED-CT",
+  "description": "Asthma (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "428915008",
+  "system": "SNOMED-CT",
+  "description": "Toxoplasma gondii antibody detected (finding)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "698754002",
+  "system": "SNOMED-CT",
+  "description": "Chronic paralysis due to lesion of spinal cord (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "47200007",
+  "system": "SNOMED-CT",
+  "description": "High risk pregnancy (finding)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "414667000",
+  "system": "SNOMED-CT",
+  "description": "Meningomyelocele (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "373587001",
+  "system": "SNOMED-CT",
+  "description": "Chiari malformation type II (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "302297009",
+  "system": "SNOMED-CT",
+  "description": "Congenital deformity of foot (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "230745008",
+  "system": "SNOMED-CT",
+  "description": "Hydrocephalus (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "1003755004",
+  "system": "SNOMED-CT",
+  "description": "Allergy to Hevea brasiliensis latex protein (finding)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "68566005",
+  "system": "SNOMED-CT",
+  "description": "Urinary tract infectious disease (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "1163220007",
+  "system": "SNOMED-CT",
+  "description": "Pressure injury stage II (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ },
+ {
+  "code": "91434003",
+  "system": "SNOMED-CT",
+  "description": "Pulmonic valve regurgitation (disorder)",
+  "patients_ever": 1,
+  "patients_active": 1,
+  "active_share": 0.001,
+  "chronic": true
+ }
+]

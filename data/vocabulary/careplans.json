@@ -1,0 +1,535 @@
+[
+ {
+  "code": "735985000",
+  "description": "Diabetes self management plan (record artifact)",
+  "patients": 700,
+  "reasons": [
+   {
+    "code": "714628002",
+    "description": "Prediabetes (finding)",
+    "count": 660
+   },
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "count": 40
+   }
+  ]
+ },
+ {
+  "code": "443402002",
+  "description": "Lifestyle education regarding hypertension (procedure)",
+  "patients": 571,
+  "reasons": [
+   {
+    "code": "59621000",
+    "description": "Essential hypertension (disorder)",
+    "count": 571
+   }
+  ]
+ },
+ {
+  "code": "734163000",
+  "description": "Care plan (record artifact)",
+  "patients": 412,
+  "reasons": [
+   {
+    "code": "60573004",
+    "description": "Aortic valve stenosis (disorder)",
+    "count": 79
+   },
+   {
+    "code": "78275009",
+    "description": "Obstructive sleep apnea syndrome (disorder)",
+    "count": 71
+   },
+   {
+    "code": "73430006",
+    "description": "Sleep apnea (disorder)",
+    "count": 25
+   },
+   {
+    "code": "60234000",
+    "description": "Aortic valve regurgitation (disorder)",
+    "count": 16
+   }
+  ]
+ },
+ {
+  "code": "53950000",
+  "description": "Respiratory therapy (procedure)",
+  "patients": 405,
+  "reasons": []
+ },
+ {
+  "code": "736285004",
+  "description": "Hyperlipidemia clinical management plan (record artifact)",
+  "patients": 397,
+  "reasons": [
+   {
+    "code": "55822004",
+    "description": "Hyperlipidemia (disorder)",
+    "count": 397
+   }
+  ]
+ },
+ {
+  "code": "385691007",
+  "description": "Fracture care (regime/therapy)",
+  "patients": 341,
+  "reasons": [
+   {
+    "code": "65966004",
+    "description": "Fracture of forearm (disorder)",
+    "count": 143
+   },
+   {
+    "code": "359817006",
+    "description": "Closed fracture of hip (disorder)",
+    "count": 66
+   },
+   {
+    "code": "58150001",
+    "description": "Fracture of clavicle (disorder)",
+    "count": 60
+   },
+   {
+    "code": "16114001",
+    "description": "Fracture of ankle (disorder)",
+    "count": 57
+   },
+   {
+    "code": "263102004",
+    "description": "Fracture subluxation of wrist (disorder)",
+    "count": 49
+   }
+  ]
+ },
+ {
+  "code": "736372004",
+  "description": "Discharge care plan (record artifact)",
+  "patients": 297,
+  "reasons": [
+   {
+    "code": "1231000119100",
+    "description": "History of aortic valve replacement (situation)",
+    "count": 90
+   }
+  ]
+ },
+ {
+  "code": "408869004",
+  "description": "Musculoskeletal care (regime/therapy)",
+  "patients": 238,
+  "reasons": [
+   {
+    "code": "239873007",
+    "description": "Osteoarthritis of knee (disorder)",
+    "count": 103
+   },
+   {
+    "code": "239872002",
+    "description": "Osteoarthritis of hip (disorder)",
+    "count": 44
+   },
+   {
+    "code": "201834006",
+    "description": "Localized  primary osteoarthritis of the hand (disorder)",
+    "count": 37
+   }
+  ]
+ },
+ {
+  "code": "736690008",
+  "description": "Dialysis care plan (record artifact)",
+  "patients": 227,
+  "reasons": []
+ },
+ {
+  "code": "773513001",
+  "description": "Physiotherapy care plan (record artifact)",
+  "patients": 139,
+  "reasons": [
+   {
+    "code": "44465007",
+    "description": "Sprain of ankle (disorder)",
+    "count": 71
+   },
+   {
+    "code": "70704007",
+    "description": "Sprain of wrist (disorder)",
+    "count": 46
+   },
+   {
+    "code": "30832001",
+    "description": "Rupture of patellar tendon (disorder)",
+    "count": 7
+   },
+   {
+    "code": "444448004",
+    "description": "Injury of medial collateral ligament of knee (disorder)",
+    "count": 6
+   },
+   {
+    "code": "239720000",
+    "description": "Tear of meniscus of knee (disorder)",
+    "count": 6
+   }
+  ]
+ },
+ {
+  "code": "736252007",
+  "description": "Cancer care plan (record artifact)",
+  "patients": 131,
+  "reasons": [
+   {
+    "code": "126906006",
+    "description": "Neoplasm of prostate (disorder)",
+    "count": 114
+   },
+   {
+    "code": "109838007",
+    "description": "Overlapping malignant neoplasm of colon (disorder)",
+    "count": 8
+   },
+   {
+    "code": "363406005",
+    "description": "Malignant neoplasm of colon (disorder)",
+    "count": 7
+   },
+   {
+    "code": "93761005",
+    "description": "Primary malignant neoplasm of colon (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "225358003",
+  "description": "Wound care (regime/therapy)",
+  "patients": 125,
+  "reasons": [
+   {
+    "code": "284551006",
+    "description": "Laceration of foot (disorder)",
+    "count": 32
+   },
+   {
+    "code": "284549007",
+    "description": "Laceration of hand (disorder)",
+    "count": 28
+   },
+   {
+    "code": "370247008",
+    "description": "Facial laceration (disorder)",
+    "count": 28
+   },
+   {
+    "code": "283385000",
+    "description": "Laceration of thigh (disorder)",
+    "count": 24
+   },
+   {
+    "code": "283371005",
+    "description": "Laceration of forearm (disorder)",
+    "count": 24
+   }
+  ]
+ },
+ {
+  "code": "276239002",
+  "description": "Therapy (regime/therapy)",
+  "patients": 117,
+  "reasons": []
+ },
+ {
+  "code": "384758001",
+  "description": "Self-care interventions (procedure)",
+  "patients": 110,
+  "reasons": []
+ },
+ {
+  "code": "386257007",
+  "description": "Dementia management (regime/therapy)",
+  "patients": 105,
+  "reasons": [
+   {
+    "code": "26929004",
+    "description": "Alzheimer's disease (disorder)",
+    "count": 102
+   },
+   {
+    "code": "230265002",
+    "description": "Familial Alzheimer's disease of early onset (disorder)",
+    "count": 3
+   }
+  ]
+ },
+ {
+  "code": "736376001",
+  "description": "Infectious disease care plan (record artifact)",
+  "patients": 93,
+  "reasons": [
+   {
+    "code": "86406008",
+    "description": "Human immunodeficiency virus infection (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "718361005",
+  "description": "Weight management program (regime/therapy)",
+  "patients": 59,
+  "reasons": []
+ },
+ {
+  "code": "47387005",
+  "description": "Head injury rehabilitation (regime/therapy)",
+  "patients": 58,
+  "reasons": [
+   {
+    "code": "62106007",
+    "description": "Concussion with no loss of consciousness (disorder)",
+    "count": 44
+   },
+   {
+    "code": "62564004",
+    "description": "Concussion with loss of consciousness (disorder)",
+    "count": 13
+   },
+   {
+    "code": "110030002",
+    "description": "Concussion injury of brain (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "133901003",
+  "description": "Burn care (regime/therapy)",
+  "patients": 42,
+  "reasons": [
+   {
+    "code": "403191005",
+    "description": "Partial thickness burn (disorder)",
+    "count": 24
+   },
+   {
+    "code": "403190006",
+    "description": "Epidermal burn of skin (disorder)",
+    "count": 14
+   },
+   {
+    "code": "403192003",
+    "description": "Full thickness burn (disorder)",
+    "count": 4
+   }
+  ]
+ },
+ {
+  "code": "736283006",
+  "description": "Chronic obstructive pulmonary disease clinical management plan (record artifact)",
+  "patients": 33,
+  "reasons": [
+   {
+    "code": "185086009",
+    "description": "Chronic obstructive bronchitis (disorder)",
+    "count": 18
+   },
+   {
+    "code": "87433001",
+    "description": "Pulmonary emphysema (disorder)",
+    "count": 15
+   }
+  ]
+ },
+ {
+  "code": "699728000",
+  "description": "Asthma self management (regime/therapy)",
+  "patients": 24,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "count": 23
+   },
+   {
+    "code": "195967001",
+    "description": "Asthma (disorder)",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "736254008",
+  "description": "Psychiatry care plan (record artifact)",
+  "patients": 24,
+  "reasons": [
+   {
+    "code": "47505003",
+    "description": "Posttraumatic stress disorder (disorder)",
+    "count": 22
+   },
+   {
+    "code": "370143000",
+    "description": "Major depressive disorder (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "735321000",
+  "description": "Surgical inpatient care plan (record artifact)",
+  "patients": 15,
+  "reasons": [
+   {
+    "code": "1231000119100",
+    "description": "History of aortic valve replacement (situation)",
+    "count": 15
+   }
+  ]
+ },
+ {
+  "code": "737567002",
+  "description": "Major surgery care management (procedure)",
+  "patients": 12,
+  "reasons": [
+   {
+    "code": "109838007",
+    "description": "Overlapping malignant neoplasm of colon (disorder)",
+    "count": 7
+   },
+   {
+    "code": "363406005",
+    "description": "Malignant neoplasm of colon (disorder)",
+    "count": 5
+   }
+  ]
+ },
+ {
+  "code": "134435003",
+  "description": "Routine antenatal care (regime/therapy)",
+  "patients": 12,
+  "reasons": []
+ },
+ {
+  "code": "781087000",
+  "description": "Medical care (regime/therapy)",
+  "patients": 6,
+  "reasons": []
+ },
+ {
+  "code": "718347000",
+  "description": "Mental health care plan (record artifact)",
+  "patients": 5,
+  "reasons": [
+   {
+    "code": "36923009",
+    "description": "Major depression  single episode (disorder)",
+    "count": 4
+   },
+   {
+    "code": "47505003",
+    "description": "Posttraumatic stress disorder (disorder)",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "182964004",
+  "description": "Terminal care (regime/therapy)",
+  "patients": 4,
+  "reasons": [
+   {
+    "code": "424132000",
+    "description": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)",
+    "count": 4
+   }
+  ]
+ },
+ {
+  "code": "735984001",
+  "description": "Heart failure self management plan (record artifact)",
+  "patients": 4,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "count": 4
+   }
+  ]
+ },
+ {
+  "code": "736353004",
+  "description": "Inpatient care plan (record artifact)",
+  "patients": 3,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "count": 6
+   }
+  ]
+ },
+ {
+  "code": "75162002",
+  "description": "Spinal cord injury rehabilitation (regime/therapy)",
+  "patients": 2,
+  "reasons": [
+   {
+    "code": "15724005",
+    "description": "Fracture of vertebral column without spinal cord injury (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "711282006",
+  "description": "Skin condition care (regime/therapy)",
+  "patients": 1,
+  "reasons": [
+   {
+    "code": "24079001",
+    "description": "Atopic dermatitis (disorder)",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "208748005",
+  "description": "Open dislocation of jaw (disorder)",
+  "patients": 1,
+  "reasons": [
+   {
+    "code": "81629009",
+    "description": "Traumatic dislocation of temporomandibular joint (disorder)",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "737434004",
+  "description": "Major depressive disorder clinical management plan (record artifact)",
+  "patients": 1,
+  "reasons": [
+   {
+    "code": "370143000",
+    "description": "Major depressive disorder (disorder)",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "183401008",
+  "description": "Anti-suicide psychotherapy (regime/therapy)",
+  "patients": 1,
+  "reasons": [
+   {
+    "code": "86849004",
+    "description": "Suicidal poisoning (disorder)",
+    "count": 1
+   }
+  ]
+ }
+]

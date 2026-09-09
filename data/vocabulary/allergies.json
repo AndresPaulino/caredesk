@@ -1,0 +1,572 @@
+[
+ {
+  "code": "609328004",
+  "system": "Unknown",
+  "description": "Allergic disposition (finding)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 110,
+  "reactions": []
+ },
+ {
+  "code": "84489001",
+  "system": "Unknown",
+  "description": "Mold (organism)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 24,
+  "reactions": [
+   {
+    "code": "267101005",
+    "description": "Nasal discharge present (situation)",
+    "severity": "MILD",
+    "count": 7
+   },
+   {
+    "code": "21626009",
+    "description": "Cutaneous hypersensitivity (disorder)",
+    "severity": "MILD",
+    "count": 4
+   },
+   {
+    "code": "76067001",
+    "description": "Sneezing (finding)",
+    "severity": "MILD",
+    "count": 3
+   },
+   {
+    "code": "56018004",
+    "description": "Wheezing (finding)",
+    "severity": "MILD",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "264287008",
+  "system": "Unknown",
+  "description": "Animal dander (substance)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 21,
+  "reactions": [
+   {
+    "code": "878820003",
+    "description": "Rhinoconjunctivitis (disorder)",
+    "severity": "MODERATE",
+    "count": 15
+   },
+   {
+    "code": "49727002",
+    "description": "Cough (finding)",
+    "severity": "MODERATE",
+    "count": 8
+   },
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MILD",
+    "count": 5
+   },
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MILD",
+    "count": 5
+   },
+   {
+    "code": "267036007",
+    "description": "Dyspnea (finding)",
+    "severity": "MILD",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "1191",
+  "system": "Unknown",
+  "description": "Aspirin",
+  "category": "medication",
+  "type": "allergy",
+  "patients": 21,
+  "reactions": [
+   {
+    "code": "21522001",
+    "description": "Abdominal pain (finding)",
+    "severity": "MODERATE",
+    "count": 4
+   },
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 4
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 1
+   },
+   {
+    "code": "402387002",
+    "description": "Allergic angioedema (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "735029006",
+  "system": "Unknown",
+  "description": "Shellfish (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 21,
+  "reactions": [
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MODERATE",
+    "count": 15
+   },
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MILD",
+    "count": 10
+   },
+   {
+    "code": "402387002",
+    "description": "Allergic angioedema (disorder)",
+    "severity": "MODERATE",
+    "count": 6
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 5
+   },
+   {
+    "code": "422587007",
+    "description": "Nausea (finding)",
+    "severity": "MODERATE",
+    "count": 2
+   },
+   {
+    "code": "62315008",
+    "description": "Diarrhea (finding)",
+    "severity": "MILD",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "256277009",
+  "system": "Unknown",
+  "description": "Grass pollen (substance)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 12,
+  "reactions": []
+ },
+ {
+  "code": "260147004",
+  "system": "Unknown",
+  "description": "House dust mite (organism)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 11,
+  "reactions": []
+ },
+ {
+  "code": "782576004",
+  "system": "Unknown",
+  "description": "Tree pollen (substance)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 10,
+  "reactions": []
+ },
+ {
+  "code": "735971005",
+  "system": "Unknown",
+  "description": "Fish (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 10,
+  "reactions": [
+   {
+    "code": "267036007",
+    "description": "Dyspnea (finding)",
+    "severity": "MODERATE",
+    "count": 7
+   },
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MILD",
+    "count": 6
+   },
+   {
+    "code": "300359004",
+    "description": "Finding of vomiting (finding)",
+    "severity": "MILD",
+    "count": 3
+   },
+   {
+    "code": "878820003",
+    "description": "Rhinoconjunctivitis (disorder)",
+    "severity": "MILD",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "29046",
+  "system": "Unknown",
+  "description": "Lisinopril",
+  "category": "medication",
+  "type": "intolerance",
+  "patients": 9,
+  "reactions": [
+   {
+    "code": "49727002",
+    "description": "Cough (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "267036007",
+    "description": "Dyspnea (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "102263004",
+  "system": "Unknown",
+  "description": "Eggs (edible) (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 8,
+  "reactions": [
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 3
+   },
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 3
+   },
+   {
+    "code": "402387002",
+    "description": "Allergic angioedema (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "7984",
+  "system": "Unknown",
+  "description": "Penicillin V",
+  "category": "medication",
+  "type": "allergy",
+  "patients": 8,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MILD",
+    "count": 7
+   },
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MILD",
+    "count": 5
+   }
+  ]
+ },
+ {
+  "code": "442571000124108",
+  "system": "Unknown",
+  "description": "Tree nut (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 7,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 7
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 4
+   },
+   {
+    "code": "267036007",
+    "description": "Dyspnea (finding)",
+    "severity": "MODERATE",
+    "count": 2
+   },
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "111088007",
+  "system": "Unknown",
+  "description": "Latex (substance)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 7,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MILD",
+    "count": 5
+   },
+   {
+    "code": "267036007",
+    "description": "Dyspnea (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 1
+   },
+   {
+    "code": "402387002",
+    "description": "Allergic angioedema (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "288328004",
+  "system": "Unknown",
+  "description": "Bee venom (substance)",
+  "category": "environment",
+  "type": "allergy",
+  "patients": 6,
+  "reactions": [
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "762952008",
+  "system": "Unknown",
+  "description": "Peanut (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 6,
+  "reactions": [
+   {
+    "code": "300359004",
+    "description": "Finding of vomiting (finding)",
+    "severity": "MILD",
+    "count": 2
+   },
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 2
+   },
+   {
+    "code": "49727002",
+    "description": "Cough (finding)",
+    "severity": "MILD",
+    "count": 1
+   },
+   {
+    "code": "62315008",
+    "description": "Diarrhea (finding)",
+    "severity": "MILD",
+    "count": 1
+   },
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MILD",
+    "count": 1
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "256355007",
+  "system": "Unknown",
+  "description": "Glycine max (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 4,
+  "reactions": [
+   {
+    "code": "300359004",
+    "description": "Finding of vomiting (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "3718001",
+  "system": "Unknown",
+  "description": "Cow's milk (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 4,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MILD",
+    "count": 2
+   },
+   {
+    "code": "300359004",
+    "description": "Finding of vomiting (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "402387002",
+    "description": "Allergic angioedema (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "62315008",
+    "description": "Diarrhea (finding)",
+    "severity": "MILD",
+    "count": 1
+   },
+   {
+    "code": "56018004",
+    "description": "Wheezing (finding)",
+    "severity": "MILD",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "25037",
+  "system": "Unknown",
+  "description": "cefdinir",
+  "category": "medication",
+  "type": "allergy",
+  "patients": 3,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "412071004",
+  "system": "Unknown",
+  "description": "Wheat (substance)",
+  "category": "food",
+  "type": "allergy",
+  "patients": 3,
+  "reactions": [
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MODERATE",
+    "count": 3
+   },
+   {
+    "code": "39579001",
+    "description": "Anaphylaxis (disorder)",
+    "severity": "SEVERE",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "5640",
+  "system": "Unknown",
+  "description": "Ibuprofen",
+  "category": "medication",
+  "type": "allergy",
+  "patients": 1,
+  "reactions": [
+   {
+    "code": "247472004",
+    "description": "Wheal (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   },
+   {
+    "code": "418290006",
+    "description": "Itching (finding)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ },
+ {
+  "code": "10831",
+  "system": "Unknown",
+  "description": "Sulfamethoxazole / Trimethoprim",
+  "category": "medication",
+  "type": "allergy",
+  "patients": 1,
+  "reactions": [
+   {
+    "code": "271807003",
+    "description": "Eruption of skin (disorder)",
+    "severity": "MODERATE",
+    "count": 1
+   }
+  ]
+ }
+]

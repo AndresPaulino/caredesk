@@ -1,0 +1,868 @@
+{
+ "classes": {
+  "ambulatory": 67621,
+  "wellness": 18274,
+  "outpatient": 15514,
+  "urgentcare": 14750,
+  "emergency": 6833,
+  "inpatient": 1628,
+  "home": 996,
+  "snf": 358,
+  "hospice": 157,
+  "virtual": 106
+ },
+ "types": [
+  {
+   "code": "185347001",
+   "description": "Encounter for problem (procedure)",
+   "count": 36061,
+   "classes": {
+    "ambulatory": 35467,
+    "outpatient": 281,
+    "inpatient": 245,
+    "emergency": 66
+   }
+  },
+  {
+   "code": "185349003",
+   "description": "Encounter for check up (procedure)",
+   "count": 30617,
+   "classes": {
+    "ambulatory": 17037,
+    "outpatient": 13573,
+    "virtual": 7
+   }
+  },
+  {
+   "code": "162673000",
+   "description": "General examination of patient (procedure)",
+   "count": 17998,
+   "classes": {
+    "wellness": 17998
+   }
+  },
+  {
+   "code": "702927004",
+   "description": "Urgent care clinic (environment)",
+   "count": 14689,
+   "classes": {
+    "urgentcare": 14689
+   }
+  },
+  {
+   "code": "50849002",
+   "description": "Emergency room admission (procedure)",
+   "count": 6611,
+   "classes": {
+    "emergency": 6611
+   }
+  },
+  {
+   "code": "390906007",
+   "description": "Follow-up encounter (procedure)",
+   "count": 4881,
+   "classes": {
+    "ambulatory": 4864,
+    "virtual": 17
+   }
+  },
+  {
+   "code": "36228007",
+   "description": "Ophthalmic examination and evaluation (procedure)",
+   "count": 4005,
+   "classes": {
+    "ambulatory": 4005
+   }
+  },
+  {
+   "code": "185345009",
+   "description": "Encounter for symptom (procedure)",
+   "count": 3366,
+   "classes": {
+    "ambulatory": 3311,
+    "emergency": 29,
+    "outpatient": 26
+   }
+  },
+  {
+   "code": "33879002",
+   "description": "Administration of vaccine to produce active immunity (procedure)",
+   "count": 1606,
+   "classes": {
+    "outpatient": 1606
+   }
+  },
+  {
+   "code": "32485007",
+   "description": "Hospital admission (procedure)",
+   "count": 1057,
+   "classes": {
+    "inpatient": 474,
+    "snf": 358,
+    "ambulatory": 203,
+    "emergency": 22
+   }
+  },
+  {
+   "code": "439708006",
+   "description": "Home visit (procedure)",
+   "count": 996,
+   "classes": {
+    "home": 996
+   }
+  },
+  {
+   "code": "439740005",
+   "description": "Postoperative follow-up visit (procedure)",
+   "count": 931,
+   "classes": {
+    "ambulatory": 878,
+    "virtual": 53
+   }
+  },
+  {
+   "code": "410410006",
+   "description": "Screening surveillance (regime/therapy)",
+   "count": 548,
+   "classes": {
+    "ambulatory": 548
+   }
+  },
+  {
+   "code": "424619006",
+   "description": "Prenatal visit (regime/therapy)",
+   "count": 357,
+   "classes": {
+    "ambulatory": 357
+   }
+  },
+  {
+   "code": "310061009",
+   "description": "Gynecology service (qualifier value)",
+   "count": 284,
+   "classes": {
+    "ambulatory": 284
+   }
+  },
+  {
+   "code": "410620009",
+   "description": "Well child visit (procedure)",
+   "count": 276,
+   "classes": {
+    "wellness": 276
+   }
+  },
+  {
+   "code": "305432006",
+   "description": "Admission to surgical transplant department (procedure)",
+   "count": 234,
+   "classes": {
+    "inpatient": 234
+   }
+  },
+  {
+   "code": "56876005",
+   "description": "Drug rehabilitation and detoxification (regime/therapy)",
+   "count": 218,
+   "classes": {
+    "inpatient": 218
+   }
+  },
+  {
+   "code": "185389009",
+   "description": "Follow-up visit (procedure)",
+   "count": 218,
+   "classes": {
+    "ambulatory": 193,
+    "inpatient": 25
+   }
+  },
+  {
+   "code": "305408004",
+   "description": "Admission to surgical department (procedure)",
+   "count": 189,
+   "classes": {
+    "inpatient": 189
+   }
+  },
+  {
+   "code": "305336008",
+   "description": "Admission to hospice (procedure)",
+   "count": 157,
+   "classes": {
+    "hospice": 157
+   }
+  },
+  {
+   "code": "281036007",
+   "description": "Follow-up consultation (procedure)",
+   "count": 123,
+   "classes": {
+    "ambulatory": 122,
+    "virtual": 1
+   }
+  },
+  {
+   "code": "394701000",
+   "description": "Asthma follow-up (regime/therapy)",
+   "count": 111,
+   "classes": {
+    "ambulatory": 111
+   }
+  },
+  {
+   "code": "305342007",
+   "description": "Admission to ward (procedure)",
+   "count": 111,
+   "classes": {
+    "inpatient": 111
+   }
+  },
+  {
+   "code": "448337001",
+   "description": "Telemedicine consultation with patient (procedure)",
+   "count": 110,
+   "classes": {
+    "ambulatory": 93,
+    "virtual": 17
+   }
+  },
+  {
+   "code": "308335008",
+   "description": "Patient encounter procedure (procedure)",
+   "count": 89,
+   "classes": {
+    "urgentcare": 61,
+    "outpatient": 25,
+    "ambulatory": 3
+   }
+  },
+  {
+   "code": "183452005",
+   "description": "Emergency hospital admission (procedure)",
+   "count": 76,
+   "classes": {
+    "emergency": 76
+   }
+  },
+  {
+   "code": "397821002",
+   "description": "Patient transfer to intensive care unit (procedure)",
+   "count": 56,
+   "classes": {
+    "inpatient": 56
+   }
+  },
+  {
+   "code": "210098006",
+   "description": "Domiciliary or rest home patient evaluation and management (procedure)",
+   "count": 50,
+   "classes": {
+    "ambulatory": 50
+   }
+  },
+  {
+   "code": "86013001",
+   "description": "Periodic reevaluation and management of healthy individual (procedure)",
+   "count": 35,
+   "classes": {
+    "ambulatory": 35
+   }
+  },
+  {
+   "code": "183478001",
+   "description": "Emergency hospital admission for asthma (procedure)",
+   "count": 28,
+   "classes": {
+    "emergency": 28
+   }
+  },
+  {
+   "code": "183495009",
+   "description": "Non-urgent orthopedic admission (procedure)",
+   "count": 21,
+   "classes": {
+    "inpatient": 21
+   }
+  },
+  {
+   "code": "308251003",
+   "description": "Admission to clinical oncology department (procedure)",
+   "count": 20,
+   "classes": {
+    "inpatient": 20
+   }
+  },
+  {
+   "code": "47505003",
+   "description": "Posttraumatic stress disorder (disorder)",
+   "count": 20,
+   "classes": {
+    "ambulatory": 20
+   }
+  },
+  {
+   "code": "79094001",
+   "description": "Initial psychiatric interview with mental status and evaluation (procedure)",
+   "count": 13,
+   "classes": {
+    "ambulatory": 13
+   }
+  },
+  {
+   "code": "424441002",
+   "description": "Prenatal initial visit (regime/therapy)",
+   "count": 13,
+   "classes": {
+    "ambulatory": 13
+   }
+  },
+  {
+   "code": "449214001",
+   "description": "Transfer to stepdown unit (procedure)",
+   "count": 11,
+   "classes": {
+    "inpatient": 11
+   }
+  },
+  {
+   "code": "305351004",
+   "description": "Admission to intensive care unit (procedure)",
+   "count": 11,
+   "classes": {
+    "inpatient": 11
+   }
+  },
+  {
+   "code": "1505002",
+   "description": "Hospital admission for isolation (procedure)",
+   "count": 10,
+   "classes": {
+    "inpatient": 10
+   }
+  },
+  {
+   "code": "185317003",
+   "description": "Telephone encounter (procedure)",
+   "count": 6,
+   "classes": {
+    "virtual": 6
+   }
+  }
+ ],
+ "reasons": [
+  {
+   "code": "431857002",
+   "description": "Chronic kidney disease stage 4 (disorder)",
+   "count": 26241,
+   "classes": {
+    "ambulatory": 26208,
+    "hospice": 33
+   }
+  },
+  {
+   "code": "55822004",
+   "description": "Hyperlipidemia (disorder)",
+   "count": 4478,
+   "classes": {
+    "ambulatory": 4476,
+    "virtual": 2
+   }
+  },
+  {
+   "code": "46177005",
+   "description": "End-stage renal disease (disorder)",
+   "count": 3393,
+   "classes": {
+    "ambulatory": 3392,
+    "hospice": 1
+   }
+  },
+  {
+   "code": "6525002",
+   "description": "Dependent drug abuse (disorder)",
+   "count": 2462,
+   "classes": {
+    "ambulatory": 2244,
+    "inpatient": 218
+   }
+  },
+  {
+   "code": "254837009",
+   "description": "Malignant neoplasm of breast (disorder)",
+   "count": 1762,
+   "classes": {
+    "ambulatory": 1693,
+    "virtual": 53,
+    "hospice": 13,
+    "inpatient": 3
+   }
+  },
+  {
+   "code": "1871000124103",
+   "description": "Transition from acute care to home-health care (finding)",
+   "count": 1057,
+   "classes": {
+    "home": 996,
+    "urgentcare": 61
+   }
+  },
+  {
+   "code": "444814009",
+   "description": "Viral sinusitis (disorder)",
+   "count": 1044,
+   "classes": {
+    "ambulatory": 1044
+   }
+  },
+  {
+   "code": "414545008",
+   "description": "Ischemic heart disease (disorder)",
+   "count": 888,
+   "classes": {
+    "ambulatory": 888
+   }
+  },
+  {
+   "code": "195662009",
+   "description": "Acute viral pharyngitis (disorder)",
+   "count": 636,
+   "classes": {
+    "ambulatory": 636
+   }
+  },
+  {
+   "code": "10509002",
+   "description": "Acute bronchitis (disorder)",
+   "count": 516,
+   "classes": {
+    "ambulatory": 516
+   }
+  },
+  {
+   "code": "82423001",
+   "description": "Chronic pain (finding)",
+   "count": 491,
+   "classes": {
+    "outpatient": 269,
+    "ambulatory": 146,
+    "emergency": 76
+   }
+  },
+  {
+   "code": "275978004",
+   "description": "Screening for malignant neoplasm of colon (procedure)",
+   "count": 419,
+   "classes": {
+    "ambulatory": 419
+   }
+  },
+  {
+   "code": "125605004",
+   "description": "Fracture of bone (disorder)",
+   "count": 409,
+   "classes": {
+    "emergency": 409
+   }
+  },
+  {
+   "code": "25675004",
+   "description": "Patient transfer to skilled nursing facility (procedure)",
+   "count": 358,
+   "classes": {
+    "snf": 358
+   }
+  },
+  {
+   "code": "36971009",
+   "description": "Sinusitis (disorder)",
+   "count": 354,
+   "classes": {
+    "ambulatory": 354
+   }
+  },
+  {
+   "code": "161665007",
+   "description": "History of renal transplant (situation)",
+   "count": 342,
+   "classes": {
+    "ambulatory": 342
+   }
+  },
+  {
+   "code": "274531002",
+   "description": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)",
+   "count": 341,
+   "classes": {
+    "ambulatory": 220,
+    "inpatient": 121
+   }
+  },
+  {
+   "code": "1149222004",
+   "description": "Overdose (disorder)",
+   "count": 300,
+   "classes": {
+    "emergency": 300
+   }
+  },
+  {
+   "code": "75498004",
+   "description": "Acute bacterial sinusitis (disorder)",
+   "count": 276,
+   "classes": {
+    "ambulatory": 276
+   }
+  },
+  {
+   "code": "60573004",
+   "description": "Aortic valve stenosis (disorder)",
+   "count": 264,
+   "classes": {
+    "ambulatory": 176,
+    "inpatient": 88
+   }
+  },
+  {
+   "code": "66383009",
+   "description": "Gingivitis (disorder)",
+   "count": 263,
+   "classes": {
+    "ambulatory": 263
+   }
+  },
+  {
+   "code": "22298006",
+   "description": "Myocardial infarction (disorder)",
+   "count": 252,
+   "classes": {
+    "emergency": 252
+   }
+  },
+  {
+   "code": "103697008",
+   "description": "Patient referral for dental care (procedure)",
+   "count": 251,
+   "classes": {
+    "ambulatory": 247,
+    "inpatient": 4
+   }
+  },
+  {
+   "code": "698306007",
+   "description": "Awaiting transplantation of kidney (situation)",
+   "count": 215,
+   "classes": {
+    "inpatient": 213,
+    "ambulatory": 2
+   }
+  },
+  {
+   "code": "39898005",
+   "description": "Sleep disorder (disorder)",
+   "count": 196,
+   "classes": {
+    "ambulatory": 99,
+    "inpatient": 97
+   }
+  },
+  {
+   "code": "183996000",
+   "description": "Sterilization requested (situation)",
+   "count": 189,
+   "classes": {
+    "inpatient": 189
+   }
+  },
+  {
+   "code": "26929004",
+   "description": "Alzheimer's disease (disorder)",
+   "count": 183,
+   "classes": {
+    "ambulatory": 117,
+    "hospice": 65,
+    "virtual": 1
+   }
+  },
+  {
+   "code": "271737000",
+   "description": "Anemia (disorder)",
+   "count": 175,
+   "classes": {
+    "ambulatory": 175
+   }
+  },
+  {
+   "code": "156073000",
+   "description": "Complete miscarriage (disorder)",
+   "count": 171,
+   "classes": {
+    "ambulatory": 171
+   }
+  },
+  {
+   "code": "59621000",
+   "description": "Essential hypertension (disorder)",
+   "count": 165,
+   "classes": {
+    "ambulatory": 150,
+    "virtual": 15
+   }
+  },
+  {
+   "code": "401314000",
+   "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+   "count": 159,
+   "classes": {
+    "inpatient": 128,
+    "ambulatory": 31
+   }
+  },
+  {
+   "code": "88805009",
+   "description": "Chronic congestive heart failure (disorder)",
+   "count": 153,
+   "classes": {
+    "ambulatory": 122,
+    "virtual": 17,
+    "emergency": 6,
+    "inpatient": 6
+   }
+  },
+  {
+   "code": "65966004",
+   "description": "Fracture of forearm (disorder)",
+   "count": 142,
+   "classes": {
+    "ambulatory": 142
+   }
+  },
+  {
+   "code": "195967001",
+   "description": "Asthma (disorder)",
+   "count": 140,
+   "classes": {
+    "ambulatory": 112,
+    "emergency": 28
+   }
+  },
+  {
+   "code": "312608009",
+   "description": "Laceration - injury (disorder)",
+   "count": 137,
+   "classes": {
+    "emergency": 137
+   }
+  },
+  {
+   "code": "126906006",
+   "description": "Neoplasm of prostate (disorder)",
+   "count": 132,
+   "classes": {
+    "ambulatory": 125,
+    "hospice": 7
+   }
+  },
+  {
+   "code": "239873007",
+   "description": "Osteoarthritis of knee (disorder)",
+   "count": 126,
+   "classes": {
+    "ambulatory": 126
+   }
+  },
+  {
+   "code": "68496003",
+   "description": "Polyp of colon (disorder)",
+   "count": 119,
+   "classes": {
+    "ambulatory": 118,
+    "virtual": 1
+   }
+  },
+  {
+   "code": "384709000",
+   "description": "Sprain (morphologic abnormality)",
+   "count": 118,
+   "classes": {
+    "emergency": 118
+   }
+  },
+  {
+   "code": "307426000",
+   "description": "Acute infective cystitis (disorder)",
+   "count": 113,
+   "classes": {
+    "ambulatory": 81,
+    "emergency": 29,
+    "virtual": 3
+   }
+  },
+  {
+   "code": "609328004",
+   "description": "Allergic disposition (finding)",
+   "count": 111,
+   "classes": {
+    "ambulatory": 111
+   }
+  },
+  {
+   "code": "43878008",
+   "description": "Streptococcal sore throat (disorder)",
+   "count": 108,
+   "classes": {
+    "ambulatory": 108
+   }
+  },
+  {
+   "code": "1231000119100",
+   "description": "History of aortic valve replacement (situation)",
+   "count": 104,
+   "classes": {
+    "inpatient": 104
+   }
+  },
+  {
+   "code": "401303003",
+   "description": "Acute ST segment elevation myocardial infarction (disorder)",
+   "count": 94,
+   "classes": {
+    "inpatient": 91,
+    "ambulatory": 3
+   }
+  },
+  {
+   "code": "840544004",
+   "description": "Suspected disease caused by Severe acute respiratory coronavirus 2 (situation)",
+   "count": 91,
+   "classes": {
+    "ambulatory": 91
+   }
+  },
+  {
+   "code": "196416002",
+   "description": "Impacted molars (disorder)",
+   "count": 86,
+   "classes": {
+    "emergency": 86
+   }
+  },
+  {
+   "code": "74400008",
+   "description": "Appendicitis (disorder)",
+   "count": 79,
+   "classes": {
+    "inpatient": 77,
+    "emergency": 2
+   }
+  },
+  {
+   "code": "399261000",
+   "description": "History of coronary artery bypass grafting (situation)",
+   "count": 77,
+   "classes": {
+    "inpatient": 77
+   }
+  },
+  {
+   "code": "124171000119105",
+   "description": "Chronic intractable migraine without aura (disorder)",
+   "count": 74,
+   "classes": {
+    "emergency": 74
+   }
+  },
+  {
+   "code": "35999006",
+   "description": "Blighted ovum (disorder)",
+   "count": 72,
+   "classes": {
+    "ambulatory": 72
+   }
+  },
+  {
+   "code": "110030002",
+   "description": "Concussion injury of brain (disorder)",
+   "count": 71,
+   "classes": {
+    "emergency": 69,
+    "ambulatory": 2
+   }
+  },
+  {
+   "code": "230690007",
+   "description": "Cerebrovascular accident (disorder)",
+   "count": 70,
+   "classes": {
+    "emergency": 70
+   }
+  },
+  {
+   "code": "359817006",
+   "description": "Closed fracture of hip (disorder)",
+   "count": 66,
+   "classes": {
+    "ambulatory": 66
+   }
+  },
+  {
+   "code": "424132000",
+   "description": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)",
+   "count": 63,
+   "classes": {
+    "inpatient": 59,
+    "outpatient": 4
+   }
+  },
+  {
+   "code": "58150001",
+   "description": "Fracture of clavicle (disorder)",
+   "count": 58,
+   "classes": {
+    "ambulatory": 58
+   }
+  },
+  {
+   "code": "16114001",
+   "description": "Fracture of ankle (disorder)",
+   "count": 56,
+   "classes": {
+    "ambulatory": 56
+   }
+  },
+  {
+   "code": "91302008",
+   "description": "Sepsis (disorder)",
+   "count": 54,
+   "classes": {
+    "emergency": 54
+   }
+  },
+  {
+   "code": "47505003",
+   "description": "Posttraumatic stress disorder (disorder)",
+   "count": 54,
+   "classes": {
+    "ambulatory": 53,
+    "virtual": 1
+   }
+  },
+  {
+   "code": "239872002",
+   "description": "Osteoarthritis of hip (disorder)",
+   "count": 50,
+   "classes": {
+    "ambulatory": 50
+   }
+  },
+  {
+   "code": "60234000",
+   "description": "Aortic valve regurgitation (disorder)",
+   "count": 49,
+   "classes": {
+    "ambulatory": 28,
+    "inpatient": 21
+   }
+  }
+ ]
+}

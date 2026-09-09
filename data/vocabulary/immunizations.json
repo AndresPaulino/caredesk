@@ -1,0 +1,62 @@
+[
+ {
+  "code": "140",
+  "description": "Influenza  split virus  trivalent  PF",
+  "patients": 617,
+  "count": 5624
+ },
+ {
+  "code": "113",
+  "description": "Td (adult)  5 Lf tetanus toxoid  preservative free  adsorbed",
+  "patients": 496,
+  "count": 498
+ },
+ {
+  "code": "207",
+  "description": "COVID-19  mRNA  LNP-S  PF  100 mcg/0.5mL dose or 50 mcg/0.25mL dose",
+  "patients": 453,
+  "count": 906
+ },
+ {
+  "code": "208",
+  "description": "COVID-19  mRNA  LNP-S  PF  30 mcg/0.3 mL dose",
+  "patients": 438,
+  "count": 876
+ },
+ {
+  "code": "33",
+  "description": "pneumococcal polysaccharide vaccine  23 valent",
+  "patients": 135,
+  "count": 135
+ },
+ {
+  "code": "133",
+  "description": "Pneumococcal conjugate PCV 13",
+  "patients": 131,
+  "count": 131
+ },
+ {
+  "code": "212",
+  "description": "COVID-19 vaccine  vector-nr  rS-Ad26  PF  0.5 mL",
+  "patients": 33,
+  "count": 33
+ },
+ {
+  "code": "115",
+  "description": "tetanus toxoid  reduced diphtheria toxoid  and acellular pertussis vaccine  adsorbed",
+  "patients": 2,
+  "count": 2
+ },
+ {
+  "code": "114",
+  "description": "meningococcal polysaccharide (groups A  C  Y and W-135) diphtheria toxoid conjugate vaccine (MCV4P)",
+  "patients": 2,
+  "count": 2
+ },
+ {
+  "code": "187",
+  "description": "zoster vaccine recombinant",
+  "patients": 2,
+  "count": 2
+ }
+]

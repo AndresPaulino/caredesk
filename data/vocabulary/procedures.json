@@ -1,0 +1,1317 @@
+[
+ {
+  "code": "710824005",
+  "system": "SNOMED-CT",
+  "description": "Assessment of health and social care needs (procedure)",
+  "patients": 1000,
+  "count": 30136,
+  "reasons": []
+ },
+ {
+  "code": "103697008",
+  "system": "SNOMED-CT",
+  "description": "Patient referral for dental care (procedure)",
+  "patients": 1000,
+  "count": 14987,
+  "reasons": [
+   {
+    "code": "66383009",
+    "description": "Gingivitis (disorder)",
+    "count": 7458
+   }
+  ]
+ },
+ {
+  "code": "430193006",
+  "system": "SNOMED-CT",
+  "description": "Medication reconciliation (procedure)",
+  "patients": 998,
+  "count": 18555,
+  "reasons": []
+ },
+ {
+  "code": "171207006",
+  "system": "SNOMED-CT",
+  "description": "Depression screening (procedure)",
+  "patients": 996,
+  "count": 47894,
+  "reasons": []
+ },
+ {
+  "code": "762993000",
+  "system": "SNOMED-CT",
+  "description": "Assessment using Morse Fall Scale (procedure)",
+  "patients": 992,
+  "count": 20323,
+  "reasons": []
+ },
+ {
+  "code": "866148006",
+  "system": "SNOMED-CT",
+  "description": "Screening for domestic abuse (procedure)",
+  "patients": 983,
+  "count": 8946,
+  "reasons": []
+ },
+ {
+  "code": "710841007",
+  "system": "SNOMED-CT",
+  "description": "Assessment of anxiety (procedure)",
+  "patients": 978,
+  "count": 14629,
+  "reasons": []
+ },
+ {
+  "code": "428211000124100",
+  "system": "SNOMED-CT",
+  "description": "Assessment of substance use (procedure)",
+  "patients": 888,
+  "count": 17239,
+  "reasons": []
+ },
+ {
+  "code": "713106006",
+  "system": "SNOMED-CT",
+  "description": "Screening for drug abuse (procedure)",
+  "patients": 884,
+  "count": 8600,
+  "reasons": []
+ },
+ {
+  "code": "763302001",
+  "system": "SNOMED-CT",
+  "description": "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)",
+  "patients": 880,
+  "count": 8639,
+  "reasons": []
+ },
+ {
+  "code": "D0604",
+  "system": "CDT",
+  "description": "antigen testing for a public health related pathogen  including coronavirus",
+  "patients": 745,
+  "count": 2130,
+  "reasons": []
+ },
+ {
+  "code": "D0603",
+  "system": "CDT",
+  "description": "caries risk assessment and documentation  with a finding of high risk",
+  "patients": 630,
+  "count": 1559,
+  "reasons": []
+ },
+ {
+  "code": "715252007",
+  "system": "SNOMED-CT",
+  "description": "Depression screening using Patient Health Questionnaire Nine Item score (procedure)",
+  "patients": 550,
+  "count": 1496,
+  "reasons": []
+ },
+ {
+  "code": "D7140",
+  "system": "CDT",
+  "description": "extraction  erupted tooth or exposed root (elevation and/or forceps removal)",
+  "patients": 509,
+  "count": 2389,
+  "reasons": []
+ },
+ {
+  "code": "D0602",
+  "system": "CDT",
+  "description": "caries risk assessment and documentation  with a finding of moderate risk",
+  "patients": 500,
+  "count": 1017,
+  "reasons": []
+ },
+ {
+  "code": "315639002",
+  "system": "SNOMED-CT",
+  "description": "Initial patient assessment (procedure)",
+  "patients": 454,
+  "count": 574,
+  "reasons": []
+ },
+ {
+  "code": "370789001",
+  "system": "SNOMED-CT",
+  "description": "Development of individualized plan of care (procedure)",
+  "patients": 454,
+  "count": 574,
+  "reasons": []
+ },
+ {
+  "code": "410401003",
+  "system": "SNOMED-CT",
+  "description": "Nursing care/supplementary surveillance (regime/therapy)",
+  "patients": 332,
+  "count": 7338,
+  "reasons": []
+ },
+ {
+  "code": "308283009",
+  "system": "SNOMED-CT",
+  "description": "Discharge from hospital (procedure)",
+  "patients": 325,
+  "count": 411,
+  "reasons": [
+   {
+    "code": "399261000",
+    "description": "History of coronary artery bypass grafting (situation)",
+    "count": 37
+   },
+   {
+    "code": "1231000119100",
+    "description": "History of aortic valve replacement (situation)",
+    "count": 18
+   }
+  ]
+ },
+ {
+  "code": "63332003",
+  "system": "SNOMED-CT",
+  "description": "History AND physical examination (procedure)",
+  "patients": 306,
+  "count": 377,
+  "reasons": [
+   {
+    "code": "60573004",
+    "description": "Aortic valve stenosis (disorder)",
+    "count": 16
+   },
+   {
+    "code": "60234000",
+    "description": "Aortic valve regurgitation (disorder)",
+    "count": 3
+   },
+   {
+    "code": "86406008",
+    "description": "Human immunodeficiency virus infection (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "D7210",
+  "system": "CDT",
+  "description": "extraction  erupted tooth requiring removal of bone and/or sectioning of tooth  and including elevation of mucoperiosteal flap if indicated",
+  "patients": 299,
+  "count": 1082,
+  "reasons": []
+ },
+ {
+  "code": "225386006",
+  "system": "SNOMED-CT",
+  "description": "Pre-discharge assessment (procedure)",
+  "patients": 291,
+  "count": 356,
+  "reasons": []
+ },
+ {
+  "code": "D7286",
+  "system": "CDT",
+  "description": "incisional biopsy of oral tissue-soft",
+  "patients": 285,
+  "count": 1911,
+  "reasons": []
+ },
+ {
+  "code": "D0703",
+  "system": "CDT",
+  "description": "2-D oral/facial photographic image obtained intra-orally or extra-orally - image capture only",
+  "patients": 271,
+  "count": 384,
+  "reasons": []
+ },
+ {
+  "code": "409023009",
+  "system": "SNOMED-CT",
+  "description": "Professional / ancillary services care (regime/therapy)",
+  "patients": 264,
+  "count": 1777,
+  "reasons": []
+ },
+ {
+  "code": "91251008",
+  "system": "SNOMED-CT",
+  "description": "Physical therapy procedure (regime/therapy)",
+  "patients": 260,
+  "count": 989,
+  "reasons": []
+ },
+ {
+  "code": "312681000",
+  "system": "SNOMED-CT",
+  "description": "Bone density scan (procedure)",
+  "patients": 258,
+  "count": 463,
+  "reasons": [
+   {
+    "code": "254837009",
+    "description": "Malignant neoplasm of breast (disorder)",
+    "count": 193
+   },
+   {
+    "code": "65966004",
+    "description": "Fracture of forearm (disorder)",
+    "count": 53
+   },
+   {
+    "code": "16114001",
+    "description": "Fracture of ankle (disorder)",
+    "count": 43
+   },
+   {
+    "code": "58150001",
+    "description": "Fracture of clavicle (disorder)",
+    "count": 40
+   },
+   {
+    "code": "263102004",
+    "description": "Fracture subluxation of wrist (disorder)",
+    "count": 34
+   }
+  ]
+ },
+ {
+  "code": "274474001",
+  "system": "SNOMED-CT",
+  "description": "Bone immobilization (procedure)",
+  "patients": 247,
+  "count": 276,
+  "reasons": [
+   {
+    "code": "65966004",
+    "description": "Fracture of forearm (disorder)",
+    "count": 140
+   },
+   {
+    "code": "16114001",
+    "description": "Fracture of ankle (disorder)",
+    "count": 57
+   },
+   {
+    "code": "263102004",
+    "description": "Fracture subluxation of wrist (disorder)",
+    "count": 48
+   },
+   {
+    "code": "33737001",
+    "description": "Fracture of rib (disorder)",
+    "count": 31
+   }
+  ]
+ },
+ {
+  "code": "23426006",
+  "system": "SNOMED-CT",
+  "description": "Measurement of respiratory function (procedure)",
+  "patients": 239,
+  "count": 265,
+  "reasons": [
+   {
+    "code": "10509002",
+    "description": "Acute bronchitis (disorder)",
+    "count": 265
+   }
+  ]
+ },
+ {
+  "code": "D0804",
+  "system": "CDT",
+  "description": "3D facial surface scan - indirect",
+  "patients": 238,
+  "count": 303,
+  "reasons": []
+ },
+ {
+  "code": "D0601",
+  "system": "CDT",
+  "description": "caries risk assessment and documentation  with a finding of low risk",
+  "patients": 237,
+  "count": 303,
+  "reasons": []
+ },
+ {
+  "code": "84478008",
+  "system": "SNOMED-CT",
+  "description": "Occupational therapy (regime/therapy)",
+  "patients": 235,
+  "count": 767,
+  "reasons": []
+ },
+ {
+  "code": "D0120",
+  "system": "CDT",
+  "description": "periodic oral evaluation  established patient",
+  "patients": 226,
+  "count": 304,
+  "reasons": []
+ },
+ {
+  "code": "58000006",
+  "system": "SNOMED-CT",
+  "description": "Patient discharge (procedure)",
+  "patients": 220,
+  "count": 239,
+  "reasons": []
+ },
+ {
+  "code": "73761001",
+  "system": "SNOMED-CT",
+  "description": "Colonoscopy (procedure)",
+  "patients": 193,
+  "count": 381,
+  "reasons": []
+ },
+ {
+  "code": "D0140",
+  "system": "CDT",
+  "description": "limited oral evaluation - problem focused",
+  "patients": 192,
+  "count": 248,
+  "reasons": []
+ },
+ {
+  "code": "311555007",
+  "system": "SNOMED-CT",
+  "description": "Speech and language therapy regime (regime/therapy)",
+  "patients": 181,
+  "count": 370,
+  "reasons": []
+ },
+ {
+  "code": "D0802",
+  "system": "CDT",
+  "description": "3D dental surface scan - indirect",
+  "patients": 173,
+  "count": 211,
+  "reasons": []
+ },
+ {
+  "code": "252832004",
+  "system": "SNOMED-CT",
+  "description": "Intraocular pressure test (procedure)",
+  "patients": 161,
+  "count": 3842,
+  "reasons": []
+ },
+ {
+  "code": "55468007",
+  "system": "SNOMED-CT",
+  "description": "Ocular slit lamp examination (procedure)",
+  "patients": 161,
+  "count": 3842,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "count": 3842
+   }
+  ]
+ },
+ {
+  "code": "389153003",
+  "system": "SNOMED-CT",
+  "description": "Indirect gonioscopy (procedure)",
+  "patients": 161,
+  "count": 3842,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "count": 3842
+   }
+  ]
+ },
+ {
+  "code": "314971001",
+  "system": "SNOMED-CT",
+  "description": "Camera fundoscopy (procedure)",
+  "patients": 161,
+  "count": 3842,
+  "reasons": []
+ },
+ {
+  "code": "722161008",
+  "system": "SNOMED-CT",
+  "description": "Diabetic retinal eye exam (procedure)",
+  "patients": 161,
+  "count": 3842,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "count": 3842
+   }
+  ]
+ },
+ {
+  "code": "16830007",
+  "system": "SNOMED-CT",
+  "description": "Visual acuity testing (procedure)",
+  "patients": 159,
+  "count": 3730,
+  "reasons": []
+ },
+ {
+  "code": "310417005",
+  "system": "SNOMED-CT",
+  "description": "Certification procedure (procedure)",
+  "patients": 157,
+  "count": 157,
+  "reasons": []
+ },
+ {
+  "code": "185087000",
+  "system": "SNOMED-CT",
+  "description": "Notifications (procedure)",
+  "patients": 157,
+  "count": 157,
+  "reasons": []
+ },
+ {
+  "code": "385763009",
+  "system": "SNOMED-CT",
+  "description": "Hospice care (regime/therapy)",
+  "patients": 157,
+  "count": 3979,
+  "reasons": []
+ },
+ {
+  "code": "D0702",
+  "system": "CDT",
+  "description": "2-D cephalometric radiographic image - image capture only",
+  "patients": 146,
+  "count": 169,
+  "reasons": []
+ },
+ {
+  "code": "D0330",
+  "system": "CDT",
+  "description": "panoramic radiographic image",
+  "patients": 140,
+  "count": 166,
+  "reasons": []
+ },
+ {
+  "code": "399208008",
+  "system": "SNOMED-CT",
+  "description": "Plain X-ray of chest (procedure)",
+  "patients": 138,
+  "count": 270,
+  "reasons": [
+   {
+    "code": "10509002",
+    "description": "Acute bronchitis (disorder)",
+    "count": 25
+   },
+   {
+    "code": "162573006",
+    "description": "Suspected lung cancer (situation)",
+    "count": 4
+   }
+  ]
+ },
+ {
+  "code": "713026007",
+  "system": "SNOMED-CT",
+  "description": "Plain X-ray of humerus (procedure)",
+  "patients": 128,
+  "count": 140,
+  "reasons": []
+ },
+ {
+  "code": "117015009",
+  "system": "SNOMED-CT",
+  "description": "Throat culture (procedure)",
+  "patients": 125,
+  "count": 132,
+  "reasons": [
+   {
+    "code": "43878008",
+    "description": "Streptococcal sore throat (disorder)",
+    "count": 80
+   },
+   {
+    "code": "195662009",
+    "description": "Acute viral pharyngitis (disorder)",
+    "count": 52
+   }
+  ]
+ },
+ {
+  "code": "D1110",
+  "system": "CDT",
+  "description": "prophylaxis - adult",
+  "patients": 123,
+  "count": 161,
+  "reasons": []
+ },
+ {
+  "code": "288086009",
+  "system": "SNOMED-CT",
+  "description": "Suture open wound (procedure)",
+  "patients": 121,
+  "count": 135,
+  "reasons": [
+   {
+    "code": "284551006",
+    "description": "Laceration of foot (disorder)",
+    "count": 32
+   },
+   {
+    "code": "284549007",
+    "description": "Laceration of hand (disorder)",
+    "count": 28
+   },
+   {
+    "code": "370247008",
+    "description": "Facial laceration (disorder)",
+    "count": 27
+   },
+   {
+    "code": "283385000",
+    "description": "Laceration of thigh (disorder)",
+    "count": 24
+   },
+   {
+    "code": "283371005",
+    "description": "Laceration of forearm (disorder)",
+    "count": 24
+   }
+  ]
+ },
+ {
+  "code": "305428000",
+  "system": "SNOMED-CT",
+  "description": "Admission to orthopedic department (procedure)",
+  "patients": 119,
+  "count": 123,
+  "reasons": [
+   {
+    "code": "359817006",
+    "description": "Closed fracture of hip (disorder)",
+    "count": 65
+   },
+   {
+    "code": "58150001",
+    "description": "Fracture of clavicle (disorder)",
+    "count": 58
+   }
+  ]
+ },
+ {
+  "code": "D7288",
+  "system": "CDT",
+  "description": "brush biopsy - transepithelial sample collection",
+  "patients": 118,
+  "count": 228,
+  "reasons": []
+ },
+ {
+  "code": "D4341",
+  "system": "CDT",
+  "description": "periodontal scaling and root planing - four or more teeth per quadrant",
+  "patients": 117,
+  "count": 172,
+  "reasons": []
+ },
+ {
+  "code": "700070005",
+  "system": "SNOMED-CT",
+  "description": "Optical coherence tomography of retina (procedure)",
+  "patients": 116,
+  "count": 3313,
+  "reasons": []
+ },
+ {
+  "code": "D1704",
+  "system": "CDT",
+  "description": "Moderna Covid-19 vaccine administration - second dose",
+  "patients": 115,
+  "count": 128,
+  "reasons": []
+ },
+ {
+  "code": "D7270",
+  "system": "CDT",
+  "description": "tooth re-implantation and/or stabilization of accidentally evulsed or displaced tooth",
+  "patients": 113,
+  "count": 220,
+  "reasons": []
+ },
+ {
+  "code": "265764009",
+  "system": "SNOMED-CT",
+  "description": "Renal dialysis (procedure)",
+  "patients": 113,
+  "count": 26791,
+  "reasons": [
+   {
+    "code": "431857002",
+    "description": "Chronic kidney disease stage 4 (disorder)",
+    "count": 22776
+   },
+   {
+    "code": "46177005",
+    "description": "End-stage renal disease (disorder)",
+    "count": 2866
+   }
+  ]
+ },
+ {
+  "code": "D9223",
+  "system": "CDT",
+  "description": "deep sedation/general anesthesia - each subsequent 15 minute increment",
+  "patients": 112,
+  "count": 155,
+  "reasons": []
+ },
+ {
+  "code": "D7310",
+  "system": "CDT",
+  "description": "alveoloplasty in conjunction with extractions - four or more teeth or tooth spaces  per quadrant",
+  "patients": 110,
+  "count": 164,
+  "reasons": []
+ },
+ {
+  "code": "33367005",
+  "system": "SNOMED-CT",
+  "description": "Angiography of coronary artery (procedure)",
+  "patients": 108,
+  "count": 120,
+  "reasons": [
+   {
+    "code": "414545008",
+    "description": "Ischemic heart disease (disorder)",
+    "count": 75
+   },
+   {
+    "code": "401314000",
+    "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "D0230",
+  "system": "CDT",
+  "description": "intraoral - periapical each additional radiographic image",
+  "patients": 107,
+  "count": 140,
+  "reasons": []
+ },
+ {
+  "code": "D0220",
+  "system": "CDT",
+  "description": "intraoral - periapical first radiographic image",
+  "patients": 104,
+  "count": 138,
+  "reasons": []
+ },
+ {
+  "code": "D0150",
+  "system": "CDT",
+  "description": "comprehensive oral evaluation - new or established patient",
+  "patients": 102,
+  "count": 114,
+  "reasons": []
+ },
+ {
+  "code": "D7285",
+  "system": "CDT",
+  "description": "incisional biopsy of oral tissue-hard (bone  tooth)",
+  "patients": 98,
+  "count": 164,
+  "reasons": []
+ },
+ {
+  "code": "103750000",
+  "system": "SNOMED-CT",
+  "description": "Sleep apnea assessment (procedure)",
+  "patients": 97,
+  "count": 3094,
+  "reasons": [
+   {
+    "code": "39898005",
+    "description": "Sleep disorder (disorder)",
+    "count": 3094
+   }
+  ]
+ },
+ {
+  "code": "D1206",
+  "system": "CDT",
+  "description": "topical application of fluoride varnish",
+  "patients": 93,
+  "count": 112,
+  "reasons": []
+ },
+ {
+  "code": "306316000",
+  "system": "SNOMED-CT",
+  "description": "Referral to transplant surgeon (procedure)",
+  "patients": 93,
+  "count": 94,
+  "reasons": [
+   {
+    "code": "698306007",
+    "description": "Awaiting transplantation of kidney (situation)",
+    "count": 91
+   },
+   {
+    "code": "698303004",
+    "description": "Awaiting transplantation of bone marrow (situation)",
+    "count": 3
+   }
+  ]
+ },
+ {
+  "code": "261352009",
+  "system": "SNOMED-CT",
+  "description": "Face mask (physical object)",
+  "patients": 91,
+  "count": 91,
+  "reasons": [
+   {
+    "code": "840544004",
+    "description": "Suspected disease caused by Severe acute respiratory coronavirus 2 (situation)",
+    "count": 91
+   }
+  ]
+ },
+ {
+  "code": "D9230",
+  "system": "CDT",
+  "description": "inhalation of nitrous oxide/analgesia  anxiolysis",
+  "patients": 88,
+  "count": 101,
+  "reasons": []
+ },
+ {
+  "code": "D0502",
+  "system": "CDT",
+  "description": "other oral pathology procedures  by report",
+  "patients": 87,
+  "count": 93,
+  "reasons": []
+ },
+ {
+  "code": "698314001",
+  "system": "SNOMED-CT",
+  "description": "Consultation for treatment (procedure)",
+  "patients": 84,
+  "count": 89,
+  "reasons": [
+   {
+    "code": "414545008",
+    "description": "Ischemic heart disease (disorder)",
+    "count": 75
+   },
+   {
+    "code": "401314000",
+    "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "269911007",
+  "system": "SNOMED-CT",
+  "description": "Sputum examination (procedure)",
+  "patients": 83,
+  "count": 85,
+  "reasons": [
+   {
+    "code": "10509002",
+    "description": "Acute bronchitis (disorder)",
+    "count": 85
+   }
+  ]
+ },
+ {
+  "code": "29303009",
+  "system": "SNOMED-CT",
+  "description": "Electrocardiographic procedure (procedure)",
+  "patients": 81,
+  "count": 201,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "count": 9
+   }
+  ]
+ },
+ {
+  "code": "52052004",
+  "system": "SNOMED-CT",
+  "description": "Rehabilitation therapy (regime/therapy)",
+  "patients": 81,
+  "count": 2189,
+  "reasons": [
+   {
+    "code": "6525002",
+    "description": "Dependent drug abuse (disorder)",
+    "count": 2189
+   }
+  ]
+ },
+ {
+  "code": "D2391",
+  "system": "CDT",
+  "description": "resin-based composite - one surface  posterior",
+  "patients": 81,
+  "count": 110,
+  "reasons": []
+ },
+ {
+  "code": "D2330",
+  "system": "CDT",
+  "description": "resin-based composite - one surface  anterior",
+  "patients": 78,
+  "count": 101,
+  "reasons": []
+ },
+ {
+  "code": "183519002",
+  "system": "SNOMED-CT",
+  "description": "Referral to cardiology service (procedure)",
+  "patients": 77,
+  "count": 121,
+  "reasons": [
+   {
+    "code": "414545008",
+    "description": "Ischemic heart disease (disorder)",
+    "count": 76
+   },
+   {
+    "code": "274531002",
+    "description": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)",
+    "count": 43
+   },
+   {
+    "code": "401314000",
+    "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "711069006",
+  "system": "SNOMED-CT",
+  "description": "Coordination of care plan (procedure)",
+  "patients": 77,
+  "count": 82,
+  "reasons": [
+   {
+    "code": "60573004",
+    "description": "Aortic valve stenosis (disorder)",
+    "count": 16
+   },
+   {
+    "code": "60234000",
+    "description": "Aortic valve regurgitation (disorder)",
+    "count": 3
+   },
+   {
+    "code": "86406008",
+    "description": "Human immunodeficiency virus infection (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "D0803",
+  "system": "CDT",
+  "description": "3D facial surface scan - direct",
+  "patients": 77,
+  "count": 81,
+  "reasons": []
+ },
+ {
+  "code": "736169004",
+  "system": "SNOMED-CT",
+  "description": "Post anesthesia care management (procedure)",
+  "patients": 76,
+  "count": 77,
+  "reasons": [
+   {
+    "code": "274531002",
+    "description": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)",
+    "count": 77
+   }
+  ]
+ },
+ {
+  "code": "D9222",
+  "system": "CDT",
+  "description": "deep sedation/general anesthesia - first 15 minutes",
+  "patients": 75,
+  "count": 89,
+  "reasons": []
+ },
+ {
+  "code": "711446003",
+  "system": "SNOMED-CT",
+  "description": "Transplantation of kidney regime (regime/therapy)",
+  "patients": 71,
+  "count": 704,
+  "reasons": [
+   {
+    "code": "161665007",
+    "description": "History of renal transplant (situation)",
+    "count": 704
+   }
+  ]
+ },
+ {
+  "code": "473231009",
+  "system": "SNOMED-CT",
+  "description": "Renal disorder medication review (procedure)",
+  "patients": 71,
+  "count": 341,
+  "reasons": [
+   {
+    "code": "161665007",
+    "description": "History of renal transplant (situation)",
+    "count": 341
+   }
+  ]
+ },
+ {
+  "code": "D7250",
+  "system": "CDT",
+  "description": "removal of residual tooth roots (cutting procedure)",
+  "patients": 69,
+  "count": 91,
+  "reasons": []
+ },
+ {
+  "code": "428830000",
+  "system": "SNOMED-CT",
+  "description": "Pretransplant evaluation of kidney recipient (procedure)",
+  "patients": 68,
+  "count": 68,
+  "reasons": [
+   {
+    "code": "698306007",
+    "description": "Awaiting transplantation of kidney (situation)",
+    "count": 68
+   }
+  ]
+ },
+ {
+  "code": "70536003",
+  "system": "SNOMED-CT",
+  "description": "Transplant of kidney (procedure)",
+  "patients": 68,
+  "count": 68,
+  "reasons": [
+   {
+    "code": "698306007",
+    "description": "Awaiting transplantation of kidney (situation)",
+    "count": 68
+   }
+  ]
+ },
+ {
+  "code": "D2392",
+  "system": "CDT",
+  "description": "resin-based composite - two surfaces  posterior",
+  "patients": 66,
+  "count": 86,
+  "reasons": []
+ },
+ {
+  "code": "713021002",
+  "system": "SNOMED-CT",
+  "description": "Plain X-ray of pelvis (procedure)",
+  "patients": 65,
+  "count": 65,
+  "reasons": []
+ },
+ {
+  "code": "D0701",
+  "system": "CDT",
+  "description": "panoramic radiographic image - image capture only",
+  "patients": 64,
+  "count": 67,
+  "reasons": []
+ },
+ {
+  "code": "D2150",
+  "system": "CDT",
+  "description": "amalgam - two surfaces  primary or permanent",
+  "patients": 62,
+  "count": 82,
+  "reasons": []
+ },
+ {
+  "code": "D6010",
+  "system": "CDT",
+  "description": "surgical placement of implant body: endosteal implant",
+  "patients": 61,
+  "count": 104,
+  "reasons": []
+ },
+ {
+  "code": "D4910",
+  "system": "CDT",
+  "description": "periodontal maintenance",
+  "patients": 61,
+  "count": 69,
+  "reasons": []
+ },
+ {
+  "code": "84100007",
+  "system": "SNOMED-CT",
+  "description": "History taking (procedure)",
+  "patients": 60,
+  "count": 70,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "count": 9
+   }
+  ]
+ },
+ {
+  "code": "415070008",
+  "system": "SNOMED-CT",
+  "description": "Percutaneous coronary intervention",
+  "patients": 59,
+  "count": 65,
+  "reasons": [
+   {
+    "code": "274531002",
+    "description": "Abnormal findings diagnostic imaging heart+coronary circulat (finding)",
+    "count": 42
+   },
+   {
+    "code": "401303003",
+    "description": "Acute ST segment elevation myocardial infarction (disorder)",
+    "count": 11
+   },
+   {
+    "code": "401314000",
+    "description": "Acute non-ST segment elevation myocardial infarction (disorder)",
+    "count": 10
+   },
+   {
+    "code": "4557003",
+    "description": "Preinfarction syndrome (disorder)",
+    "count": 2
+   }
+  ]
+ },
+ {
+  "code": "274031008",
+  "system": "SNOMED-CT",
+  "description": "Rectal polypectomy (procedure)",
+  "patients": 59,
+  "count": 72,
+  "reasons": [
+   {
+    "code": "68496003",
+    "description": "Polyp of colon (disorder)",
+    "count": 57
+   },
+   {
+    "code": "713197008",
+    "description": "Recurrent rectal polyp (disorder)",
+    "count": 15
+   }
+  ]
+ },
+ {
+  "code": "25656009",
+  "system": "SNOMED-CT",
+  "description": "Physical examination  complete (procedure)",
+  "patients": 59,
+  "count": 587,
+  "reasons": [
+   {
+    "code": "254837009",
+    "description": "Malignant neoplasm of breast (disorder)",
+    "count": 587
+   }
+  ]
+ },
+ {
+  "code": "D9243",
+  "system": "CDT",
+  "description": "intravenous moderate (conscious) sedation/analgesia - each subsequent 15 minute increment",
+  "patients": 59,
+  "count": 67,
+  "reasons": []
+ },
+ {
+  "code": "417511005",
+  "system": "SNOMED-CT",
+  "description": "Referral to home health care service (procedure)",
+  "patients": 58,
+  "count": 61,
+  "reasons": []
+ },
+ {
+  "code": "200619008",
+  "system": "SNOMED-CT",
+  "description": "Comprehensive interview and evaluation (procedure)",
+  "patients": 58,
+  "count": 61,
+  "reasons": []
+ },
+ {
+  "code": "D7251",
+  "system": "CDT",
+  "description": "coronectomy - intentional partial tooth removal  impacted teeth only",
+  "patients": 58,
+  "count": 76,
+  "reasons": []
+ },
+ {
+  "code": "433236007",
+  "system": "SNOMED-CT",
+  "description": "Transthoracic echocardiography (procedure)",
+  "patients": 57,
+  "count": 86,
+  "reasons": []
+ },
+ {
+  "code": "104435004",
+  "system": "SNOMED-CT",
+  "description": "Screening for occult blood in feces (procedure)",
+  "patients": 56,
+  "count": 57,
+  "reasons": [
+   {
+    "code": "68496003",
+    "description": "Polyp of colon (disorder)",
+    "count": 57
+   }
+  ]
+ },
+ {
+  "code": "1290459008",
+  "system": "SNOMED-CT",
+  "description": "Plain X-ray of ankle region (procedure)",
+  "patients": 56,
+  "count": 57,
+  "reasons": []
+ },
+ {
+  "code": "D1702",
+  "system": "CDT",
+  "description": "Pfizer-BioNTech Covid-19 vaccine administration - second dose",
+  "patients": 56,
+  "count": 59,
+  "reasons": []
+ },
+ {
+  "code": "D1703",
+  "system": "CDT",
+  "description": "Moderna Covid-19 vaccine administration - first dose",
+  "patients": 56,
+  "count": 61,
+  "reasons": []
+ },
+ {
+  "code": "D0274",
+  "system": "CDT",
+  "description": "bitewings - four radiographic images",
+  "patients": 55,
+  "count": 67,
+  "reasons": []
+ },
+ {
+  "code": "D7311",
+  "system": "CDT",
+  "description": "alveoloplasty in conjunction with extractions - one to three teeth or tooth spaces  per quadrant",
+  "patients": 55,
+  "count": 85,
+  "reasons": []
+ },
+ {
+  "code": "71651007",
+  "system": "SNOMED-CT",
+  "description": "Mammography (procedure)",
+  "patients": 55,
+  "count": 548,
+  "reasons": [
+   {
+    "code": "254837009",
+    "description": "Malignant neoplasm of breast (disorder)",
+    "count": 548
+   }
+  ]
+ },
+ {
+  "code": "168594001",
+  "system": "SNOMED-CT",
+  "description": "Plain X-ray of clavicle (procedure)",
+  "patients": 55,
+  "count": 58,
+  "reasons": []
+ },
+ {
+  "code": "D7261",
+  "system": "CDT",
+  "description": "primary closure of a sinus perforation",
+  "patients": 53,
+  "count": 67,
+  "reasons": []
+ },
+ {
+  "code": "D2331",
+  "system": "CDT",
+  "description": "resin-based composite - two surfaces  anterior",
+  "patients": 53,
+  "count": 65,
+  "reasons": []
+ },
+ {
+  "code": "D7953",
+  "system": "CDT",
+  "description": "bone replacement graft for ridge preservation - per site",
+  "patients": 53,
+  "count": 57,
+  "reasons": []
+ },
+ {
+  "code": "D1208",
+  "system": "CDT",
+  "description": "topical application of fluoride  excluding varnish",
+  "patients": 52,
+  "count": 61,
+  "reasons": []
+ },
+ {
+  "code": "40701008",
+  "system": "SNOMED-CT",
+  "description": "Echocardiography (procedure)",
+  "patients": 52,
+  "count": 75,
+  "reasons": []
+ },
+ {
+  "code": "223470000",
+  "system": "SNOMED-CT",
+  "description": "Discussion about signs and symptoms (procedure)",
+  "patients": 51,
+  "count": 61,
+  "reasons": []
+ },
+ {
+  "code": "57617002",
+  "system": "SNOMED-CT",
+  "description": "Urine specimen collection (procedure)",
+  "patients": 51,
+  "count": 61,
+  "reasons": []
+ }
+]

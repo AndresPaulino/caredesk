@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Environment files (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Build output
+.next/
+out/
+dist/
+coverage/
+
+# OS and editor
+.DS_Store

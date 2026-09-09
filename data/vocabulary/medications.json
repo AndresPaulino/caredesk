@@ -1,0 +1,1891 @@
+[
+ {
+  "code": "705129",
+  "system": "RxNorm",
+  "description": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray",
+  "patients": 761,
+  "orders": 761,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "866412",
+  "system": "RxNorm",
+  "description": "24 HR metoprolol succinate 100 MG Extended Release Oral Tablet",
+  "patients": 490,
+  "orders": 490,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "313782",
+  "system": "RxNorm",
+  "description": "Acetaminophen 325 MG Oral Tablet",
+  "patients": 446,
+  "orders": 587,
+  "active_share": 0.0051,
+  "reasons": [
+   {
+    "code": "10509002",
+    "description": "Acute bronchitis (disorder)",
+    "orders": 339
+   }
+  ]
+ },
+ {
+  "code": "314076",
+  "system": "RxNorm",
+  "description": "lisinopril 10 MG Oral Tablet",
+  "patients": 410,
+  "orders": 20797,
+  "active_share": 0.0197,
+  "reasons": [
+   {
+    "code": "59621000",
+    "description": "Essential hypertension (disorder)",
+    "orders": 20780
+   }
+  ]
+ },
+ {
+  "code": "314231",
+  "system": "RxNorm",
+  "description": "Simvastatin 10 MG Oral Tablet",
+  "patients": 400,
+  "orders": 4476,
+  "active_share": 0.0894,
+  "reasons": [
+   {
+    "code": "55822004",
+    "description": "Hyperlipidemia (disorder)",
+    "orders": 4473
+   }
+  ]
+ },
+ {
+  "code": "312961",
+  "system": "RxNorm",
+  "description": "Simvastatin 20 MG Oral Tablet",
+  "patients": 351,
+  "orders": 351,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "849574",
+  "system": "RxNorm",
+  "description": "Naproxen sodium 220 MG Oral Tablet",
+  "patients": 339,
+  "orders": 370,
+  "active_share": 0.3,
+  "reasons": [
+   {
+    "code": "239873007",
+    "description": "Osteoarthritis of knee (disorder)",
+    "orders": 78
+   },
+   {
+    "code": "239872002",
+    "description": "Osteoarthritis of hip (disorder)",
+    "orders": 31
+   },
+   {
+    "code": "201834006",
+    "description": "Localized  primary osteoarthritis of the hand (disorder)",
+    "orders": 31
+   }
+  ]
+ },
+ {
+  "code": "309362",
+  "system": "RxNorm",
+  "description": "Clopidogrel 75 MG Oral Tablet",
+  "patients": 334,
+  "orders": 334,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "308136",
+  "system": "RxNorm",
+  "description": "amLODIPine 2.5 MG Oral Tablet",
+  "patients": 314,
+  "orders": 15854,
+  "active_share": 0.0198,
+  "reasons": [
+   {
+    "code": "59621000",
+    "description": "Essential hypertension (disorder)",
+    "orders": 15854
+   }
+  ]
+ },
+ {
+  "code": "310798",
+  "system": "RxNorm",
+  "description": "Hydrochlorothiazide 25 MG Oral Tablet",
+  "patients": 311,
+  "orders": 16781,
+  "active_share": 0.0185,
+  "reasons": [
+   {
+    "code": "59621000",
+    "description": "Essential hypertension (disorder)",
+    "orders": 16781
+   }
+  ]
+ },
+ {
+  "code": "106892",
+  "system": "RxNorm",
+  "description": "insulin isophane  human 70 UNT/ML / insulin  regular  human 30 UNT/ML Injectable Suspension [Humulin]",
+  "patients": 257,
+  "orders": 25917,
+  "active_share": 0.0099,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "orders": 15779
+   },
+   {
+    "code": "714628002",
+    "description": "Prediabetes (finding)",
+    "orders": 10138
+   }
+  ]
+ },
+ {
+  "code": "310965",
+  "system": "RxNorm",
+  "description": "Ibuprofen 200 MG Oral Tablet",
+  "patients": 249,
+  "orders": 287,
+  "active_share": 0.0174,
+  "reasons": []
+ },
+ {
+  "code": "904419",
+  "system": "RxNorm",
+  "description": "Alendronic acid 10 MG Oral Tablet",
+  "patients": 232,
+  "orders": 9456,
+  "active_share": 0.0245,
+  "reasons": [
+   {
+    "code": "64859006",
+    "description": "Osteoporosis (disorder)",
+    "orders": 9456
+   }
+  ]
+ },
+ {
+  "code": "562251",
+  "system": "RxNorm",
+  "description": "Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet",
+  "patients": 214,
+  "orders": 239,
+  "active_share": 0.0042,
+  "reasons": [
+   {
+    "code": "444814009",
+    "description": "Viral sinusitis (disorder)",
+    "orders": 214
+   },
+   {
+    "code": "36971009",
+    "description": "Sinusitis (disorder)",
+    "orders": 13
+   },
+   {
+    "code": "75498004",
+    "description": "Acute bacterial sinusitis (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "243670",
+  "system": "RxNorm",
+  "description": "aspirin 81 MG Oral Tablet",
+  "patients": 188,
+  "orders": 188,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1664463",
+  "system": "RxNorm",
+  "description": "24 HR tacrolimus 1 MG Extended Release Oral Tablet [Envarsus]",
+  "patients": 179,
+  "orders": 10062,
+  "active_share": 0.0171,
+  "reasons": [
+   {
+    "code": "161665007",
+    "description": "History of renal transplant (situation)",
+    "orders": 10062
+   }
+  ]
+ },
+ {
+  "code": "855812",
+  "system": "RxNorm",
+  "description": "prasugrel 10 MG Oral Tablet",
+  "patients": 164,
+  "orders": 168,
+  "active_share": 0.9405,
+  "reasons": []
+ },
+ {
+  "code": "313521",
+  "system": "RxNorm",
+  "description": "tropicamide 5 MG/ML Ophthalmic Solution",
+  "patients": 161,
+  "orders": 3842,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1043400",
+  "system": "RxNorm",
+  "description": "Acetaminophen 21.7 MG/ML / Dextromethorphan Hydrobromide 1 MG/ML / doxylamine succinate 0.417 MG/ML Oral Solution",
+  "patients": 151,
+  "orders": 158,
+  "active_share": 0.0063,
+  "reasons": [
+   {
+    "code": "10509002",
+    "description": "Acute bronchitis (disorder)",
+    "orders": 158
+   }
+  ]
+ },
+ {
+  "code": "855332",
+  "system": "RxNorm",
+  "description": "Warfarin Sodium 5 MG Oral Tablet",
+  "patients": 140,
+  "orders": 5319,
+  "active_share": 0.0263,
+  "reasons": [
+   {
+    "code": "49436004",
+    "description": "Atrial fibrillation (disorder)",
+    "orders": 5215
+   }
+  ]
+ },
+ {
+  "code": "197604",
+  "system": "RxNorm",
+  "description": "Digoxin 0.125 MG Oral Tablet",
+  "patients": 120,
+  "orders": 5215,
+  "active_share": 0.023,
+  "reasons": [
+   {
+    "code": "49436004",
+    "description": "Atrial fibrillation (disorder)",
+    "orders": 5215
+   }
+  ]
+ },
+ {
+  "code": "897685",
+  "system": "RxNorm",
+  "description": "verapamil hydrochloride 80 MG Oral Tablet [Calan]",
+  "patients": 110,
+  "orders": 5083,
+  "active_share": 0.0216,
+  "reasons": [
+   {
+    "code": "49436004",
+    "description": "Atrial fibrillation (disorder)",
+    "orders": 5083
+   }
+  ]
+ },
+ {
+  "code": "205923",
+  "system": "RxNorm",
+  "description": "1 ML Epoetin Alfa 4000 UNT/ML Injection [Epogen]",
+  "patients": 104,
+  "orders": 24293,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "271737000",
+    "description": "Anemia (disorder)",
+    "orders": 24293
+   }
+  ]
+ },
+ {
+  "code": "860975",
+  "system": "RxNorm",
+  "description": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+  "patients": 102,
+  "orders": 11205,
+  "active_share": 0.0091,
+  "reasons": [
+   {
+    "code": "44054006",
+    "description": "Diabetes mellitus type 2 (disorder)",
+    "orders": 11205
+   }
+  ]
+ },
+ {
+  "code": "856987",
+  "system": "RxNorm",
+  "description": "Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet",
+  "patients": 102,
+  "orders": 1796,
+  "active_share": 0.054,
+  "reasons": []
+ },
+ {
+  "code": "1049221",
+  "system": "RxNorm",
+  "description": "Acetaminophen 325 MG / oxyCODONE Hydrochloride 5 MG Oral Tablet",
+  "patients": 101,
+  "orders": 116,
+  "active_share": 0.0086,
+  "reasons": []
+ },
+ {
+  "code": "2001499",
+  "system": "RxNorm",
+  "description": "Vitamin B12 5 MG/ML Injectable Solution",
+  "patients": 95,
+  "orders": 95,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "861467",
+  "system": "RxNorm",
+  "description": "Meperidine Hydrochloride 50 MG Oral Tablet",
+  "patients": 93,
+  "orders": 99,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "310436",
+  "system": "RxNorm",
+  "description": "Galantamine 4 MG Oral Tablet",
+  "patients": 89,
+  "orders": 89,
+  "active_share": 0.4494,
+  "reasons": [
+   {
+    "code": "26929004",
+    "description": "Alzheimer's disease (disorder)",
+    "orders": 86
+   },
+   {
+    "code": "230265002",
+    "description": "Familial Alzheimer's disease of early onset (disorder)",
+    "orders": 3
+   }
+  ]
+ },
+ {
+  "code": "310325",
+  "system": "RxNorm",
+  "description": "ferrous sulfate 325 MG Oral Tablet",
+  "patients": 80,
+  "orders": 80,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "834102",
+  "system": "RxNorm",
+  "description": "Penicillin V Potassium 500 MG Oral Tablet",
+  "patients": 77,
+  "orders": 80,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "43878008",
+    "description": "Streptococcal sore throat (disorder)",
+    "orders": 80
+   }
+  ]
+ },
+ {
+  "code": "857005",
+  "system": "RxNorm",
+  "description": "Acetaminophen 325 MG / HYDROcodone Bitartrate 7.5 MG Oral Tablet",
+  "patients": 75,
+  "orders": 77,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "108515",
+  "system": "RxNorm",
+  "description": "1 ML tacrolimus 5 MG/ML Injection [Prograf]",
+  "patients": 71,
+  "orders": 772,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "161665007",
+    "description": "History of renal transplant (situation)",
+    "orders": 704
+   },
+   {
+    "code": "698306007",
+    "description": "Awaiting transplantation of kidney (situation)",
+    "orders": 68
+   }
+  ]
+ },
+ {
+  "code": "1804799",
+  "system": "RxNorm",
+  "description": "Alteplase 100 MG Injection",
+  "patients": 70,
+  "orders": 70,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "209387",
+  "system": "RxNorm",
+  "description": "Acetaminophen 325 MG Oral Tablet [Tylenol]",
+  "patients": 66,
+  "orders": 2761,
+  "active_share": 0.0239,
+  "reasons": []
+ },
+ {
+  "code": "2563431",
+  "system": "RxNorm",
+  "description": "aspirin 81 MG Oral Capsule [Vazalore]",
+  "patients": 64,
+  "orders": 2797,
+  "active_share": 0.0229,
+  "reasons": []
+ },
+ {
+  "code": "1191013",
+  "system": "RxNorm",
+  "description": "proparacaine hydrochloride 5 MG/ML Ophthalmic Solution",
+  "patients": 58,
+  "orders": 2242,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1599803",
+  "system": "RxNorm",
+  "description": "24 HR Donepezil hydrochloride 10 MG / Memantine hydrochloride 28 MG Extended Release Oral Capsule",
+  "patients": 57,
+  "orders": 57,
+  "active_share": 1.0,
+  "reasons": [
+   {
+    "code": "26929004",
+    "description": "Alzheimer's disease (disorder)",
+    "orders": 55
+   },
+   {
+    "code": "230265002",
+    "description": "Familial Alzheimer's disease of early onset (disorder)",
+    "orders": 2
+   }
+  ]
+ },
+ {
+  "code": "206905",
+  "system": "RxNorm",
+  "description": "Ibuprofen 400 MG Oral Tablet [Ibu]",
+  "patients": 57,
+  "orders": 2240,
+  "active_share": 0.0254,
+  "reasons": []
+ },
+ {
+  "code": "1049625",
+  "system": "RxNorm",
+  "description": "Acetaminophen 325 MG / Oxycodone Hydrochloride 10 MG Oral Tablet [Percocet]",
+  "patients": 51,
+  "orders": 1615,
+  "active_share": 0.0316,
+  "reasons": []
+ },
+ {
+  "code": "866924",
+  "system": "RxNorm",
+  "description": "metoprolol tartrate 25 MG Oral Tablet",
+  "patients": 48,
+  "orders": 48,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1665060",
+  "system": "RxNorm",
+  "description": "cefazolin 2000 MG Injection",
+  "patients": 48,
+  "orders": 49,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1657066",
+  "system": "RxNorm",
+  "description": "4 ML bevacizumab 25 MG/ML Injection",
+  "patients": 48,
+  "orders": 2091,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "308182",
+  "system": "RxNorm",
+  "description": "Amoxicillin 250 MG Oral Capsule",
+  "patients": 41,
+  "orders": 41,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "617311",
+  "system": "RxNorm",
+  "description": "atorvastatin 40 MG Oral Tablet",
+  "patients": 38,
+  "orders": 38,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1740467",
+  "system": "RxNorm",
+  "description": "2 ML Ondansetron 2 MG/ML Injection",
+  "patients": 36,
+  "orders": 38,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1808217",
+  "system": "RxNorm",
+  "description": "100 ML Propofol 10 MG/ML Injection",
+  "patients": 36,
+  "orders": 36,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1234995",
+  "system": "RxNorm",
+  "description": "Rocuronium bromide 10 MG/ML Injectable Solution",
+  "patients": 36,
+  "orders": 36,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "866436",
+  "system": "RxNorm",
+  "description": "24 HR metoprolol succinate 50 MG Extended Release Oral Tablet",
+  "patients": 35,
+  "orders": 35,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1049504",
+  "system": "RxNorm",
+  "description": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 10 MG Extended Release Oral Tablet [Oxycontin]",
+  "patients": 35,
+  "orders": 1058,
+  "active_share": 0.0331,
+  "reasons": []
+ },
+ {
+  "code": "1796676",
+  "system": "RxNorm",
+  "description": "25 ML protamine sulfate (USP) 10 MG/ML Injection",
+  "patients": 34,
+  "orders": 34,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "311700",
+  "system": "RxNorm",
+  "description": "Midazolam 1 MG/ML Injectable Solution",
+  "patients": 34,
+  "orders": 34,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "245134",
+  "system": "RxNorm",
+  "description": "72 HR Fentanyl 0.025 MG/HR Transdermal System",
+  "patients": 33,
+  "orders": 1984,
+  "active_share": 0.0166,
+  "reasons": []
+ },
+ {
+  "code": "1659263",
+  "system": "RxNorm",
+  "description": "1 ML heparin sodium  porcine 5000 UNT/ML Injection",
+  "patients": 33,
+  "orders": 33,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "866427",
+  "system": "RxNorm",
+  "description": "24 HR metoprolol succinate 25 MG Extended Release Oral Tablet",
+  "patients": 32,
+  "orders": 32,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "896209",
+  "system": "RxNorm",
+  "description": "60 ACTUAT Fluticasone propionate 0.25 MG/ACTUAT / salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler",
+  "patients": 31,
+  "orders": 380,
+  "active_share": 0.0816,
+  "reasons": [
+   {
+    "code": "185086009",
+    "description": "Chronic obstructive bronchitis (disorder)",
+    "orders": 232
+   },
+   {
+    "code": "87433001",
+    "description": "Pulmonary emphysema (disorder)",
+    "orders": 148
+   }
+  ]
+ },
+ {
+  "code": "245314",
+  "system": "RxNorm",
+  "description": "albuterol 5 MG/ML Inhalation Solution",
+  "patients": 31,
+  "orders": 380,
+  "active_share": 0.0816,
+  "reasons": [
+   {
+    "code": "185086009",
+    "description": "Chronic obstructive bronchitis (disorder)",
+    "orders": 232
+   },
+   {
+    "code": "87433001",
+    "description": "Pulmonary emphysema (disorder)",
+    "orders": 148
+   }
+  ]
+ },
+ {
+  "code": "309309",
+  "system": "RxNorm",
+  "description": "ciprofloxacin 500 MG Oral Tablet",
+  "patients": 30,
+  "orders": 33,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "307426000",
+    "description": "Acute infective cystitis (disorder)",
+    "orders": 33
+   }
+  ]
+ },
+ {
+  "code": "617312",
+  "system": "RxNorm",
+  "description": "atorvastatin 10 MG Oral Tablet",
+  "patients": 30,
+  "orders": 30,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "617310",
+  "system": "RxNorm",
+  "description": "atorvastatin 20 MG Oral Tablet",
+  "patients": 29,
+  "orders": 29,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "106258",
+  "system": "RxNorm",
+  "description": "Hydrocortisone 10 MG/ML Topical Cream",
+  "patients": 29,
+  "orders": 29,
+  "active_share": 0.9655,
+  "reasons": [
+   {
+    "code": "40275004",
+    "description": "Contact dermatitis (disorder)",
+    "orders": 28
+   },
+   {
+    "code": "24079001",
+    "description": "Atopic dermatitis (disorder)",
+    "orders": 1
+   }
+  ]
+ },
+ {
+  "code": "212033",
+  "system": "RxNorm",
+  "description": "aspirin 325 MG Oral Tablet",
+  "patients": 26,
+  "orders": 26,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "835603",
+  "system": "RxNorm",
+  "description": "tramadol hydrochloride 50 MG Oral Tablet",
+  "patients": 26,
+  "orders": 1097,
+  "active_share": 0.0237,
+  "reasons": []
+ },
+ {
+  "code": "198031",
+  "system": "RxNorm",
+  "description": "24 HR nicotine 0.292 MG/HR Transdermal System",
+  "patients": 26,
+  "orders": 26,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "542347",
+  "system": "RxNorm",
+  "description": "isoflurane 999 MG/ML Inhalation Solution",
+  "patients": 26,
+  "orders": 26,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "198039",
+  "system": "RxNorm",
+  "description": "nitroglycerin 0.4 MG Sublingual Tablet",
+  "patients": 25,
+  "orders": 25,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1860491",
+  "system": "RxNorm",
+  "description": "12 HR Hydrocodone Bitartrate 10 MG Extended Release Oral Capsule",
+  "patients": 25,
+  "orders": 1249,
+  "active_share": 0.02,
+  "reasons": []
+ },
+ {
+  "code": "314077",
+  "system": "RxNorm",
+  "description": "lisinopril 20 MG Oral Tablet",
+  "patients": 25,
+  "orders": 36,
+  "active_share": 0.6944,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "orders": 14
+   }
+  ]
+ },
+ {
+  "code": "259255",
+  "system": "RxNorm",
+  "description": "atorvastatin 80 MG Oral Tablet",
+  "patients": 22,
+  "orders": 22,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "198014",
+  "system": "RxNorm",
+  "description": "Naproxen 500 MG Oral Tablet",
+  "patients": 22,
+  "orders": 23,
+  "active_share": 0.6087,
+  "reasons": [
+   {
+    "code": "95417003",
+    "description": "Primary fibromyalgia syndrome (disorder)",
+    "orders": 9
+   },
+   {
+    "code": "90560007",
+    "description": "Gout",
+    "orders": 9
+   },
+   {
+    "code": "69896004",
+    "description": "Rheumatoid arthritis (disorder)",
+    "orders": 5
+   }
+  ]
+ },
+ {
+  "code": "1431987",
+  "system": "RxNorm",
+  "description": "24 HR tacrolimus 5 MG Extended Release Oral Capsule [Astagraf]",
+  "patients": 22,
+  "orders": 1121,
+  "active_share": 0.0196,
+  "reasons": [
+   {
+    "code": "161665007",
+    "description": "History of renal transplant (situation)",
+    "orders": 1121
+   }
+  ]
+ },
+ {
+  "code": "966222",
+  "system": "RxNorm",
+  "description": "Levothyroxine Sodium 0.075 MG Oral Tablet",
+  "patients": 20,
+  "orders": 20,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "311354",
+  "system": "RxNorm",
+  "description": "lisinopril 5 MG Oral Tablet",
+  "patients": 20,
+  "orders": 20,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1361226",
+  "system": "RxNorm",
+  "description": "heparin sodium  porcine 1000 UNT/ML Injectable Solution",
+  "patients": 18,
+  "orders": 18,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1728805",
+  "system": "RxNorm",
+  "description": "2 ML morphine sulfate 1 MG/ML Injection",
+  "patients": 18,
+  "orders": 18,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "312938",
+  "system": "RxNorm",
+  "description": "Sertraline 100 MG Oral Tablet",
+  "patients": 18,
+  "orders": 18,
+  "active_share": 1.0,
+  "reasons": [
+   {
+    "code": "47505003",
+    "description": "Posttraumatic stress disorder (disorder)",
+    "orders": 18
+   }
+  ]
+ },
+ {
+  "code": "1361048",
+  "system": "RxNorm",
+  "description": "heparin sodium  porcine 100 UNT/ML Injectable Solution",
+  "patients": 17,
+  "orders": 17,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "979480",
+  "system": "RxNorm",
+  "description": "losartan potassium 100 MG Oral Tablet",
+  "patients": 17,
+  "orders": 17,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "859747",
+  "system": "RxNorm",
+  "description": "rosuvastatin calcium 10 MG Oral Tablet",
+  "patients": 16,
+  "orders": 16,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "993770",
+  "system": "RxNorm",
+  "description": "Acetaminophen 300 MG / Codeine Phosphate 15 MG Oral Tablet",
+  "patients": 15,
+  "orders": 550,
+  "active_share": 0.0273,
+  "reasons": []
+ },
+ {
+  "code": "197380",
+  "system": "RxNorm",
+  "description": "atenolol 25 MG Oral Tablet",
+  "patients": 15,
+  "orders": 15,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "198211",
+  "system": "RxNorm",
+  "description": "simvastatin 40 MG Oral Tablet",
+  "patients": 15,
+  "orders": 15,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "904475",
+  "system": "RxNorm",
+  "description": "pravastatin sodium 40 MG Oral Tablet",
+  "patients": 15,
+  "orders": 15,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "856980",
+  "system": "RxNorm",
+  "description": "acetaminophen 300 MG / hydrocodone bitartrate 10 MG Oral Tablet",
+  "patients": 14,
+  "orders": 14,
+  "active_share": 1.0,
+  "reasons": [
+   {
+    "code": "47505003",
+    "description": "Posttraumatic stress disorder (disorder)",
+    "orders": 14
+   }
+  ]
+ },
+ {
+  "code": "1116635",
+  "system": "RxNorm",
+  "description": "ticagrelor 90 MG Oral Tablet",
+  "patients": 13,
+  "orders": 13,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "197884",
+  "system": "RxNorm",
+  "description": "lisinopril 40 MG Oral Tablet",
+  "patients": 13,
+  "orders": 13,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "197319",
+  "system": "RxNorm",
+  "description": "Allopurinol 100 MG Oral Tablet",
+  "patients": 13,
+  "orders": 17,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "90560007",
+    "description": "Gout",
+    "orders": 17
+   }
+  ]
+ },
+ {
+  "code": "1049630",
+  "system": "RxNorm",
+  "description": "diphenhydrAMINE Hydrochloride 25 MG Oral Tablet",
+  "patients": 12,
+  "orders": 12,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "979492",
+  "system": "RxNorm",
+  "description": "losartan potassium 50 MG Oral Tablet",
+  "patients": 12,
+  "orders": 23,
+  "active_share": 0.5217,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "orders": 14
+   }
+  ]
+ },
+ {
+  "code": "630208",
+  "system": "RxNorm",
+  "description": "albuterol 0.83 MG/ML Inhalation Solution",
+  "patients": 11,
+  "orders": 340,
+  "active_share": 0.0324,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 340
+   }
+  ]
+ },
+ {
+  "code": "1729584",
+  "system": "RxNorm",
+  "description": "remifentanil 2 MG Injection",
+  "patients": 11,
+  "orders": 11,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "979485",
+  "system": "RxNorm",
+  "description": "losartan potassium 25 MG Oral Tablet",
+  "patients": 11,
+  "orders": 54,
+  "active_share": 0.2037,
+  "reasons": [
+   {
+    "code": "59621000",
+    "description": "Essential hypertension (disorder)",
+    "orders": 46
+   }
+  ]
+ },
+ {
+  "code": "200033",
+  "system": "RxNorm",
+  "description": "carvedilol 25 MG Oral Tablet",
+  "patients": 10,
+  "orders": 23,
+  "active_share": 0.4348,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "orders": 16
+   }
+  ]
+ },
+ {
+  "code": "198335",
+  "system": "RxNorm",
+  "description": "sulfamethoxazole 800 MG / trimethoprim 160 MG Oral Tablet",
+  "patients": 10,
+  "orders": 12,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "307426000",
+    "description": "Acute infective cystitis (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "197454",
+  "system": "RxNorm",
+  "description": "cephalexin 500 MG Oral Tablet",
+  "patients": 10,
+  "orders": 10,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "307426000",
+    "description": "Acute infective cystitis (disorder)",
+    "orders": 10
+   }
+  ]
+ },
+ {
+  "code": "895996",
+  "system": "RxNorm",
+  "description": "120 ACTUAT fluticasone propionate 0.044 MG/ACTUAT Metered Dose Inhaler [Flovent]",
+  "patients": 10,
+  "orders": 392,
+  "active_share": 0.0255,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 392
+   }
+  ]
+ },
+ {
+  "code": "1809104",
+  "system": "RxNorm",
+  "description": "5 ML SUFentanil 0.05 MG/ML Injection",
+  "patients": 10,
+  "orders": 10,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "309097",
+  "system": "RxNorm",
+  "description": "Cefuroxime 250 MG Oral Tablet",
+  "patients": 10,
+  "orders": 10,
+  "active_share": 0.1,
+  "reasons": []
+ },
+ {
+  "code": "979471",
+  "system": "RxNorm",
+  "description": "hydrochlorothiazide 25 MG / losartan potassium 100 MG Oral Tablet",
+  "patients": 10,
+  "orders": 10,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "854235",
+  "system": "RxNorm",
+  "description": "0.4 ML Enoxaparin sodium 100 MG/ML Prefilled Syringe",
+  "patients": 10,
+  "orders": 99,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "198440",
+  "system": "RxNorm",
+  "description": "Acetaminophen 500 MG Oral Tablet",
+  "patients": 10,
+  "orders": 140,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "197381",
+  "system": "RxNorm",
+  "description": "atenolol 50 MG Oral Tablet",
+  "patients": 9,
+  "orders": 9,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "866514",
+  "system": "RxNorm",
+  "description": "metoprolol tartrate 50 MG Oral Tablet",
+  "patients": 9,
+  "orders": 9,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "854252",
+  "system": "RxNorm",
+  "description": "1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe",
+  "patients": 9,
+  "orders": 41,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "132281000119108",
+    "description": "Acute deep venous thrombosis (disorder)",
+    "orders": 29
+   },
+   {
+    "code": "706870000",
+    "description": "Acute pulmonary embolism (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "1803932",
+  "system": "RxNorm",
+  "description": "Leucovorin 100 MG Injection",
+  "patients": 8,
+  "orders": 38,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "363406005",
+    "description": "Malignant neoplasm of colon (disorder)",
+    "orders": 26
+   },
+   {
+    "code": "109838007",
+    "description": "Overlapping malignant neoplasm of colon (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "1736776",
+  "system": "RxNorm",
+  "description": "10 ML oxaliplatin 5 MG/ML Injection",
+  "patients": 8,
+  "orders": 38,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "363406005",
+    "description": "Malignant neoplasm of colon (disorder)",
+    "orders": 26
+   },
+   {
+    "code": "109838007",
+    "description": "Overlapping malignant neoplasm of colon (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "197886",
+  "system": "RxNorm",
+  "description": "hydrochlorothiazide 12.5 MG / lisinopril 20 MG Oral Tablet",
+  "patients": 8,
+  "orders": 8,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1735006",
+  "system": "RxNorm",
+  "description": "10 ML Fentanyl 0.05 MG/ML Injection",
+  "patients": 8,
+  "orders": 8,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "749196",
+  "system": "RxNorm",
+  "description": "clopidogrel 300 MG Oral Tablet",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1997015",
+  "system": "RxNorm",
+  "description": "50 ML bivalirudin 5 MG/ML Injection",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "483438",
+  "system": "RxNorm",
+  "description": "pregabalin 100 MG Oral Capsule",
+  "patients": 7,
+  "orders": 9,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "95417003",
+    "description": "Primary fibromyalgia syndrome (disorder)",
+    "orders": 9
+   }
+  ]
+ },
+ {
+  "code": "311034",
+  "system": "RxNorm",
+  "description": "insulin  regular  human 100 UNT/ML Injectable Solution",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1723208",
+  "system": "RxNorm",
+  "description": "10 ML Alfentanil 0.5 MG/ML Injection",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "745752",
+  "system": "RxNorm",
+  "description": "NDA021457 200 ACTUAT albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir]",
+  "patients": 7,
+  "orders": 321,
+  "active_share": 0.0218,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 303
+   },
+   {
+    "code": "195967001",
+    "description": "Asthma (disorder)",
+    "orders": 18
+   }
+  ]
+ },
+ {
+  "code": "311353",
+  "system": "RxNorm",
+  "description": "lisinopril 2.5 MG Oral Tablet",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1860154",
+  "system": "RxNorm",
+  "description": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 15 MG Extended Release Oral Tablet",
+  "patients": 7,
+  "orders": 17,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "197541",
+  "system": "RxNorm",
+  "description": "Colchicine 0.6 MG Oral Tablet",
+  "patients": 7,
+  "orders": 8,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "90560007",
+    "description": "Gout",
+    "orders": 8
+   }
+  ]
+ },
+ {
+  "code": "859424",
+  "system": "RxNorm",
+  "description": "rosuvastatin calcium 5 MG Oral Tablet",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1649987",
+  "system": "RxNorm",
+  "description": "doxycycline hyclate 100 MG",
+  "patients": 7,
+  "orders": 7,
+  "active_share": 1.0,
+  "reasons": [
+   {
+    "code": "444814009",
+    "description": "Viral sinusitis (disorder)",
+    "orders": 6
+   },
+   {
+    "code": "75498004",
+    "description": "Acute bacterial sinusitis (disorder)",
+    "orders": 1
+   }
+  ]
+ },
+ {
+  "code": "200032",
+  "system": "RxNorm",
+  "description": "carvedilol 12.5 MG Oral Tablet",
+  "patients": 6,
+  "orders": 6,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "997223",
+  "system": "RxNorm",
+  "description": "Donepezil hydrochloride 10 MG Oral Tablet",
+  "patients": 6,
+  "orders": 6,
+  "active_share": 0.5,
+  "reasons": [
+   {
+    "code": "26929004",
+    "description": "Alzheimer's disease (disorder)",
+    "orders": 6
+   }
+  ]
+ },
+ {
+  "code": "859751",
+  "system": "RxNorm",
+  "description": "rosuvastatin calcium 20 MG Oral Tablet",
+  "patients": 6,
+  "orders": 6,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "1860480",
+  "system": "RxNorm",
+  "description": "1 ML DOCEtaxel 20 MG/ML Injection",
+  "patients": 6,
+  "orders": 12,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "126906006",
+    "description": "Neoplasm of prostate (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "752899",
+  "system": "RxNorm",
+  "description": "0.25 ML Leuprolide Acetate 30 MG/ML Prefilled Syringe",
+  "patients": 6,
+  "orders": 12,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "126906006",
+    "description": "Neoplasm of prostate (disorder)",
+    "orders": 12
+   }
+  ]
+ },
+ {
+  "code": "2123111",
+  "system": "RxNorm",
+  "description": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler",
+  "patients": 6,
+  "orders": 92,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "389087006",
+    "description": "Hypoxemia (disorder)",
+    "orders": 92
+   }
+  ]
+ },
+ {
+  "code": "562366",
+  "system": "RxNorm",
+  "description": "desflurane 1000 MG/ML Inhalation Solution",
+  "patients": 6,
+  "orders": 6,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "477045",
+  "system": "RxNorm",
+  "description": "Chlorpheniramine Maleate 2 MG/ML Oral Solution",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "833135",
+  "system": "RxNorm",
+  "description": "Milnacipran hydrochloride 100 MG Oral Tablet",
+  "patients": 5,
+  "orders": 9,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "95417003",
+    "description": "Primary fibromyalgia syndrome (disorder)",
+    "orders": 9
+   }
+  ]
+ },
+ {
+  "code": "197904",
+  "system": "RxNorm",
+  "description": "lovastatin 20 MG Oral Tablet",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "200031",
+  "system": "RxNorm",
+  "description": "carvedilol 6.25 MG Oral Tablet",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "314203",
+  "system": "RxNorm",
+  "description": "quinapril 40 MG Oral Tablet",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "896766",
+  "system": "RxNorm",
+  "description": "labetalol hydrochloride 300 MG Oral Tablet",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "261962",
+  "system": "RxNorm",
+  "description": "ramipril 10 MG Oral Capsule",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "858817",
+  "system": "RxNorm",
+  "description": "enalapril maleate 10 MG Oral Tablet",
+  "patients": 5,
+  "orders": 5,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "197885",
+  "system": "RxNorm",
+  "description": "hydrochlorothiazide 12.5 MG / lisinopril 10 MG Oral Tablet",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "200243",
+  "system": "RxNorm",
+  "description": "sevoflurane 1000 MG/ML Inhalation Solution",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 0.0,
+  "reasons": []
+ },
+ {
+  "code": "1648756",
+  "system": "RxNorm",
+  "description": "nitrofurantoin  macrocrystals 25 MG / nitrofurantoin  monohydrate 75 MG [Macrobid]",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "307426000",
+    "description": "Acute infective cystitis (disorder)",
+    "orders": 4
+   }
+  ]
+ },
+ {
+  "code": "1736854",
+  "system": "RxNorm",
+  "description": "Cisplatin 50 MG Injection",
+  "patients": 4,
+  "orders": 326,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "424132000",
+    "description": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)",
+    "orders": 326
+   }
+  ]
+ },
+ {
+  "code": "583214",
+  "system": "RxNorm",
+  "description": "PACLitaxel 100 MG Injection",
+  "patients": 4,
+  "orders": 326,
+  "active_share": 0.0,
+  "reasons": [
+   {
+    "code": "424132000",
+    "description": "Non-small cell carcinoma of lung  TNM stage 1 (disorder)",
+    "orders": 326
+   }
+  ]
+ },
+ {
+  "code": "349094",
+  "system": "RxNorm",
+  "description": "budesonide 0.125 MG/ML Inhalation Suspension",
+  "patients": 4,
+  "orders": 261,
+  "active_share": 0.0153,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 261
+   }
+  ]
+ },
+ {
+  "code": "197887",
+  "system": "RxNorm",
+  "description": "hydrochlorothiazide 25 MG / lisinopril 20 MG Oral Tablet",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "351109",
+  "system": "RxNorm",
+  "description": "budesonide 0.25 MG/ML Inhalation Suspension",
+  "patients": 4,
+  "orders": 66,
+  "active_share": 0.0606,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 48
+   },
+   {
+    "code": "195967001",
+    "description": "Asthma (disorder)",
+    "orders": 18
+   }
+  ]
+ },
+ {
+  "code": "351266",
+  "system": "RxNorm",
+  "description": "buprenorphine 2 MG / naloxone 0.5 MG Sublingual Tablet",
+  "patients": 4,
+  "orders": 310,
+  "active_share": 0.0129,
+  "reasons": [
+   {
+    "code": "5602001",
+    "description": "Opioid abuse",
+    "orders": 310
+   }
+  ]
+ },
+ {
+  "code": "866511",
+  "system": "RxNorm",
+  "description": "metoprolol tartrate 100 MG Oral Tablet",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "204892",
+  "system": "RxNorm",
+  "description": "clonazePAM 0.25 MG Oral Tablet",
+  "patients": 4,
+  "orders": 7,
+  "active_share": 0.4286,
+  "reasons": [
+   {
+    "code": "128613002",
+    "description": "Seizure disorder (disorder)",
+    "orders": 7
+   }
+  ]
+ },
+ {
+  "code": "351137",
+  "system": "RxNorm",
+  "description": "albuterol 0.21 MG/ML Inhalation Solution",
+  "patients": 4,
+  "orders": 122,
+  "active_share": 0.0328,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 122
+   }
+  ]
+ },
+ {
+  "code": "904467",
+  "system": "RxNorm",
+  "description": "pravastatin sodium 20 MG Oral Tablet",
+  "patients": 4,
+  "orders": 4,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "313988",
+  "system": "RxNorm",
+  "description": "Furosemide 40 MG Oral Tablet",
+  "patients": 4,
+  "orders": 538,
+  "active_share": 0.0074,
+  "reasons": [
+   {
+    "code": "88805009",
+    "description": "Chronic congestive heart failure (disorder)",
+    "orders": 538
+   }
+  ]
+ },
+ {
+  "code": "197379",
+  "system": "RxNorm",
+  "description": "atenolol 100 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "349200",
+  "system": "RxNorm",
+  "description": "valsartan 320 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "827075",
+  "system": "RxNorm",
+  "description": "nebivolol 20 MG Oral Tablet [Bystolic]",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "686924",
+  "system": "RxNorm",
+  "description": "carvedilol 3.125 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "349201",
+  "system": "RxNorm",
+  "description": "valsartan 160 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "616830",
+  "system": "RxNorm",
+  "description": "budesonide 0.125 MG/ML Inhalation Suspension [Pulmicort]",
+  "patients": 3,
+  "orders": 50,
+  "active_share": 0.06,
+  "reasons": [
+   {
+    "code": "233678006",
+    "description": "Childhood asthma (disorder)",
+    "orders": 50
+   }
+  ]
+ },
+ {
+  "code": "349199",
+  "system": "RxNorm",
+  "description": "valsartan 80 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "856448",
+  "system": "RxNorm",
+  "description": "propranolol hydrochloride 10 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "896762",
+  "system": "RxNorm",
+  "description": "labetalol hydrochloride 200 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "198188",
+  "system": "RxNorm",
+  "description": "ramipril 2.5 MG Oral Capsule",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "859749",
+  "system": "RxNorm",
+  "description": "rosuvastatin calcium 10 MG Oral Tablet [Crestor]",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ },
+ {
+  "code": "979468",
+  "system": "RxNorm",
+  "description": "hydrochlorothiazide 12.5 MG / losartan potassium 50 MG Oral Tablet",
+  "patients": 3,
+  "orders": 3,
+  "active_share": 1.0,
+  "reasons": []
+ }
+]

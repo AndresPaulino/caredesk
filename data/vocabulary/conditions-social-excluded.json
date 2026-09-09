@@ -1,0 +1,209 @@
+[
+ {
+  "code": "160903007",
+  "system": "SNOMED-CT",
+  "description": "Full-time employment (finding)",
+  "patients_ever": 1000,
+  "patients_active": 665,
+  "active_share": 0.665,
+  "chronic": true
+ },
+ {
+  "code": "73595000",
+  "system": "SNOMED-CT",
+  "description": "Stress (finding)",
+  "patients_ever": 1000,
+  "patients_active": 570,
+  "active_share": 0.57,
+  "chronic": true
+ },
+ {
+  "code": "314529007",
+  "system": "SNOMED-CT",
+  "description": "Medication review due (situation)",
+  "patients_ever": 1000,
+  "patients_active": 561,
+  "active_share": 0.561,
+  "chronic": true
+ },
+ {
+  "code": "160904001",
+  "system": "SNOMED-CT",
+  "description": "Part-time employment (finding)",
+  "patients_ever": 930,
+  "patients_active": 199,
+  "active_share": 0.199,
+  "chronic": false
+ },
+ {
+  "code": "423315002",
+  "system": "SNOMED-CT",
+  "description": "Limited social contact (finding)",
+  "patients_ever": 844,
+  "patients_active": 231,
+  "active_share": 0.231,
+  "chronic": false
+ },
+ {
+  "code": "422650009",
+  "system": "SNOMED-CT",
+  "description": "Social isolation (finding)",
+  "patients_ever": 810,
+  "patients_active": 264,
+  "active_share": 0.264,
+  "chronic": false
+ },
+ {
+  "code": "741062008",
+  "system": "SNOMED-CT",
+  "description": "Not in labor force (finding)",
+  "patients_ever": 766,
+  "patients_active": 86,
+  "active_share": 0.086,
+  "chronic": false
+ },
+ {
+  "code": "706893006",
+  "system": "SNOMED-CT",
+  "description": "Victim of intimate partner abuse (finding)",
+  "patients_ever": 743,
+  "patients_active": 266,
+  "active_share": 0.266,
+  "chronic": false
+ },
+ {
+  "code": "266948004",
+  "system": "SNOMED-CT",
+  "description": "Has a criminal record (finding)",
+  "patients_ever": 656,
+  "patients_active": 656,
+  "active_share": 0.656,
+  "chronic": true
+ },
+ {
+  "code": "424393004",
+  "system": "SNOMED-CT",
+  "description": "Reports of violence in the environment (finding)",
+  "patients_ever": 611,
+  "patients_active": 60,
+  "active_share": 0.06,
+  "chronic": false
+ },
+ {
+  "code": "224299000",
+  "system": "SNOMED-CT",
+  "description": "Received higher education (finding)",
+  "patients_ever": 588,
+  "patients_active": 588,
+  "active_share": 0.588,
+  "chronic": true
+ },
+ {
+  "code": "73438004",
+  "system": "SNOMED-CT",
+  "description": "Unemployed (finding)",
+  "patients_ever": 492,
+  "patients_active": 50,
+  "active_share": 0.05,
+  "chronic": false
+ },
+ {
+  "code": "473461003",
+  "system": "SNOMED-CT",
+  "description": "Educated to high school level (finding)",
+  "patients_ever": 292,
+  "patients_active": 292,
+  "active_share": 0.292,
+  "chronic": true
+ },
+ {
+  "code": "160968000",
+  "system": "SNOMED-CT",
+  "description": "Risk activity involvement (finding)",
+  "patients_ever": 210,
+  "patients_active": 210,
+  "active_share": 0.21,
+  "chronic": true
+ },
+ {
+  "code": "105531004",
+  "system": "SNOMED-CT",
+  "description": "Housing unsatisfactory (finding)",
+  "patients_ever": 155,
+  "patients_active": 155,
+  "active_share": 0.155,
+  "chronic": true
+ },
+ {
+  "code": "10939881000119105",
+  "system": "SNOMED-CT",
+  "description": "Unhealthy alcohol drinking behavior (finding)",
+  "patients_ever": 148,
+  "patients_active": 16,
+  "active_share": 0.016,
+  "chronic": false
+ },
+ {
+  "code": "266934004",
+  "system": "SNOMED-CT",
+  "description": "Transport problem (finding)",
+  "patients_ever": 122,
+  "patients_active": 122,
+  "active_share": 0.122,
+  "chronic": true
+ },
+ {
+  "code": "713458007",
+  "system": "SNOMED-CT",
+  "description": "Lack of access to transportation (finding)",
+  "patients_ever": 122,
+  "patients_active": 122,
+  "active_share": 0.122,
+  "chronic": true
+ },
+ {
+  "code": "224295006",
+  "system": "SNOMED-CT",
+  "description": "Only received primary school education (finding)",
+  "patients_ever": 120,
+  "patients_active": 120,
+  "active_share": 0.12,
+  "chronic": true
+ },
+ {
+  "code": "446654005",
+  "system": "SNOMED-CT",
+  "description": "Refugee (person)",
+  "patients_ever": 111,
+  "patients_active": 111,
+  "active_share": 0.111,
+  "chronic": true
+ },
+ {
+  "code": "361055000",
+  "system": "SNOMED-CT",
+  "description": "Misuses drugs (finding)",
+  "patients_ever": 51,
+  "patients_active": 5,
+  "active_share": 0.005,
+  "chronic": false
+ },
+ {
+  "code": "32911000",
+  "system": "SNOMED-CT",
+  "description": "Homeless (finding)",
+  "patients_ever": 24,
+  "patients_active": 2,
+  "active_share": 0.002,
+  "chronic": false
+ },
+ {
+  "code": "271825005",
+  "system": "SNOMED-CT",
+  "description": "Respiratory distress (finding)",
+  "patients_ever": 10,
+  "patients_active": 0,
+  "active_share": 0.0,
+  "chronic": false
+ }
+]

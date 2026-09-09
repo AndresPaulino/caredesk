@@ -1,0 +1,23 @@
+{
+ "source": "Synthea v4.0.0 (synthea-with-dependencies.jar), Apache License 2.0, The MITRE Corporation",
+ "generated_on": "2026-09-09",
+ "generation_command": "java -jar synthea-with-dependencies.jar -p 1000 -a 65-140 --generate.only_alive_patients=true --exporter.csv.export=true --exporter.fhir.export=false Massachusetts",
+ "source_rows": {
+  "patients.csv": 1000,
+  "conditions.csv": 80079,
+  "medications.csv": 192539,
+  "procedures.csv": 299216,
+  "allergies.csv": 307,
+  "careplans.csv": 4966,
+  "immunizations.csv": 8209,
+  "encounters.csv": 126237,
+  "observations.csv": 2500729
+ },
+ "patients": 1000,
+ "notes": [
+  "Only aggregate vocabulary, co-occurrence counts, value distributions, and name pools were extracted. No patient records were copied.",
+  "Numeric distributions for observations use reservoir samples of at most 4000 values per code.",
+  "Conditions matching social-determinant patterns were moved to conditions-social-excluded.json.",
+  "Names had Synthea's numeric suffixes stripped."
+ ]
+}
