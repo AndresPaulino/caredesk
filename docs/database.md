@@ -38,11 +38,37 @@ If the card says the function is missing, migrations have not been pushed yet.
 
 ## Seeding
 
-`pnpm db:seed` (`scripts/seed/provisional.ts`) connects with `SUPABASE_SECRET_KEY`, creates the
-three demo auth users if they are missing (and resets their password to the demo password), then
-clears and rebuilds the organization and resident tables from `scripts/seed/provisional-data.ts`.
-The dataset is derived from a fixed seed and ids are stable across runs, so links keep working
-after a reseed. The full generator arrives with ticket 03.
+`pnpm db:seed` (`scripts/seed/reset.ts`) connects with `SUPABASE_SECRET_KEY`, creates the three
+demo auth users if they are missing (and resets their password to the demo password), empties
+every demo table with one call to `reset_demo_data()`, and inserts the generated dataset in
+chunks: the organization, about 1,000 residents, and their clinical records, close to 59,000 rows
+in all. It records the run in `seed_runs`.
+
+The generator lives in `src/lib/seed/` and is shared with the tests and, later, the simulator:
+
+- `vocabulary.ts` reads the catalogs under `data/vocabulary/` (ADR 0002) and decides which
+  entries a care-home record uses and how often. Synthea's prevalence describes a general
+  elderly population, so the care-home prevalence of each condition is set there.
+- `organization.ts` builds the six facilities, four units each, thirty rooms per unit (ten
+  semi-private), the demo accounts, and two physicians and eight nurses per facility, ten of the
+  nurses flagged as simulated staff.
+- `residents.ts` places about 150 current residents per facility (94 percent of beds) plus
+  about 100 former residents, with names from the pools, ages centered in the mid-eighties, and
+  the conditions that shape the rest of the record.
+- `records.ts` writes each resident's conditions, allergies with reactions, medication orders
+  paired with the conditions the catalog says they treat (never one the resident is allergic
+  to), three days of administrations, vitals, assessments with plausible last-done dates, lab
+  results, a care plan with goals, incidents, progress notes, appointments, and family contacts.
+  A former resident's activity stops when their stay ended.
+- `text.ts` holds the findings, notes, and goal templates so the records read like a chart.
+
+Everything derives from a seed number (default `20260909`) and an **anchor** instant: "now",
+rounded down to the hour, unless `--anchor <ISO instant>` pins it. Recent records are placed
+relative to the anchor so a fresh reseed always has vitals from this morning, an appointment
+tomorrow, and an assessment overdue since last week. Ids derive from stable keys, not from the
+anchor, so links keep working from one reseed to the next. The same seed and anchor produce the
+same rows; `src/lib/seed/seed.test.ts` proves that, along with the row budget, catalog
+references, and the former-resident rule.
 
 ## Scope
 
@@ -57,9 +83,20 @@ room names and carries a `search_text` column for the search box. It is created 
 `security_invoker = true`, so the caller's policies on the underlying tables apply and the view
 can never widen scope.
 
-`src/lib/scope/policies.integration.test.ts` signs in as each demo account and asserts the
-visible row counts, that an out-of-scope resident is "not found" by id and absent from search,
-and that out-of-scope writes are rejected.
+Every clinical table carries a `resident_id`, and its policies are one expression: the row's
+resident is visible to the caller (`resident_id in (select id from residents)`). The subquery
+runs under the residents policies, so an admin matches everyone and a nurse matches their
+units, and there is one place to change the rule. Nurses may insert and update rows for
+residents they can see; there is no delete policy anywhere, because records are archived.
+Composite foreign keys such as `(medication_order_id, resident_id)` keep a child record on the
+same resident as its parent.
+
+`src/lib/scope/policies.integration.test.ts` signs in as each demo account and asserts, for
+residents and every clinical table, that the visible row count equals the count the generator
+predicts for that account's scope; that an out-of-scope resident is "not found" by id and absent
+from search; that recording care for an out-of-scope resident is rejected; and that nobody but
+the service role can call `reset_demo_data()`. It reads the latest `seed_runs` row to rebuild the
+exact dataset that is in the database.
 
 ## Types
 
@@ -78,3 +115,7 @@ update the matching `Row`, `Insert`, and `Relationships` entries in the same com
   `archived_at` for soft deletes.
 - The seeder and simulator connect with the secret key and set an explicit actor; the web app never
   uses the secret key.
+- Reference data that is not resident data (`assessment_kinds`, `seed_runs`) is readable by any
+  signed-in staff member.
+- `assessment_kinds` holds each kind's due interval; `src/lib/clinical/assessment-kinds.ts` is a
+  copy for code that needs the names without a round trip, and the policy test checks they agree.

@@ -26,8 +26,13 @@ message naming it.
 Then seed the demo data and sign in:
 
 ```sh
-pnpm db:seed                 # six facilities, a few dozen residents, three demo logins
+pnpm db:seed                 # six facilities, ~1,000 residents with clinical records, three demo logins
 ```
+
+The seed is generated, not stored: about 59,000 rows drawn from the committed clinical
+vocabulary, identical on every run, rebuilt in well under a minute. Recent records are placed
+around the moment you run it, so there is always something due today and overdue since last
+week. See [docs/database.md](docs/database.md#seeding).
 
 ### Demo accounts
 
@@ -66,7 +71,7 @@ present and are skipped otherwise.
 | `pnpm test`      | Unit tests (Vitest)                                     |
 | `pnpm db:push`   | Apply pending migrations to the hosted project          |
 | `pnpm db:status` | Compare local and remote migration history              |
-| `pnpm db:seed`   | Reset and rebuild the demo data and the demo logins     |
+| `pnpm db:seed`   | Reset and rebuild the whole dataset and the demo logins |
 
 ## Credits
 

@@ -17,7 +17,7 @@
     "db:push": "node scripts/db/remote.mjs db push",
     "db:status": "node scripts/db/remote.mjs migration list",
     "db:new": "supabase migration new",
-    "db:seed": "tsx scripts/seed/provisional.ts"
+    "db:seed": "tsx scripts/seed/reset.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",
