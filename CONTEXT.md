@@ -44,6 +44,10 @@ _Avoid_: caregiver, aide
 A staff member with operator-wide visibility, such as a charge nurse or administrator. The other login role.
 _Avoid_: superuser, manager, owner
 
+**Unit assignment**:
+The link between a nurse and one unit they cover. A nurse's scope is the residents on their assigned units.
+_Avoid_: membership, permission, access grant
+
 **Physician**:
 The attending doctor recorded on assessments and medication orders. Not a login role.
 _Avoid_: doctor, provider, MD
@@ -150,11 +154,19 @@ _Avoid_: citation, reference, evidence
 The set of residents a staff member may see, derived from their role and unit assignments.
 _Avoid_: permissions, visibility, access level
 
+**Resident directory**:
+The scoped view of residents with their facility, unit, and room names that the list, search, and detail pages read.
+_Avoid_: roster, census list, patient list
+
 ### Demo data
 
 **Seed**:
 The deterministic generated dataset the demo starts from.
 _Avoid_: fixtures, mock data, sample data
+
+**Demo account**:
+One of the three seeded logins shown on the login page: a nurse at one facility, a nurse at another, and an operator-wide admin.
+_Avoid_: test user, seed user
 
 **Hero resident**:
 One of ten hand-authored residents with coherent stories that the demo script relies on.

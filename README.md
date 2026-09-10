@@ -23,6 +23,28 @@ Open [http://localhost:3000/health](http://localhost:3000/health) to confirm the
 the assistant are configured. A missing or malformed variable stops the server at startup with a
 message naming it.
 
+Then seed the demo data and sign in:
+
+```sh
+pnpm db:seed                 # six facilities, a few dozen residents, three demo logins
+```
+
+### Demo accounts
+
+The login page lists them. The password for every account is `willowbrook-demo`.
+
+| Account                               | Role  | Scope                                    |
+| ------------------------------------- | ----- | ---------------------------------------- |
+| `maria.alvarez@willowbrook.example`   | Nurse | Willowbrook Meadows, Units A and B       |
+| `daniel.okafor@willowbrook.example`   | Nurse | Willowbrook Harbor, Units A, B, and C    |
+| `priya.natarajan@willowbrook.example` | Admin | Every resident across all six facilities |
+
+A nurse sees only residents on their units: a resident outside that scope is absent from search
+and returns "not found" by direct link. The rule is enforced by Row Level Security in the
+database, not by the screens (ADR 0003). `pnpm test` includes policy tests that read as each
+account and assert exactly that; they run against the hosted project when `.env.local` is
+present and are skipped otherwise.
+
 ### Environment variables
 
 | Variable                               | Required               | Where it comes from                                                                   |
@@ -44,6 +66,7 @@ message naming it.
 | `pnpm test`      | Unit tests (Vitest)                                     |
 | `pnpm db:push`   | Apply pending migrations to the hosted project          |
 | `pnpm db:status` | Compare local and remote migration history              |
+| `pnpm db:seed`   | Reset and rebuild the demo data and the demo logins     |
 
 ## Credits
 

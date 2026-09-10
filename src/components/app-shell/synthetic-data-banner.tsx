@@ -7,7 +7,7 @@ export function SyntheticDataBanner() {
       role="note"
       className="border-b border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-100"
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-1.5 text-xs sm:px-6">
+      <div className="flex items-center gap-2 px-4 py-1.5 text-xs sm:px-6">
         <TriangleAlert className="size-3.5 shrink-0" aria-hidden />
         <p>
           <span className="font-semibold">Demonstration only.</span> Every resident, staff member,

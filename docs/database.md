@@ -36,11 +36,45 @@ exists only because the CLI expects it; its local-development settings are unuse
 card calls the `health_check` function from the first migration and shows the database's clock.
 If the card says the function is missing, migrations have not been pushed yet.
 
+## Seeding
+
+`pnpm db:seed` (`scripts/seed/provisional.ts`) connects with `SUPABASE_SECRET_KEY`, creates the
+three demo auth users if they are missing (and resets their password to the demo password), then
+clears and rebuilds the organization and resident tables from `scripts/seed/provisional-data.ts`.
+The dataset is derived from a fixed seed and ids are stable across runs, so links keep working
+after a reseed. The full generator arrives with ticket 03.
+
+## Scope
+
+Scope lives in the database (ADR 0003). The helper functions `current_staff_id()`,
+`current_staff_role()`, `is_admin()`, `current_unit_ids()`, and `current_facility_ids()` are
+`security definer` so a policy can ask who is signed in without recursing into the staff table's
+own policies; each reads only the caller's own rows. Policies call them as `(select ...)` so
+Postgres evaluates them once per query.
+
+The app reads residents through the `resident_directory` view, which joins facility, unit, and
+room names and carries a `search_text` column for the search box. It is created with
+`security_invoker = true`, so the caller's policies on the underlying tables apply and the view
+can never widen scope.
+
+`src/lib/scope/policies.integration.test.ts` signs in as each demo account and asserts the
+visible row counts, that an out-of-scope resident is "not found" by id and absent from search,
+and that out-of-scope writes are rejected.
+
+## Types
+
+`src/lib/supabase/database.types.ts` is maintained by hand in the shape `supabase gen types`
+produces, because generating over `--db-url` needs Docker. When a migration changes a table,
+update the matching `Row`, `Insert`, and `Relationships` entries in the same commit.
+
 ## Conventions
 
 - Every table that holds resident data gets Row Level Security policies in the same migration that
   creates it (ADR 0003).
 - Functions set `search_path = ''` and are `security invoker` unless there is a written reason
-  otherwise.
+  otherwise. The scope helpers above are the written reason.
+- Views are `security_invoker = true`.
+- Every table has `created_at`, `updated_at` (kept current by `set_updated_at()`), and
+  `archived_at` for soft deletes.
 - The seeder and simulator connect with the secret key and set an explicit actor; the web app never
   uses the secret key.

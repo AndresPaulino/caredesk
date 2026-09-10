@@ -12,5 +12,8 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts", "scripts/**/*.test.ts"],
+    setupFiles: ["src/test/load-env.ts"],
+    // Integration tests round-trip to the hosted project.
+    testTimeout: 20_000,
   },
 });

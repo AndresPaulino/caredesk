@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 
 import { publicEnv } from "@/lib/env/public";
 
+import type { Database } from "./database.types";
+
 /**
  * Supabase client for Server Components, Server Functions, and Route Handlers.
  * It acts as the signed-in staff member (or anonymously before sign-in), never as the
@@ -13,7 +15,7 @@ import { publicEnv } from "@/lib/env/public";
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
+  return createServerClient<Database>(
     publicEnv.NEXT_PUBLIC_SUPABASE_URL,
     publicEnv.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     {
@@ -27,11 +29,13 @@ export async function createSupabaseServerClient() {
               cookieStore.set(name, value, options);
             }
           } catch {
-            // Server Components cannot write cookies. Session refresh happens in proxy.ts
-            // once sign-in exists, so a failed write here is safe to ignore.
+            // Server Components cannot write cookies. The proxy refreshes the session on
+            // every request (src/lib/supabase/proxy.ts), so a failed write here is safe to ignore.
           }
         },
       },
     },
   );
 }
+
+export type SupabaseServerClient = Awaited<ReturnType<typeof createSupabaseServerClient>>;

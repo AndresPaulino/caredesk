@@ -16,13 +16,15 @@
     "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test",
     "db:push": "node scripts/db/remote.mjs db push",
     "db:status": "node scripts/db/remote.mjs migration list",
-    "db:new": "supabase migration new"
+    "db:new": "supabase migration new",
+    "db:seed": "tsx scripts/seed/provisional.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",
     "@base-ui/react": "^1.8.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.116.0",
+    "@tanstack/react-table": "9.2.4",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.6",
     "lucide-react": "^1.43.0",
@@ -46,6 +48,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "supabase": "^2.117.0",
     "tailwindcss": "^4",
+    "tsx": "4.23.13",
     "typescript": "^5",
     "vitest": "^4.1.11"
   },
