@@ -39,10 +39,12 @@ If the card says the function is missing, migrations have not been pushed yet.
 ## Seeding
 
 `pnpm db:seed` (`scripts/seed/reset.ts`) connects with `SUPABASE_SECRET_KEY`, creates the three
-demo auth users if they are missing (and resets their password to the demo password), empties
-every demo table with one call to `reset_demo_data()`, and inserts the generated dataset in
-chunks: the organization, about 1,000 residents, and their clinical records, close to 59,000 rows
-in all. It records the run in `seed_runs`.
+demo auth users if they are missing, empties every demo table with one call to
+`reset_demo_data()`, and inserts the generated dataset in chunks: the organization, about 1,000
+residents, and their clinical records, close to 59,000 rows in all. It records the run in
+`seed_runs`. It checks each demo password by signing in with the publishable key and resets it
+only when that fails, because a reset signs the account out everywhere; a routine reseed leaves
+open browser sessions alone.
 
 The generator lives in `src/lib/seed/` and is shared with the tests and, later, the simulator:
 

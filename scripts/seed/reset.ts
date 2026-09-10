@@ -8,7 +8,8 @@
  *   pnpm db:seed --seed 7                         # a different population
  *
  * Uses the secret key, which is reserved for the seeder and the simulator (ADR 0003). The web
- * app never loads it. Running it twice with the same arguments yields identical data.
+ * app never loads it. The publishable key is used only to check that each demo password still
+ * works. Running it twice with the same arguments yields identical data.
  */
 import { existsSync } from "node:fs";
 import { parseArgs } from "node:util";
@@ -30,10 +31,11 @@ import type { Database } from "../../src/lib/supabase/database.types";
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
 const secretKey = process.env.SUPABASE_SECRET_KEY?.trim();
-if (!url || !secretKey) {
+if (!url || !publishableKey || !secretKey) {
   console.error(
-    "NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY must be set in .env.local to seed the hosted project.",
+    "NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, and SUPABASE_SECRET_KEY must be set in .env.local to seed the hosted project.",
   );
   process.exit(1);
 }
@@ -56,6 +58,10 @@ if (seedNumber !== undefined && !Number.isInteger(seedNumber)) {
 }
 
 const supabase = createClient<Database>(url, secretKey, {
+  auth: { persistSession: false, autoRefreshToken: false },
+});
+/** Signs in as a demo account only to check its password (see passwordWorks). */
+const passwordCheck = createClient<Database>(url, publishableKey, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
@@ -115,7 +121,11 @@ async function main() {
   }
 }
 
-/** Creates each demo login if it is missing and makes sure the demo password is current. */
+/**
+ * Creates each demo login if it is missing and makes sure the demo password works. The password
+ * is reset only when signing in with it fails: a reset through the admin API signs the account
+ * out everywhere, which would end every browser session open during a routine reseed.
+ */
 async function ensureAuthUsers(staff: SeedStaffMember[]): Promise<Map<string, string>> {
   const { data, error } = await supabase.auth.admin.listUsers({ perPage: 1000 });
   if (error) throw new Error(`Could not list auth users: ${error.message}`);
@@ -126,9 +136,11 @@ async function ensureAuthUsers(staff: SeedStaffMember[]): Promise<Map<string, st
     const { email, password } = member.account!;
     const found = existing.get(email.toLowerCase());
     if (found) {
+      ids.set(email, found);
+      if (await passwordWorks(email, password)) continue;
       const { error: updateError } = await supabase.auth.admin.updateUserById(found, { password });
       if (updateError) throw new Error(`Could not update ${email}: ${updateError.message}`);
-      ids.set(email, found);
+      console.info(`  reset the password for ${email}; its open sessions are signed out`);
       continue;
     }
     const { data: created, error: createError } = await supabase.auth.admin.createUser({
@@ -143,6 +155,14 @@ async function ensureAuthUsers(staff: SeedStaffMember[]): Promise<Map<string, st
     console.info(`  created auth user ${email}`);
   }
   return ids;
+}
+
+/** Whether a sign-in with this password succeeds. The session it creates is ended right away. */
+async function passwordWorks(email: string, password: string): Promise<boolean> {
+  const { error } = await passwordCheck.auth.signInWithPassword({ email, password });
+  if (error) return false;
+  await passwordCheck.auth.signOut({ scope: "local" });
+  return true;
 }
 
 /** Inserts in chunks, a few chunks at a time. Ids are pre-assigned, so order within a table is free. */

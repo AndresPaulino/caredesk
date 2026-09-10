@@ -15,7 +15,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+      {/* Browser extensions (ColorZilla, Grammarly) add attributes to <body> before React hydrates;
+          the flag silences that one element's attribute mismatches and nothing else. */}
+      <body className="min-h-full" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
