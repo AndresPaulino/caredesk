@@ -2,6 +2,8 @@
 
 **What to build:** A resident's page tells their story. It leads with the essentials, shows a clinical timeline that merges assessments, lab results, incidents, and progress notes in date order, and offers a tab for every record type. For each assessment kind the page states when it was last done and when it is next due, and an allergy that conflicts with an active medication order is flagged where a nurse will see it.
 
+**UI approach (ADR 0004):** header as a grid of `@shadcn/card`; record tabs with `@shadcn/tabs` and the data table pattern from ticket 02; vitals and lab trends with `@shadcn/chart`. The clinical timeline and the assessment summary have no block to start from and get the design time.
+
 **Blocked by:** 03 (Clinical schema and the deterministic seed)
 
 **Status:** ready-for-agent

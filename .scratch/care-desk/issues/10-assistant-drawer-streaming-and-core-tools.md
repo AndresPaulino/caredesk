@@ -2,6 +2,8 @@
 
 **What to build:** From any page a nurse opens the assistant drawer and asks "when was Mr. Doe's last podiatry exam". The assistant looks up the resident with tools that run under the nurse's own permissions, streams a dated answer, and shows what it is looking up while it works. The admin asking the same question is asked which Mr. Doe. A nurse asking about a resident outside their scope is told the resident can't be found. The assistant runs on Claude Sonnet 5 and never writes.
 
+**UI approach (ADR 0004):** the drawer is `@shadcn/sheet` anchored right with a persistent trigger in the sidebar shell; the message list, the tool status line, suggested prompts, and source chips are custom components.
+
 **Blocked by:** 04 (Resident detail with clinical timeline and record tabs), 09 (Hero residents)
 
 **Status:** ready-for-agent

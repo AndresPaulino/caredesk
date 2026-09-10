@@ -140,6 +140,7 @@ The deliverable is a public repository with a README that explains the architect
 ### Stack
 
 - Next.js with the App Router, TypeScript in strict mode, Tailwind, shadcn components, zod for validation, pnpm.
+- Screens start from official shadcn registry blocks (sidebar, login, dashboard, data table, form, chart) added with the CLI and then edited as project code; no third-party admin template (ADR 0004).
 - Hosted Supabase project providing Postgres, Auth, Row Level Security, and Realtime. Schema changes are versioned migrations in the repo so the project can be recreated from scratch.
 - The app runs locally against the hosted project for the case study. It must be deployable to Vercel by setting environment variables, but deployment is not part of this spec.
 - Environment configuration is validated at startup and fails fast with a clear message naming the missing variable.

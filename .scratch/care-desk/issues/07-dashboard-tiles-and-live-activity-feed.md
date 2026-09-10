@@ -2,6 +2,8 @@
 
 **What to build:** Signing in lands on a dashboard with six tiles and a live activity feed. An admin sees the whole operator; a nurse sees the same tiles scoped to their units. Each tile opens a filtered resident list. The feed shows new audit events as they happen without a page refresh.
 
+**UI approach (ADR 0004):** start from the `@shadcn/dashboard-01` block (sidebar, stat cards, interactive area chart, data table) and cut it down to the six tiles and the feed; census and occupancy by facility uses `@shadcn/chart`; the feed is a custom list.
+
 **Blocked by:** 06 (Audit trail: triggers, actor resolution, and the audit tab)
 
 **Status:** ready-for-agent

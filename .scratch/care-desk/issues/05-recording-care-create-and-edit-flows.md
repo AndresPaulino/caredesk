@@ -2,6 +2,8 @@
 
 **What to build:** A nurse can do the work of a shift from the resident page: edit the resident's details, record vitals, add or discontinue a medication order, mark a medication as given with one click, write a progress note, report an incident, schedule or cancel an appointment, add or edit a family contact, and add an allergy. Removals archive the record instead of destroying it. Every form validates and explains mistakes.
 
+**UI approach (ADR 0004):** forms use `@shadcn/form` with the zod schemas the server validates against; create and edit flows open in `@shadcn/sheet` (or `@shadcn/dialog` for one-field actions such as marking a medication given) from the record tabs, so the resident page stays in place.
+
 **Blocked by:** 04 (Resident detail with clinical timeline and record tabs)
 
 **Status:** ready-for-agent

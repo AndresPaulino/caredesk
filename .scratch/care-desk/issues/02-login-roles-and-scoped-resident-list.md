@@ -2,6 +2,8 @@
 
 **What to build:** Staff sign in with email and password and land on a resident list that already respects scope: a nurse sees only residents on their assigned units, an admin sees every resident across all six facilities. The boundary is enforced by Row Level Security, so a resident outside scope is absent from search and returns "not found" by direct link.
 
+**UI approach (ADR 0004):** login page from the `@shadcn/login-03` block with the demo credentials callout added; replace the ticket 01 top bar with the `@shadcn/sidebar-07` shell (collapses to icons, user menu with sign-out); resident list from the shadcn data table pattern, which `@shadcn/dashboard-01` includes ready to copy. Rename block internals to the glossary's terms before closing.
+
 **Blocked by:** 01 (Scaffold, CI, and a database health page)
 
 **Status:** ready-for-agent
