@@ -12,7 +12,7 @@
 - [x] The app shell has a navigation frame and a persistent banner stating the data is synthetic and the product is a demonstration
 - [x] A health page reports database connectivity and the database's current time
 - [x] The Anthropic SDK is installed and a startup check confirms the API key is present without making a paid call
-- [ ] GitHub Actions runs lint, typecheck, and the unit suite and is green
+- [x] GitHub Actions runs lint, typecheck, and the unit suite and is green
 - [x] The README has a minimal "run it locally" section listing the required environment variables (the full README comes in ticket 13)
 
 ## Comments
@@ -27,3 +27,5 @@ Three boxes stay open until a human step is done:
 
 **2026-09-09, agent.** `DATABASE_URL` (session pooler) added by Andres; `pnpm db:push` applied `20260909120000_health_check.sql` and `pnpm db:status` shows local and remote in step. `/health` now reports the database clock with a round trip of a few hundred milliseconds, and `/api/health` returns 200. The Anthropic key was rotated and the new one passes the startup check. Only the CI box stays open: the workflow is committed but cannot run until the repo has a GitHub remote. Marking the ticket resolved so ticket 02 is unblocked; confirm CI is green when the remote is added.
 
+
+**2026-09-09, agent.** Remote added and pushed; CI run on 6ec4f14 completed green (https://github.com/AndresPaulino/caredesk/actions/runs/34425850204). All acceptance criteria met.
