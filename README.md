@@ -1,0 +1,51 @@
+# CareDesk
+
+A demonstration care-home operations dashboard for a fictional operator, Willowbrook Care, with a
+natural-language assistant that answers questions from live, permission-scoped resident records.
+Every resident, staff member, and record is synthetic.
+
+The full README, with the architecture, the privacy model, and screenshots, arrives with the
+final ticket. This section is enough to run it.
+
+## Run it locally
+
+Requirements: Node 22 (`.nvmrc` pins it; `nvm use` picks it up), pnpm 9 (`corepack enable` installs the
+pinned version), a hosted Supabase project, and a Claude Console API key.
+
+```sh
+pnpm install
+cp .env.example .env.local   # then fill in the values below
+pnpm db:push                 # apply migrations to the hosted project
+pnpm dev                     # http://localhost:3000
+```
+
+Open [http://localhost:3000/health](http://localhost:3000/health) to confirm the database and
+the assistant are configured. A missing or malformed variable stops the server at startup with a
+message naming it.
+
+### Environment variables
+
+| Variable                               | Required               | Where it comes from                                                                   |
+| -------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`             | yes                    | Supabase dashboard, Project Settings, API. `https://<ref>.supabase.co`                |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | yes                    | Same page. `sb_publishable_...` (the legacy anon key also works)                      |
+| `ANTHROPIC_API_KEY`                    | yes                    | Claude Console, API keys. Starts with `sk-ant-`                                       |
+| `ANTHROPIC_MODEL`                      | no                     | Defaults to `claude-sonnet-5`                                                         |
+| `DATABASE_URL`                         | for `pnpm db:push`     | Supabase dashboard, Connect, Session pooler. See [docs/database.md](docs/database.md) |
+| `SUPABASE_SECRET_KEY`                  | for seed and simulator | Same API page. Never used by the web app                                              |
+
+### Scripts
+
+| Command          | What it does                                            |
+| ---------------- | ------------------------------------------------------- |
+| `pnpm dev`       | Development server                                      |
+| `pnpm build`     | Production build                                        |
+| `pnpm check`     | Lint, format check, typecheck, and unit tests, as in CI |
+| `pnpm test`      | Unit tests (Vitest)                                     |
+| `pnpm db:push`   | Apply pending migrations to the hosted project          |
+| `pnpm db:status` | Compare local and remote migration history              |
+
+## Credits
+
+Clinical vocabulary is derived from [Synthea](https://github.com/synthetichealth/synthea)
+(The MITRE Corporation, Apache License 2.0). See `data/vocabulary/README.md`.
