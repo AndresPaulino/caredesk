@@ -5,7 +5,9 @@
  * writes are rejected for a resident outside scope while the admin can make them anywhere.
  *
  * Skipped without `.env.local`. Needs the secret key to put the seed back as it found it,
- * since nothing but the service role may delete a row.
+ * since nothing but the service role may delete a row. The cleanup carries the same skip flag
+ * the seeder uses, so the audit triggers (ticket 06) record nothing for it, and it removes the
+ * audit events the writes above produced.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -88,6 +90,7 @@ describe.skipIf(!hostedProject)("recording care on the hosted project", () => {
   let nurseStaffId: string;
   let resident: SeedRow<"residents">;
   let harborResident: SeedRow<"residents">;
+  let startedAt: string;
 
   /** Rows this file inserted, removed with the service role when it is done. */
   const inserted: Array<{ table: ClinicalTable; id: string }> = [];
@@ -118,10 +121,13 @@ describe.skipIf(!hostedProject)("recording care on the hosted project", () => {
   });
 
   beforeAll(async () => {
+    startedAt = now();
     nurse = await signIn(nurseAccount);
     admin = await signIn(adminAccount);
     serviceRole = createClient<Database>(url!, secretKey!, {
       auth: { persistSession: false, autoRefreshToken: false },
+      // Putting the seed back is not a change to record (docs/database.md, "Audit trail").
+      global: { headers: { "x-caredesk-audit": "skip" } },
     });
 
     const { data: run, error } = await nurse
@@ -160,6 +166,15 @@ describe.skipIf(!hostedProject)("recording care on the hosted project", () => {
           .update({ is_primary: contact.is_primary })
           .eq("id", contact.id);
       }
+    }
+    const residentIds = [resident?.id, harborResident?.id].filter(Boolean) as string[];
+    if (residentIds.length > 0) {
+      const cleared = await serviceRole
+        .from("audit_events")
+        .delete()
+        .in("resident_id", residentIds)
+        .gte("occurred_at", startedAt);
+      expect(cleared.error).toBeNull();
     }
     await nurse?.auth.signOut();
     await admin?.auth.signOut();

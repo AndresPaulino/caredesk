@@ -239,12 +239,16 @@ describe.skipIf(!hostedProject)("the resident page's reads as the nurse", () => 
           }),
         ]);
       } finally {
-        // Only the service role may remove a row; the test leaves the seed as it found it.
+        // Only the service role may remove a row; the test leaves the seed as it found it,
+        // audit trail included, with the skip flag the seeder uses (docs/database.md).
         const serviceRole = createClient<Database>(url!, secretKey!, {
           auth: { persistSession: false, autoRefreshToken: false },
+          global: { headers: { "x-caredesk-audit": "skip" } },
         });
         const removed = await serviceRole.from("medication_orders").delete().eq("id", orderId);
         expect(removed.error).toBeNull();
+        const cleared = await serviceRole.from("audit_events").delete().eq("record_id", orderId);
+        expect(cleared.error).toBeNull();
       }
     });
   });

@@ -10,6 +10,7 @@ import { AssessmentSummary } from "@/components/residents/assessment-summary";
 import { ClinicalTimeline } from "@/components/residents/clinical-timeline";
 import { AllergiesTable } from "@/components/residents/record/allergies-table";
 import { AppointmentsTable } from "@/components/residents/record/appointments-table";
+import { AuditTrailTab } from "@/components/residents/record/audit-trail-tab";
 import { CarePlanTab } from "@/components/residents/record/care-plan-tab";
 import { ConditionsTable } from "@/components/residents/record/conditions-table";
 import { FamilyContactsTab } from "@/components/residents/record/family-contacts-tab";
@@ -23,6 +24,7 @@ import { ResidentRecordSkeleton } from "@/components/residents/resident-record-s
 import { ResidentStatusBadge } from "@/components/residents/resident-status-badge";
 import { ResidentSummaryCards } from "@/components/residents/resident-summary-cards";
 import { Button } from "@/components/ui/button";
+import { getAuditTrail } from "@/lib/audit/events";
 import { requireStaff } from "@/lib/auth/current-staff";
 import { listPhysicians, listPlacementOptions } from "@/lib/care/options";
 import { ALLERGEN_OPTIONS, MEDICATION_OPTIONS } from "@/lib/care/vocabulary";
@@ -54,9 +56,10 @@ export async function generateMetadata(props: PageProps<"/residents/[id]">): Pro
 }
 
 /**
- * A resident's page: the essentials, the clinical timeline, the assessment summary, and a tab
- * for every record type. The resident is checked before anything streams, so a resident
- * outside scope is a real 404; the record itself streams in behind the header.
+ * A resident's page: the essentials, the clinical timeline, the assessment summary, a tab for
+ * every record type, and the audit trail. The resident is checked before anything streams, so
+ * a resident outside scope is a real 404, audit trail included; the record itself streams in
+ * behind the header.
  */
 export default async function ResidentPage(props: PageProps<"/residents/[id]">) {
   const { id } = await props.params;
@@ -111,9 +114,10 @@ async function EditDetails({ resident }: { resident: ResidentDirectoryEntry }) {
 /** Everything below the header. Every read goes through the signed-in session (ADR 0003). */
 async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }) {
   const supabase = await createSupabaseServerClient();
-  const [record, physicians] = await Promise.all([
+  const [record, physicians, auditTrail] = await Promise.all([
     getClinicalRecord(supabase, resident.id),
     listPhysicians(supabase, resident.facility_id),
+    getAuditTrail(supabase, resident.id),
   ]);
 
   const today = dateInZone(new Date());
@@ -155,6 +159,7 @@ async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }
           notes: record.progress_notes.length,
           appointments: record.appointments.length,
           family: record.family_contacts.length,
+          audit: auditTrail.total,
         }}
         panels={{
           conditions: <ConditionsTable conditions={record.conditions} />,
@@ -212,6 +217,7 @@ async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }
             />
           ),
           family: <FamilyContactsTab residentId={resident.id} contacts={record.family_contacts} />,
+          audit: <AuditTrailTab residentId={resident.id} trail={auditTrail} today={today} />,
         }}
       />
     </>

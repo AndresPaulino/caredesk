@@ -59,6 +59,7 @@ type FamilyRelationship =
   | "friend"
   | "guardian"
   | "other";
+type AuditOperation = "insert" | "update" | "delete";
 
 type FacilityRow = {
   id: string;
@@ -337,6 +338,19 @@ type SeedRunRow = {
   anchor: string;
   row_counts: Json;
   completed_at: string;
+};
+
+type AuditEventRow = {
+  id: string;
+  occurred_at: string;
+  actor_id: string;
+  resident_id: string;
+  table_name: string;
+  record_id: string;
+  operation: AuditOperation;
+  old_values: Json | null;
+  new_values: Json | null;
+  changed_columns: string[];
 };
 
 type ResidentDirectoryRow = {
@@ -696,6 +710,18 @@ export type Database = {
         Update: Partial<SeedRunRow>;
         Relationships: [];
       };
+      audit_events: {
+        Row: AuditEventRow;
+        Insert: Insertable<
+          AuditEventRow,
+          "id" | "occurred_at" | "old_values" | "new_values" | "changed_columns"
+        >;
+        Update: Partial<AuditEventRow>;
+        Relationships: [
+          ResidentRelationship & { foreignKeyName: "audit_events_resident_id_fkey" },
+          StaffRelationship<"actor_id"> & { foreignKeyName: "audit_events_actor_id_fkey" },
+        ];
+      };
     };
     Views: {
       resident_directory: {
@@ -711,6 +737,8 @@ export type Database = {
       current_unit_ids: { Args: Record<PropertyKey, never>; Returns: string[] };
       current_facility_ids: { Args: Record<PropertyKey, never>; Returns: string[] };
       reset_demo_data: { Args: Record<PropertyKey, never>; Returns: undefined };
+      current_actor_id: { Args: Record<PropertyKey, never>; Returns: string };
+      audit_skipped: { Args: Record<PropertyKey, never>; Returns: boolean };
     };
     Enums: {
       staff_role: StaffRole;
@@ -732,6 +760,7 @@ export type Database = {
       appointment_kind: AppointmentKind;
       appointment_status: AppointmentStatus;
       family_relationship: FamilyRelationship;
+      audit_operation: AuditOperation;
     };
     CompositeTypes: Record<never, never>;
   };

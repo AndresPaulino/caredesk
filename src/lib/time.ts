@@ -1,4 +1,4 @@
-import { DEMO_TIME_ZONE } from "./format";
+import { DEMO_TIME_ZONE, formatDate } from "./format";
 
 /**
  * Calendar dates are `YYYY-MM-DD` strings; instants are `Date`s. Facilities keep Eastern time,
@@ -97,4 +97,26 @@ export function toIso(instant: Date): string {
 
 export function earliest(a: Date, b: Date): Date {
   return a.getTime() <= b.getTime() ? a : b;
+}
+
+/** Consecutive items that fall on the same calendar day, in the order given, with that day. */
+export function groupByDay<T>(
+  items: readonly T[],
+  at: (item: T) => string,
+): Array<{ date: string; items: T[] }> {
+  const days: Array<{ date: string; items: T[] }> = [];
+  for (const item of items) {
+    const date = dateInZone(new Date(at(item)));
+    const last = days[days.length - 1];
+    if (last && last.date === date) last.items.push(item);
+    else days.push({ date, items: [item] });
+  }
+  return days;
+}
+
+/** "Today", "Yesterday", or the date itself, for a heading over a day's entries. */
+export function dayHeading(date: string, today: string): string {
+  if (date === today) return "Today";
+  if (date === addDays(today, -1)) return "Yesterday";
+  return formatDate(date);
 }

@@ -8,9 +8,9 @@ import {
   type TimelineEntry,
   type TimelineEntryType,
 } from "@/lib/clinical/timeline";
-import { formatDate, formatTime } from "@/lib/format";
+import { formatTime } from "@/lib/format";
 import { RECORD_TABS, residentHref } from "@/lib/residents/record-tabs";
-import { addDays, dateInZone } from "@/lib/time";
+import { dayHeading, groupByDay } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 /** Entries shown before the rest fold behind "older entries". */
@@ -83,15 +83,14 @@ function TimelineList({
   entries: TimelineEntry[];
   today: string;
 }) {
-  const days = groupByDay(entries);
-  const yesterday = addDays(today, -1);
+  const days = groupByDay(entries, (entry) => entry.at);
 
   return (
     <ol className="relative space-y-6 before:absolute before:top-2 before:bottom-2 before:left-3 before:w-px before:bg-border">
-      {days.map(({ date, entries: dayEntries }) => (
+      {days.map(({ date, items: dayEntries }) => (
         <li key={date}>
           <h3 className="relative mb-3 ml-9 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            {date === today ? "Today" : date === yesterday ? "Yesterday" : formatDate(date)}
+            {dayHeading(date, today)}
           </h3>
           <ol className="space-y-5">
             {dayEntries.map((entry) => (
@@ -152,15 +151,4 @@ function TimelineItem({ residentId, entry }: { residentId: string; entry: Timeli
       </p>
     </li>
   );
-}
-
-function groupByDay(entries: TimelineEntry[]): Array<{ date: string; entries: TimelineEntry[] }> {
-  const days: Array<{ date: string; entries: TimelineEntry[] }> = [];
-  for (const entry of entries) {
-    const date = dateInZone(new Date(entry.at));
-    const last = days[days.length - 1];
-    if (last && last.date === date) last.entries.push(entry);
-    else days.push({ date, entries: [entry] });
-  }
-  return days;
 }

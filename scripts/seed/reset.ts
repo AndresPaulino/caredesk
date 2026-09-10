@@ -59,6 +59,8 @@ if (seedNumber !== undefined && !Number.isInteger(seedNumber)) {
 
 const supabase = createClient<Database>(url, secretKey, {
   auth: { persistSession: false, autoRefreshToken: false },
+  // The seed is the starting state, not a change: no audit events (docs/database.md).
+  global: { headers: { "x-caredesk-audit": "skip" } },
 });
 /** Signs in as a demo account only to check its password (see passwordWorks). */
 const passwordCheck = createClient<Database>(url, publishableKey, {

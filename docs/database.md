@@ -137,6 +137,52 @@ from search; that recording care for an out-of-scope resident is rejected; and t
 the service role can call `reset_demo_data()`. It reads the latest `seed_runs` row to rebuild the
 exact dataset that is in the database.
 
+## Audit trail
+
+Every change to a tracked record becomes an audit event (ticket 06). The tracked tables are
+the ones that hold resident data: `residents` and the thirteen clinical tables. An
+`after insert or update or delete` row trigger on each (`record_audit_event()`) writes one row
+to `audit_events` with the actor, the time, the table and row, the operation, the whole row
+before and after as JSON, and, for an update, the columns that changed (`updated_at` never
+counts, and an update that changes nothing else writes no event). Removals are updates that
+stamp `archived_at`, so they are recorded as changes; a hard delete, which only the service
+role can do, is recorded as a delete. The residents trigger covers inserts and updates only: a
+resident row is never removed, and the foreign key from `audit_events` stops a hard delete of
+any resident with a trail.
+
+The actor is resolved by `current_actor_id()`:
+
+- A signed-in user acts as themself (`current_staff_id()`), whatever else the request says.
+- A service-role caller has no user, so it names the acting staff member on each request:
+  over the API, the `x-caredesk-actor` request header (PostgREST exposes request headers to
+  SQL, and supabase-js sends it from `global.headers`); in a direct SQL session,
+  `set_config('app.actor_id', ..., true)`.
+- A write with neither, or naming someone who is not staff, is rejected with a message that
+  says so (hint `no_actor`), so nothing changes anonymously.
+
+The seed is the starting state, not a change, and is not audited: the seeder sends
+`x-caredesk-audit: skip` (`app.audit` in SQL) and the trigger records nothing for that
+request. Only a request without a user session can skip, so a signed-in user sending the same
+header is audited all the same. The integration tests use the same flag when they put the seed
+back, and delete the events their own writes produced.
+
+Events are readable within the resident's scope (`resident_id in (select id from residents)`),
+the same rule as every clinical table, and are append-only: the trigger function is
+`security definer` so it can insert, and `insert`, `update`, and `delete` are revoked from
+signed-in staff. The table is in the `supabase_realtime` publication for the activity feed
+(ticket 07), which applies the same policy per subscriber. Operator-wide staff (those with no
+facility, the admin) are visible to every signed-in staff member so a change the admin made is
+attributed by name on a nurse's screen. `reset_demo_data()` empties the trail with the data it
+describes.
+
+The app reads the trail through `src/lib/audit/`: `events.ts` queries the events for a
+resident with the actor joined and resolves the names behind foreign keys (rooms, units,
+staff, medication orders) through the caller's own session; `describe.ts` turns each event
+into a sentence ("discontinued the Metformin order", "moved the resident to Room 214, Unit B")
+and a field-by-field before-and-after list, using the labels and formats in `columns.ts`.
+`src/lib/audit/triggers.integration.test.ts` proves the actor rules, the archive-as-change
+rule, the scope, and the append-only rule against the hosted project.
+
 ## Types
 
 `src/lib/supabase/database.types.ts` is maintained by hand in the shape `supabase gen types`

@@ -1,5 +1,5 @@
 /**
- * The record tabs on a resident's page, one per record type. The active tab lives in the URL
+ * The record tabs on a resident's page, one per record type plus the audit trail. The active tab lives in the URL
  * (`?tab=medications`) so a link, including an assistant source chip, can open a resident on
  * the tab that holds the record.
  */
@@ -15,6 +15,7 @@ export const RECORD_TABS = [
   { key: "notes", label: "Progress notes" },
   { key: "appointments", label: "Appointments" },
   { key: "family", label: "Family contacts" },
+  { key: "audit", label: "Audit trail" },
 ] as const;
 
 export type RecordTabKey = (typeof RECORD_TABS)[number]["key"];
