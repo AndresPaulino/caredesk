@@ -3,9 +3,15 @@
  * about 100 former residents whose stays ended in the last year. Each resident gets a name
  * from the pools, an age centered in the mid-eighties, a stay, and the conditions that then
  * shape everything else on their record.
+ *
+ * The ten hero residents (`heroes.ts`) are layered in here: each takes a headcount slot on
+ * their unit, so the totals hold, and a current hero's authored room is reserved before the
+ * generated residents fill the beds, so the hero lives where the story says.
  */
+import { ageOn } from "../format";
 import type { Enums } from "../supabase/database.types";
 
+import { HERO_RESIDENTS, type HeroDefinition } from "./heroes";
 import type { Organization } from "./organization";
 import { stableId, type Random } from "./random";
 import { pronounsFor, type ResidentContext } from "./text";
@@ -50,6 +56,8 @@ export type ResidentProfile = {
   has(code: string): boolean;
   hasAny(codes: readonly string[]): boolean;
   context: ResidentContext;
+  /** The authored facts, for a hero resident; null for the generated population. */
+  hero: HeroDefinition | null;
 };
 
 export function buildResidents(
@@ -57,8 +65,14 @@ export function buildResidents(
   org: Organization,
   anchor: Date,
   anchorDate: string,
+  heroes: readonly HeroDefinition[] = HERO_RESIDENTS,
 ): ResidentProfile[] {
   const profiles: ResidentProfile[] = [];
+  const heroesByUnit = new Map<string, HeroDefinition[]>();
+  for (const hero of heroes) {
+    const key = `${hero.facilityCode}:${hero.unitCode}`;
+    heroesByUnit.set(key, [...(heroesByUnit.get(key) ?? []), hero]);
+  }
 
   org.facilities.forEach((facility, facilityIndex) => {
     const units = org.unitsByFacility.get(facility.id)!;
@@ -68,11 +82,27 @@ export function buildResidents(
     units.forEach((unit, unitIndex) => {
       const rooms = org.roomsByUnit.get(unit.id)!;
       const beds = rooms.flatMap((room) => Array.from({ length: room.capacity }, () => room));
-      const openBeds = random.derive(`beds:${facility.code}:${unit.code}`).shuffle(beds);
-      const namesOnUnit = new Set<string>();
+      const unitHeroes = heroesByUnit.get(`${facility.code}:${unit.code}`) ?? [];
+      // A hero's bed is reserved (one bed of the room, so a semi-private room keeps its other
+      // bed), and each hero takes one of the unit's headcount slots.
+      const reservedRooms = unitHeroes.flatMap((hero) =>
+        hero.roomNumber ? [hero.roomNumber] : [],
+      );
+      const openBeds = random
+        .derive(`beds:${facility.code}:${unit.code}`)
+        .shuffle(beds)
+        .filter((room) => {
+          const reserved = reservedRooms.indexOf(room.number);
+          if (reserved === -1) return true;
+          reservedRooms.splice(reserved, 1);
+          return false;
+        });
+      const currentHere = currentCounts[unitIndex] - unitHeroes.filter((h) => !h.stay).length;
+      const formerHere = formerCounts[unitIndex] - unitHeroes.filter((h) => h.stay).length;
+      const namesOnUnit = new Set(unitHeroes.map((hero) => `${hero.firstName} ${hero.lastName}`));
       const common = { facility, unit, anchor, anchorDate, namesOnUnit };
 
-      for (let i = 0; i < currentCounts[unitIndex]; i++) {
+      for (let i = 0; i < currentHere; i++) {
         profiles.push(
           buildResident(random, {
             ...common,
@@ -82,7 +112,7 @@ export function buildResidents(
           }),
         );
       }
-      for (let j = 0; j < formerCounts[unitIndex]; j++) {
+      for (let j = 0; j < formerHere; j++) {
         profiles.push(
           buildResident(random, {
             ...common,
@@ -94,6 +124,8 @@ export function buildResidents(
       }
     });
   });
+
+  for (const hero of heroes) profiles.push(buildHeroProfile(random, hero, org, anchor, anchorDate));
 
   return profiles;
 }
@@ -196,21 +228,111 @@ function buildResident(masterRandom: Random, input: ResidentInput): ResidentProf
     activityEnd,
     has,
     hasAny,
-    context: {
-      firstName,
-      lastName,
-      sex,
-      ...pronounsFor(sex),
-      ageYears,
-      mobility,
-      diet,
-      hasDementia: has(CODES.dementia),
-      hasDiabetes: has(CODES.diabetes),
-      hasHeartFailure: has(CODES.heartFailure),
-      hasCopd: has(CODES.copd),
-      hasHypertension: has(CODES.hypertension),
-      hasPressureInjury: has(CODES.pressureInjury),
-    },
+    context: contextFor(row, sex, ageYears, has),
+    hero: null,
+  };
+}
+
+/**
+ * A hero resident from their authored facts. Dates are resolved against the anchor, so the
+ * story holds on every reseed; ids derive from the hero's key, so they hold across seed numbers.
+ */
+function buildHeroProfile(
+  masterRandom: Random,
+  hero: HeroDefinition,
+  org: Organization,
+  anchor: Date,
+  anchorDate: string,
+): ResidentProfile {
+  const key = `hero:${hero.key}`;
+  const facility = org.facilities.find((candidate) => candidate.code === hero.facilityCode);
+  if (!facility) throw new Error(`Hero ${hero.key}: unknown facility ${hero.facilityCode}`);
+  const unit = org.unitsByFacility
+    .get(facility.id)!
+    .find((candidate) => candidate.code === hero.unitCode);
+  if (!unit) throw new Error(`Hero ${hero.key}: unknown unit ${hero.unitCode}`);
+  const room = hero.roomNumber
+    ? org.roomsByUnit.get(unit.id)!.find((candidate) => candidate.number === hero.roomNumber)
+    : null;
+  if (hero.roomNumber && !room)
+    throw new Error(`Hero ${hero.key}: unknown room ${hero.roomNumber}`);
+  if (hero.stay ? room : !room) {
+    throw new Error(`Hero ${hero.key}: a former resident has no room and a current one has one`);
+  }
+
+  const admissionDate = addDays(anchorDate, -hero.admittedDaysAgo);
+  const stayEndedOn = hero.stay ? addDays(anchorDate, -hero.stay.endedDaysAgo) : null;
+  const activityEndDate = stayEndedOn ?? anchorDate;
+  const activityEnd = stayEndedOn ? atZoned(stayEndedOn, 23, 59) : anchor;
+
+  const conditions: PlannedCondition[] = hero.conditions.map((condition) => ({
+    id: stableId(`condition:${key}:${condition.code}`),
+    entry: conditionEntry(condition.code),
+    onset: addDays(anchorDate, -condition.onsetDaysAgo),
+    resolvedOn:
+      condition.resolvedDaysAgo === undefined
+        ? null
+        : addDays(anchorDate, -condition.resolvedDaysAgo),
+  }));
+  const codes = new Set(conditions.map((condition) => condition.entry.code));
+  const has = (code: string) => codes.has(code);
+
+  const row: SeedRow<"residents"> = {
+    id: stableId(`resident:${key}`),
+    facility_id: facility.id,
+    unit_id: unit.id,
+    room_id: room?.id ?? null,
+    first_name: hero.firstName,
+    last_name: hero.lastName,
+    date_of_birth: hero.dateOfBirth,
+    sex: hero.sex,
+    admission_date: admissionDate,
+    status: hero.stay ? "former" : "current",
+    stay_ended_on: stayEndedOn,
+    stay_end_reason: hero.stay?.reason ?? null,
+    code_status: hero.codeStatus,
+    diet: hero.diet,
+    mobility: hero.mobility,
+  };
+  const ageYears = ageOn(hero.dateOfBirth, anchor);
+
+  return {
+    key,
+    random: masterRandom.derive(`resident:${key}`),
+    row,
+    facility,
+    unit,
+    ageYears,
+    conditions,
+    activityEndDate,
+    activityEnd,
+    has,
+    hasAny: (candidates) => candidates.some(has),
+    context: contextFor(row, hero.sex, ageYears, has),
+    hero,
+  };
+}
+
+function contextFor(
+  row: SeedRow<"residents">,
+  sex: "female" | "male",
+  ageYears: number,
+  has: (code: string) => boolean,
+): ResidentContext {
+  return {
+    firstName: row.first_name,
+    lastName: row.last_name,
+    sex,
+    ...pronounsFor(sex),
+    ageYears,
+    mobility: row.mobility,
+    diet: row.diet,
+    hasDementia: has(CODES.dementia),
+    hasDiabetes: has(CODES.diabetes),
+    hasHeartFailure: has(CODES.heartFailure),
+    hasCopd: has(CODES.copd),
+    hasHypertension: has(CODES.hypertension),
+    hasPressureInjury: has(CODES.pressureInjury),
   };
 }
 

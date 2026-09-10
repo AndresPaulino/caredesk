@@ -1,6 +1,8 @@
 import type { DemoAccount } from "../demo-accounts";
 import type { Database, Tables } from "../supabase/database.types";
 
+import type { HeroKey } from "./heroes";
+
 export type TableName = keyof Database["public"]["Tables"];
 
 /**
@@ -38,6 +40,14 @@ export const CLINICAL_TABLES = [
 
 export type ClinicalTable = (typeof CLINICAL_TABLES)[number];
 
+/** A hero resident as seeded: which story, and the resident row it became. */
+export type SeedHero = {
+  key: HeroKey;
+  /** One line for the demo script: what this resident's record shows. */
+  story: string;
+  resident: SeedRow<"residents">;
+};
+
 export type Seed = {
   /** The number the generator was seeded with. */
   seedNumber: number;
@@ -45,6 +55,8 @@ export type Seed = {
   anchor: Date;
   /** The calendar date of `anchor` in the facilities' time zone. */
   anchorDate: string;
+  /** The ten hero residents, in the order `heroes.ts` lists them. */
+  heroes: SeedHero[];
   facilities: SeedRow<"facilities">[];
   units: SeedRow<"units">[];
   rooms: SeedRow<"rooms">[];

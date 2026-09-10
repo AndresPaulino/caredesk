@@ -63,6 +63,7 @@ The generator lives in `src/lib/seed/` and is shared with the tests and the simu
   results, a care plan with goals, incidents, progress notes, appointments, and family contacts.
   A former resident's activity stops when their stay ended.
 - `text.ts` holds the findings, notes, and goal templates so the records read like a chart.
+- `heroes.ts` holds the ten hero residents as authored facts (see below).
 
 Everything derives from a seed number (default `20260909`) and an **anchor** instant: "now",
 rounded down to the hour, unless `--anchor <ISO instant>` pins it. Recent records are placed
@@ -71,6 +72,37 @@ tomorrow, and an assessment overdue since last week. Ids derive from stable keys
 anchor, so links keep working from one reseed to the next. The same seed and anchor produce the
 same rows; `src/lib/seed/seed.test.ts` proves that, along with the row budget, catalog
 references, and the former-resident rule.
+
+### Hero residents
+
+Ten residents are hand-authored in `src/lib/seed/heroes.ts` so the demo script always has its
+stories, and layered into the generated population rather than added on top: each takes a
+headcount slot on their unit, and a current hero's room is reserved before the generated
+residents fill the beds, so the totals and the occupancy hold. A hero is authored as facts
+(identity, room, conditions, allergies, the whole medication list, the assessments the story
+turns on, incidents, notes, contacts, a care plan) with every date relative to the anchor, so
+the story is true on every reseed; `records.ts` generates whatever the story leaves open
+(administrations, daily vitals, lab results, the routine assessments). Ids derive from the
+hero's key (`heroResidentId("doe-meadows")`), so they survive a reseed and a change of seed
+number. `pnpm db:seed` lists them at the end.
+
+| Key                | Resident          | Where                     | Story                                                                 |
+| ------------------ | ----------------- | ------------------------- | --------------------------------------------------------------------- |
+| `doe-meadows`      | Harold Doe        | Meadows, Unit A, Room 104 | Podiatry overdue; physician visit four days ago                       |
+| `doe-harbor`       | Walter Doe        | Harbor, Unit B, Room 212  | The other Mr. Doe; dialysis three mornings a week                     |
+| `allergy-conflict` | Margaret Kowalski | Meadows, Unit B, Room 218 | Antibiotic ordered today conflicts with her sulfamethoxazole allergy  |
+| `falls`            | Eugene Barlow     | Meadows, Unit A, Room 115 | Two falls in thirty days; fall-risk assessment overdue                |
+| `readmitted`       | Frank Moreau      | Harbor, Unit A, Room 121  | Hospital stay; orders discontinued at transfer and added on return    |
+| `dementia`         | Rose Delgado      | Meadows, Unit B, Room 207 | Alzheimer's; daughter calls most evenings, notes record her questions |
+| `wound-series`     | Samuel Whitcomb   | Orchard, Unit A, Room 118 | Weekly wound checks with shrinking measurements                       |
+| `recently-former`  | Irene Castellano  | Commons, Unit D, former   | Discharged home six days ago after hip-fracture rehabilitation        |
+| `weight-loss`      | Clara Beaumont    | Bayview, Unit B, Room 226 | Weekly weights down eleven pounds in five weeks                       |
+| `unmet-goal`       | Vernon Pryor      | Pines, Unit C, Room 309   | Hypertension care plan with the blood-pressure goal not met           |
+
+The Meadows nurse sees Harold Doe and not Walter; the Harbor nurse the reverse; the admin sees
+both, which is what the assistant's "which Mr. Doe" flow needs. `heroes.test.ts` checks every
+authored fact against the generated seed and every code against the vocabulary;
+`heroes.integration.test.ts` reads each hero back from the hosted project after a reseed.
 
 ## Scope
 

@@ -7,6 +7,11 @@
  *
  * Everything for a former resident stops at the end of their stay. Everything for a current
  * resident stops at the anchor instant.
+ *
+ * A hero resident (`heroes.ts`) arrives with authored facts. Each builder below checks for
+ * them first: the whole list where the story owns the table (allergies, orders, contacts, the
+ * care plan, incidents), the named kinds for assessments, extra rows for notes and
+ * appointments, and baseline overrides for vitals. Everything else is generated as usual.
  */
 import { LAB_PANEL_BY_KEY, type LabPanel, type LabTest } from "../clinical/lab-tests";
 import { SCHEDULED_HOURS, WEEKLY_DOSE_DAY } from "../clinical/medication-schedule";
@@ -76,6 +81,10 @@ type Builder = {
   distributions: Distributions;
   allergySubstances: string[];
   orders: SeedRow<"medication_orders">[];
+  /** Orders entered today with no dose recorded yet (authored). */
+  unadministered: Set<string>;
+  /** The calendar date this many days before the anchor. */
+  ago(days: number): string;
 };
 
 export function buildRecords(
@@ -131,6 +140,8 @@ export function buildRecords(
       distributions,
       allergySubstances: [],
       orders: [],
+      unadministered: new Set(),
+      ago: (days) => addDays(anchorDate, -days),
     };
     addConditions(builder);
     addAllergies(builder);
@@ -173,6 +184,29 @@ function addConditions(b: Builder) {
 
 function addAllergies(b: Builder) {
   const { random, profile } = b;
+  const authored = profile.hero?.allergies;
+  if (authored) {
+    for (const item of authored) {
+      const entry = ALLERGY_POOL.find((candidate) => candidate.code === item.code);
+      if (!entry)
+        throw new Error(`Hero ${profile.key}: allergy ${item.code} is not in the catalog`);
+      b.out.allergies.push({
+        id: stableId(`allergy:${profile.key}:${entry.code}`),
+        resident_id: b.resident.id,
+        code: entry.code,
+        description: entry.description,
+        category: entry.category,
+        allergy_type: entry.allergyType,
+        substance: entry.substance,
+        reaction: item.reaction,
+        severity: item.severity,
+        noted_on:
+          item.notedDaysAgo === undefined ? b.resident.admission_date : b.ago(item.notedDaysAgo),
+      });
+      if (entry.substance) b.allergySubstances.push(entry.substance);
+    }
+    return;
+  }
   const count = random.weighted([0, 1, 2, 3], (n) => [30, 35, 25, 10][n]);
   const chosen = new Set<string>();
   const stayDays = Math.max(1, daysBetween(b.resident.admission_date, profile.activityEndDate));
@@ -232,6 +266,7 @@ function addMedicationOrders(b: Builder) {
     conditionId: string | null,
     startedOn: string,
     endedOn: string | null,
+    overrides: Partial<Pick<SeedRow<"medication_orders">, "frequency" | "instructions">> = {},
   ) => {
     // Nothing stays active past the end of a stay, and no order ends before it starts.
     if (b.former && (endedOn === null || endedOn > end)) endedOn = end;
@@ -242,8 +277,11 @@ function addMedicationOrders(b: Builder) {
       code: medication.code,
       code_system: medication.system,
       medication: medication.description,
-      frequency: frequencyFor(medication),
-      instructions: medicationInstructions(random, medication.description),
+      frequency: overrides.frequency ?? frequencyFor(medication),
+      instructions:
+        overrides.instructions === undefined
+          ? medicationInstructions(random, medication.description)
+          : overrides.instructions,
       condition_id: conditionId,
       prescribed_by: b.physician().id,
       started_on: startedOn,
@@ -252,7 +290,34 @@ function addMedicationOrders(b: Builder) {
     };
     b.out.medication_orders.push(row);
     b.orders.push(row);
+    return row;
   };
+
+  const authored = profile.hero?.medicationOrders;
+  if (authored) {
+    for (const item of authored) {
+      const medication = medicationEntry(item.code);
+      let conditionId: string | null = null;
+      if (item.treats) {
+        const condition = profile.conditions.find((c) => c.entry.code === item.treats);
+        if (!condition) {
+          throw new Error(
+            `Hero ${profile.key}: ${medication.description} treats an absent condition`,
+          );
+        }
+        conditionId = condition.id;
+      }
+      const row = push(
+        medication,
+        conditionId,
+        b.ago(item.startedDaysAgo),
+        item.endedDaysAgo === undefined ? null : b.ago(item.endedDaysAgo),
+        { frequency: item.frequency, instructions: item.instructions },
+      );
+      if (item.noDosesYet) b.unadministered.add(row.id);
+    }
+    return;
+  }
 
   for (const condition of profile.conditions) {
     const options = medicationsTreating(condition.entry.code).filter(
@@ -323,7 +388,7 @@ function addAdministrations(b: Builder) {
   let n = 0;
 
   for (const order of b.orders) {
-    if (order.status !== "active") continue;
+    if (order.status !== "active" || b.unadministered.has(order.id)) continue;
     for (let daysAgo = ADMINISTRATION_DAYS; daysAgo >= 0; daysAgo--) {
       const date = addDays(b.anchorDate, -daysAgo);
       if (date < order.started_on) continue;
@@ -382,12 +447,16 @@ function addVitals(b: Builder) {
   const afib = profile.has(CODES.atrialFibrillation);
   const elderly = profile.ageYears >= 85;
 
-  // A baseline per resident from the vocabulary's distributions, shifted by their conditions.
+  // A baseline per resident from the vocabulary's distributions, shifted by their conditions,
+  // unless the resident's story sets it.
+  const authored = profile.hero?.vitals;
   const systolicBase =
+    authored?.systolic ??
     quantile(distributions.systolic, random.real(0.15, 0.8)) +
-    (hypertension ? 8 : 0) +
-    (elderly ? 2 : 0);
+      (hypertension ? 8 : 0) +
+      (elderly ? 2 : 0);
   const diastolicBase =
+    authored?.diastolic ??
     quantile(distributions.diastolic, random.real(0.15, 0.8)) - (elderly ? 4 : 0);
   const pulseBase = quantile(distributions.pulse, random.real(0.1, 0.85));
   const respiratoryBase =
@@ -399,6 +468,13 @@ function addVitals(b: Builder) {
     2.2046 *
     (profile.row.sex === "female" ? 0.85 : 1) *
     (elderly ? 0.92 : 1);
+  // An authored trend runs through today's weight; a story with a trend means the trend shows.
+  const weightOn = (date: string) =>
+    authored?.weight
+      ? authored.weight.currentLb +
+        (authored.weight.changePerWeekLb * daysBetween(b.anchorDate, date)) / 7 +
+        random.normal(0, 0.3)
+      : weightBase + random.normal(0, 1.5);
 
   const slots: Array<{ date: string; hour: number; weigh: boolean }> = [];
   if (!b.former) {
@@ -427,8 +503,8 @@ function addVitals(b: Builder) {
     const at = atZoned(slot.date, slot.hour, 30 + random.int(0, 20));
     if (at.getTime() > profile.activityEnd.getTime()) continue;
 
-    let systolic = systolicBase + random.normal(0, 7);
-    let diastolic = diastolicBase + random.normal(0, 5);
+    let systolic = systolicBase + random.normal(0, authored?.systolic ? 4 : 7);
+    let diastolic = diastolicBase + random.normal(0, authored?.diastolic ? 3 : 5);
     let pulse = pulseBase + random.normal(0, afib ? 12 : 5);
     let temperature = temperatureBase + random.normal(0, 0.3);
     let respiratory = respiratoryBase + random.normal(0, 1.5);
@@ -477,7 +553,7 @@ function addVitals(b: Builder) {
       temperature_f: round1(clamp(temperature, 94, 105)),
       respiratory_rate: clamp(Math.round(respiratory), 8, 40),
       oxygen_saturation: clamp(Math.round(saturation), 75, 100),
-      weight_lb: slot.weigh ? round1(clamp(weightBase + random.normal(0, 1.5), 70, 400)) : null,
+      weight_lb: slot.weigh ? round1(clamp(weightOn(slot.date), 70, 400)) : null,
       notes,
     });
   }
@@ -505,28 +581,40 @@ function addAssessments(b: Builder) {
     kind: Enums<"assessment_kind">,
     date: string,
     hour: number,
-    extra: { panelName?: string } = {},
+    extra: { panelName?: string; findings?: string; score?: number } = {},
   ): SeedRow<"assessments"> | null => {
     if (date < admission || date > end) return null;
     const at = atZoned(date, hour, random.int(0, 45));
     if (at.getTime() > profile.activityEnd.getTime()) return null;
-    const score = kind === "fall_risk" ? fallRiskScore(b) : null;
+    const score = extra.score ?? (kind === "fall_risk" ? fallRiskScore(b) : null);
     const row: SeedRow<"assessments"> = {
       id: stableId(`assessment:${profile.key}:${n++}`),
       resident_id: b.resident.id,
       kind,
       performed_at: toIso(at),
       performed_by: (PHYSICIAN_KINDS.includes(kind) ? b.physician() : b.nurse()).id,
-      findings: assessmentFindings(random, kind, profile.context, {
-        score: score ?? undefined,
-        ...extra,
-      }),
+      findings:
+        extra.findings ??
+        assessmentFindings(random, kind, profile.context, {
+          score: score ?? undefined,
+          panelName: extra.panelName,
+        }),
       score,
     };
     b.out.assessments.push(row);
     counts.set(kind, (counts.get(kind) ?? 0) + 1);
     return row;
   };
+
+  // A hero's story owns every kind it names; the other kinds are generated below.
+  const authoredKinds = new Set<Enums<"assessment_kind">>();
+  for (const item of profile.hero?.assessments ?? []) {
+    authoredKinds.add(item.kind);
+    const date = b.ago(item.daysAgo);
+    const hour = item.hour ?? DEFAULT_ASSESSMENT_HOURS[item.kind];
+    if (item.kind === "lab_draw") pushLabDraw(b, push, date, hour);
+    else push(item.kind, date, hour, { findings: item.findings, score: item.score });
+  }
 
   /** A run of assessments back from a recent one, at roughly the kind's interval. */
   const series = (
@@ -538,6 +626,7 @@ function addAssessments(b: Builder) {
     hour: number,
     onEach?: (row: SeedRow<"assessments">, date: string) => void,
   ) => {
+    if (authoredKinds.has(kind)) return;
     const oldest = addDays(end, -horizonDays);
     let date = addDays(end, -random.int(recent[0], recent[1]));
     for (let i = 0; i < max && date >= oldest; i++) {
@@ -564,17 +653,33 @@ function addAssessments(b: Builder) {
     pushLabDraw(b, push, earliestDate(addDays(admission, random.int(0, 7)), end), 6);
   }
 
-  if (profile.has(CODES.diabetes) || random.chance(0.55)) {
+  if (!authoredKinds.has("podiatry") && (profile.has(CODES.diabetes) || random.chance(0.55))) {
     push("podiatry", addDays(end, -random.int(0, 96)), 13);
   }
-  if (random.chance(0.35)) push("dental", addDays(end, -random.int(0, 400)), 11);
-  if (random.chance(0.35)) push("vision", addDays(end, -random.int(0, 400)), 14);
-  if (profile.has(CODES.pressureInjury)) {
+  if (!authoredKinds.has("dental") && random.chance(0.35)) {
+    push("dental", addDays(end, -random.int(0, 400)), 11);
+  }
+  if (!authoredKinds.has("vision") && random.chance(0.35)) {
+    push("vision", addDays(end, -random.int(0, 400)), 14);
+  }
+  if (!authoredKinds.has("wound_check") && profile.has(CODES.pressureInjury)) {
     for (let week = 0; week < 4; week++) {
       push("wound_check", addDays(end, -(week * 7 + random.int(0, 6))), 10);
     }
   }
 }
+
+/** The hour of the day each kind of assessment usually happens, for authored ones. */
+const DEFAULT_ASSESSMENT_HOURS: Readonly<Record<Enums<"assessment_kind">, number>> = {
+  physician_visit: 10,
+  nursing_assessment: 9,
+  fall_risk: 9,
+  lab_draw: 6,
+  podiatry: 13,
+  dental: 11,
+  vision: 14,
+  wound_check: 10,
+};
 
 function fallRiskScore(b: Builder): number {
   const ranges: Record<Enums<"mobility">, [number, number]> = {
@@ -708,6 +813,43 @@ const CARE_PLAN_PRIORITY: readonly string[] = [
 function addCarePlan(b: Builder) {
   const { random, profile } = b;
   const end = profile.activityEndDate;
+  const authored = profile.hero?.carePlan;
+  if (authored) {
+    const condition = profile.conditions.find((c) => c.entry.code === authored.treats);
+    if (!condition)
+      throw new Error(`Hero ${profile.key}: the care plan addresses an absent condition`);
+    const plan = carePlansFor(authored.treats).find(
+      (candidate) => candidate.code === authored.code,
+    );
+    if (!plan) {
+      throw new Error(
+        `Hero ${profile.key}: care plan ${authored.code} does not address ${authored.treats}`,
+      );
+    }
+    const planId = stableId(`care-plan:${profile.key}`);
+    b.out.care_plans.push({
+      id: planId,
+      resident_id: b.resident.id,
+      code: plan.code,
+      description: plan.description,
+      condition_id: condition.id,
+      started_on: b.ago(authored.startedDaysAgo),
+      ended_on: b.former ? end : null,
+      status: b.former ? "completed" : "active",
+    });
+    authored.goals.forEach((goal, index) => {
+      b.out.care_plan_goals.push({
+        id: stableId(`care-plan-goal:${profile.key}:${index}`),
+        resident_id: b.resident.id,
+        care_plan_id: planId,
+        description: goal.goal,
+        intervention: goal.intervention,
+        target_date: b.ago(-goal.targetInDays),
+        status: goal.status,
+      });
+    });
+    return;
+  }
   const candidates = profile.conditions
     .filter((condition) => CARE_PLAN_PRIORITY.includes(condition.entry.code))
     .sort(
@@ -787,6 +929,23 @@ function poisson(random: Random, rate: number): number {
 function addIncidents(b: Builder) {
   const { random, profile } = b;
   const end = profile.activityEndDate;
+  const authored = profile.hero?.incidents;
+  if (authored) {
+    authored.forEach((item, index) => {
+      const at = atZoned(b.ago(item.daysAgo), item.hour, 0);
+      if (at.getTime() > profile.activityEnd.getTime()) return;
+      b.out.incidents.push({
+        id: stableId(`incident:${profile.key}:${index}`),
+        resident_id: b.resident.id,
+        kind: item.kind,
+        occurred_at: toIso(at),
+        description: item.description,
+        injury_sustained: item.injury,
+        reported_by: b.nurse().id,
+      });
+    });
+    return;
+  }
   const windowDays = Math.min(INCIDENT_WINDOW_DAYS, daysBetween(b.resident.admission_date, end));
   if (windowDays <= 0) return;
   const scale = windowDays / INCIDENT_WINDOW_DAYS;
@@ -851,18 +1010,26 @@ function addProgressNotes(b: Builder) {
   const admitted = atZoned(admission, 0, 0);
   let n = 0;
 
-  const push = (daysAgo: number) => {
-    const slot = random.pick(SHIFTS);
-    const at = atZoned(addDays(end, -daysAgo), slot.hour, slot.minute + random.int(-10, 10));
+  const write = (at: Date, body: string) => {
     if (at.getTime() > profile.activityEnd.getTime() || at.getTime() < admitted.getTime()) return;
     b.out.progress_notes.push({
       id: stableId(`note:${profile.key}:${n++}`),
       resident_id: b.resident.id,
       written_by: b.nurse().id,
       written_at: toIso(at),
-      body: progressNote(random, profile.context, slot.shift),
+      body,
     });
   };
+  const push = (daysAgo: number) => {
+    const slot = random.pick(SHIFTS);
+    const at = atZoned(addDays(end, -daysAgo), slot.hour, slot.minute + random.int(-10, 10));
+    write(at, progressNote(random, profile.context, slot.shift));
+  };
+
+  for (const item of profile.hero?.progressNotes ?? []) {
+    const slot = SHIFTS.find((candidate) => candidate.shift === item.shift)!;
+    write(atZoned(b.ago(item.daysAgo), slot.hour, slot.minute), item.body);
+  }
 
   const busy = profile.has(CODES.dementia) || profile.has(CODES.heartFailure);
   const recent = b.former ? 3 : random.int(3, 5) + (busy ? 1 : 0);
@@ -887,8 +1054,13 @@ function addAppointments(b: Builder) {
   const stayDays = Math.max(0, daysBetween(admission, end));
   let n = 0;
 
-  const push = (kind: Enums<"appointment_kind">, at: Date, status: Enums<"appointment_status">) => {
-    const { location, purpose } = appointmentDetails(random, kind, b.city, profile.context);
+  const push = (
+    kind: Enums<"appointment_kind">,
+    at: Date,
+    status: Enums<"appointment_status">,
+    details = appointmentDetails(random, kind, b.city, profile.context),
+  ) => {
+    const { location, purpose } = details;
     b.out.appointments.push({
       id: stableId(`appointment:${profile.key}:${n++}`),
       resident_id: b.resident.id,
@@ -907,6 +1079,13 @@ function addAppointments(b: Builder) {
     );
   const clockTime = (date: string) =>
     atZoned(date, random.int(8, 15), random.pick([0, 15, 30, 45]));
+
+  for (const item of profile.hero?.appointments ?? []) {
+    push(item.kind, atZoned(b.ago(-item.inDays), item.hour, item.minute ?? 0), item.status, {
+      location: item.location,
+      purpose: item.purpose,
+    });
+  }
 
   // Dialysis three mornings a week, two weeks back and (for current residents) two weeks ahead.
   if (profile.has(CODES.endStageRenalDisease)) {
@@ -945,6 +1124,23 @@ const AREA_CODES = ["617", "508", "413", "978", "781", "339", "351", "774", "857
 
 function addFamilyContacts(b: Builder) {
   const { random, profile } = b;
+  const authored = profile.hero?.familyContacts;
+  if (authored) {
+    authored.forEach((contact, index) => {
+      b.out.family_contacts.push({
+        id: stableId(`contact:${profile.key}:${index}`),
+        resident_id: b.resident.id,
+        first_name: contact.firstName,
+        last_name: contact.lastName,
+        relationship: contact.relationship,
+        phone: contact.phone,
+        email: contact.email ?? null,
+        is_primary: contact.isPrimary,
+        notes: contact.notes ?? null,
+      });
+    });
+    return;
+  }
   const count = random.weighted([1, 2, 3], (n) => [35, 45, 20][n - 1]);
   let spouseUsed = false;
 

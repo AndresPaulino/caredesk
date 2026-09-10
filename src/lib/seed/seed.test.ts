@@ -95,14 +95,18 @@ describe("the seed", () => {
     expect(current.length / beds).toBeGreaterThan(0.9);
   });
 
-  it("draws names from the pools and centers ages in the mid-eighties", () => {
+  it("draws generated names from the pools and centers ages in the mid-eighties", () => {
     const female = new Set(NAME_POOLS.female);
     const male = new Set(NAME_POOLS.male);
     const last = new Set(NAME_POOLS.last);
+    // Hero residents are authored by name (there is no Doe in the pools).
+    const heroIds = new Set(seed.heroes.map((hero) => hero.resident.id));
     const ages: number[] = [];
     for (const resident of seed.residents) {
-      expect((resident.sex === "female" ? female : male).has(resident.first_name)).toBe(true);
-      expect(last.has(resident.last_name)).toBe(true);
+      if (!heroIds.has(resident.id)) {
+        expect((resident.sex === "female" ? female : male).has(resident.first_name)).toBe(true);
+        expect(last.has(resident.last_name)).toBe(true);
+      }
       ages.push(2026 - Number(resident.date_of_birth.slice(0, 4)));
     }
     ages.sort((a, b) => a - b);
@@ -145,7 +149,7 @@ describe("the seed", () => {
     expect(paired / seed.medication_orders.length).toBeGreaterThan(0.5);
   });
 
-  it("never orders a medication a resident is allergic to", () => {
+  it("never orders a medication a resident is allergic to, except the one authored conflict", () => {
     const substancesByResident = new Map<string, string[]>();
     for (const allergy of seed.allergies) {
       if (!allergy.substance) continue;
@@ -154,11 +158,14 @@ describe("the seed", () => {
       substancesByResident.set(allergy.resident_id, list);
     }
     expect(substancesByResident.size).toBeGreaterThan(20);
-    for (const order of seed.medication_orders) {
-      for (const substance of substancesByResident.get(order.resident_id) ?? []) {
-        expect(conflictsWithAllergy(order.medication, substance), order.medication).toBe(false);
-      }
-    }
+    const conflicting = seed.medication_orders.filter((order) =>
+      (substancesByResident.get(order.resident_id) ?? []).some((substance) =>
+        conflictsWithAllergy(order.medication, substance),
+      ),
+    );
+    // The hero resident whose story is the conflict (heroes.ts), and nobody else.
+    const hero = seed.heroes.find((candidate) => candidate.key === "allergy-conflict")!;
+    expect(conflicting.map((order) => order.resident_id)).toEqual([hero.resident.id]);
     const withReaction = seed.allergies.filter((allergy) => allergy.reaction && allergy.severity);
     expect(withReaction.length / seed.allergies.length).toBeGreaterThan(0.6);
   });

@@ -23,6 +23,7 @@ import {
   defaultAnchor,
   residentsVisibleTo,
   tableRowCounts,
+  type Seed,
   type SeedStaffMember,
   type TableName,
 } from "../../src/lib/seed";
@@ -120,6 +121,26 @@ async function main() {
     console.info(
       `  ${account.email.padEnd(40)} ${account.password.padEnd(18)} ${visible.length} residents`,
     );
+  }
+  printHeroes(seed);
+}
+
+/** The hero residents and where to find them, for whoever is about to record the demo. */
+function printHeroes(seed: Seed) {
+  const facilityById = new Map(seed.facilities.map((facility) => [facility.id, facility]));
+  const unitById = new Map(seed.units.map((unit) => [unit.id, unit]));
+  const roomById = new Map(seed.rooms.map((room) => [room.id, room]));
+  console.info("\nHero residents (src/lib/seed/heroes.ts):");
+  for (const hero of seed.heroes) {
+    const { resident } = hero;
+    const room = resident.room_id ? roomById.get(resident.room_id) : null;
+    const where = [
+      facilityById.get(resident.facility_id)?.name,
+      unitById.get(resident.unit_id)?.name,
+      room ? `Room ${room.number}` : "former resident",
+    ].join(", ");
+    console.info(`  ${`${resident.first_name} ${resident.last_name}`.padEnd(20)} ${where}`);
+    console.info(`    ${hero.story}`);
   }
 }
 

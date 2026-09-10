@@ -33,7 +33,9 @@ pnpm simulate                # optional: simulated nurses record care until Ctrl
 The seed is generated, not stored: about 59,000 rows drawn from the committed clinical
 vocabulary, identical on every run, rebuilt in well under a minute. Recent records are placed
 around the moment you run it, so there is always something due today and overdue since last
-week. See [docs/database.md](docs/database.md#seeding).
+week. Ten hand-authored hero residents (two of them named Doe, in different facilities) carry
+the stories the demo relies on; the command lists them when it finishes. See
+[docs/database.md](docs/database.md#seeding).
 
 ### Demo accounts
 

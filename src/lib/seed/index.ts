@@ -8,7 +8,8 @@
  *
  * Recent records are placed relative to the anchor so a fresh reseed always has something due
  * today, overdue since last week, and scheduled for tomorrow. Ids do not depend on the anchor,
- * so links keep working from one reseed to the next.
+ * so links keep working from one reseed to the next. Ten hand-authored hero residents
+ * (`heroes.ts`) are layered into the population so the demo script always has its stories.
  */
 import type { DemoAccount } from "../demo-accounts";
 
@@ -19,9 +20,11 @@ import { buildResidents } from "./residents";
 import { dateInZone } from "../time";
 import { CLINICAL_TABLES, type ClinicalTable, type Seed } from "./types";
 
-export type { ClinicalTable, Seed, SeedRow, SeedStaffMember, TableName } from "./types";
+export type { ClinicalTable, Seed, SeedHero, SeedRow, SeedStaffMember, TableName } from "./types";
 export { CLINICAL_TABLES } from "./types";
 export { stableId } from "./random";
+export type { HeroDefinition, HeroKey } from "./heroes";
+export { HERO_BY_KEY, HERO_RESIDENTS, heroResidentId } from "./heroes";
 
 export const DEFAULT_SEED_NUMBER = 20260909;
 
@@ -51,6 +54,11 @@ export function buildSeed(options: BuildSeedOptions = {}): Seed {
     seedNumber,
     anchor,
     anchorDate,
+    heroes: profiles.flatMap((profile) =>
+      profile.hero
+        ? [{ key: profile.hero.key, story: profile.hero.story, resident: profile.row }]
+        : [],
+    ),
     facilities: organization.facilities,
     units: organization.units,
     rooms: organization.rooms,

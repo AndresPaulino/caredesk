@@ -2,10 +2,11 @@
  * The resident page's reads, run as the nurse against the seeded hosted project: the record
  * comes back complete and attributed for a resident in scope and empty for one outside it,
  * the assessment summary's last-done and overdue logic holds on known seed residents, and an
- * allergy conflict is flagged the moment an active order names a documented allergen.
+ * allergy conflict is flagged the moment an active order names a documented allergen: on the
+ * hero resident whose story that is, and on any resident once such an order is entered.
  *
- * Skipped without `.env.local`; the conflict test also needs the secret key, which it uses
- * only to remove the order it inserted, since nothing but the service role may delete.
+ * Skipped without `.env.local`; the second conflict test also needs the secret key, which it
+ * uses only to remove the order it inserted, since nothing but the service role may delete.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -194,62 +195,78 @@ describe.skipIf(!hostedProject)("the resident page's reads as the nurse", () => 
     ).toEqual([]);
   });
 
-  describe.skipIf(!secretKey)("allergy conflicts", () => {
-    it("flags none in the seed, then flags an active order that names a documented allergen", async () => {
-      const mine = residentsVisibleTo(seed, nurseAccount).filter((r) => r.status === "current");
-      const allergy = seed.allergies.find(
-        (row) => row.substance && mine.some((resident) => resident.id === row.resident_id),
-      )!;
-      expect(allergy, "a seeded resident in scope with a medication allergy").toBeDefined();
-      const resident = mine.find((row) => row.id === allergy.resident_id)!;
-      const physician = seed.staff.find(
-        (member) => member.role === "physician" && member.facility_id === resident.facility_id,
-      )!;
-
-      const before = await getClinicalRecord(nurse, resident.id);
-      expect(findAllergyConflicts(before.allergies, before.medication_orders)).toEqual([]);
-
-      const substance = allergy.substance!;
-      const medication = `${substance[0].toUpperCase()}${substance.slice(1)} 250 MG Oral Tablet`;
-      const inserted = await nurse
-        .from("medication_orders")
-        .insert({
-          resident_id: resident.id,
-          code: "test",
-          medication,
-          frequency: "once_daily",
-          prescribed_by: physician.id,
-          started_on: today,
-        })
-        .select("id")
-        .single();
-      expect(inserted.error).toBeNull();
-      const orderId = inserted.data!.id;
-
-      try {
-        const after = await getClinicalRecord(nurse, resident.id);
-        const conflicts = findAllergyConflicts(after.allergies, after.medication_orders);
-        expect(conflicts).toEqual([
-          expect.objectContaining({
-            allergyId: allergy.id,
-            orderId,
-            substance,
-            medication,
-            allergy: allergy.description,
-          }),
-        ]);
-      } finally {
-        // Only the service role may remove a row; the test leaves the seed as it found it,
-        // audit trail included, with the skip flag the seeder uses (docs/database.md).
-        const serviceRole = createClient<Database>(url!, secretKey!, {
-          auth: { persistSession: false, autoRefreshToken: false },
-          global: { headers: { "x-caredesk-audit": "skip" } },
-        });
-        const removed = await serviceRole.from("medication_orders").delete().eq("id", orderId);
-        expect(removed.error).toBeNull();
-        const cleared = await serviceRole.from("audit_events").delete().eq("record_id", orderId);
-        expect(cleared.error).toBeNull();
-      }
+  describe("allergy conflicts", () => {
+    it("flags the hero resident whose new order names a documented allergen", async () => {
+      const hero = seed.heroes.find((candidate) => candidate.key === "allergy-conflict")!;
+      const record = await getClinicalRecord(nurse, hero.resident.id);
+      const conflicts = findAllergyConflicts(record.allergies, record.medication_orders);
+      expect(conflicts).toHaveLength(1);
+      expect(conflicts[0]).toMatchObject({ substance: "sulfamethoxazole", severity: "moderate" });
+      expect(conflicts[0].medication).toMatch(/sulfamethoxazole/i);
     });
+
+    it.skipIf(!secretKey)(
+      "flags an active order that names a documented allergen once it is entered",
+      async () => {
+        const mine = residentsVisibleTo(seed, nurseAccount).filter((r) => r.status === "current");
+        const heroIds = new Set(seed.heroes.map((candidate) => candidate.resident.id));
+        const allergy = seed.allergies.find(
+          (row) =>
+            row.substance &&
+            !heroIds.has(row.resident_id) &&
+            mine.some((resident) => resident.id === row.resident_id),
+        )!;
+        expect(allergy, "a seeded resident in scope with a medication allergy").toBeDefined();
+        const resident = mine.find((row) => row.id === allergy.resident_id)!;
+        const physician = seed.staff.find(
+          (member) => member.role === "physician" && member.facility_id === resident.facility_id,
+        )!;
+
+        const before = await getClinicalRecord(nurse, resident.id);
+        expect(findAllergyConflicts(before.allergies, before.medication_orders)).toEqual([]);
+
+        const substance = allergy.substance!;
+        const medication = `${substance[0].toUpperCase()}${substance.slice(1)} 250 MG Oral Tablet`;
+        const inserted = await nurse
+          .from("medication_orders")
+          .insert({
+            resident_id: resident.id,
+            code: "test",
+            medication,
+            frequency: "once_daily",
+            prescribed_by: physician.id,
+            started_on: today,
+          })
+          .select("id")
+          .single();
+        expect(inserted.error).toBeNull();
+        const orderId = inserted.data!.id;
+
+        try {
+          const after = await getClinicalRecord(nurse, resident.id);
+          const conflicts = findAllergyConflicts(after.allergies, after.medication_orders);
+          expect(conflicts).toEqual([
+            expect.objectContaining({
+              allergyId: allergy.id,
+              orderId,
+              substance,
+              medication,
+              allergy: allergy.description,
+            }),
+          ]);
+        } finally {
+          // Only the service role may remove a row; the test leaves the seed as it found it,
+          // audit trail included, with the skip flag the seeder uses (docs/database.md).
+          const serviceRole = createClient<Database>(url!, secretKey!, {
+            auth: { persistSession: false, autoRefreshToken: false },
+            global: { headers: { "x-caredesk-audit": "skip" } },
+          });
+          const removed = await serviceRole.from("medication_orders").delete().eq("id", orderId);
+          expect(removed.error).toBeNull();
+          const cleared = await serviceRole.from("audit_events").delete().eq("record_id", orderId);
+          expect(cleared.error).toBeNull();
+        }
+      },
+    );
   });
 });
