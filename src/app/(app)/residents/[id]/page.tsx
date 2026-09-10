@@ -1,23 +1,36 @@
-import { CalendarDays, MapPin, Stethoscope } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { cache } from "react";
+import { Suspense, cache } from "react";
 import { z } from "zod";
 
 import { PageHeader } from "@/components/app-shell/page-header";
+import { AllergyConflictAlert } from "@/components/residents/allergy-conflict-alert";
+import { AssessmentSummary } from "@/components/residents/assessment-summary";
+import { ClinicalTimeline } from "@/components/residents/clinical-timeline";
+import { AllergiesTable } from "@/components/residents/record/allergies-table";
+import { AppointmentsTable } from "@/components/residents/record/appointments-table";
+import { CarePlanTab } from "@/components/residents/record/care-plan-tab";
+import { ConditionsTable } from "@/components/residents/record/conditions-table";
+import { FamilyContactsTab } from "@/components/residents/record/family-contacts-tab";
+import { IncidentsTable } from "@/components/residents/record/incidents-table";
+import { LabResultsTab } from "@/components/residents/record/lab-results-tab";
+import { MedicationsTab } from "@/components/residents/record/medications-tab";
+import { ProgressNotesList } from "@/components/residents/record/progress-notes-list";
+import { VitalsTab } from "@/components/residents/record/vitals-tab";
+import { RecordTabs } from "@/components/residents/record-tabs";
+import { ResidentRecordSkeleton } from "@/components/residents/resident-record-skeleton";
 import { ResidentStatusBadge } from "@/components/residents/resident-status-badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ResidentSummaryCards } from "@/components/residents/resident-summary-cards";
 import { requireStaff } from "@/lib/auth/current-staff";
-import { ageOn, formatDate } from "@/lib/format";
-import {
-  CODE_STATUS_LABELS,
-  DIET_LABELS,
-  MOBILITY_LABELS,
-  STAY_END_REASON_LABELS,
-  sexLabel,
-} from "@/lib/residents/labels";
-import { getResident } from "@/lib/residents/queries";
+import { findAllergyConflicts } from "@/lib/clinical/allergy-conflicts";
+import { summarizeAssessments } from "@/lib/clinical/assessment-summary";
+import { buildTimeline } from "@/lib/clinical/timeline";
+import { ageOn } from "@/lib/format";
+import { getClinicalRecord } from "@/lib/residents/clinical-record";
+import { sexLabel } from "@/lib/residents/labels";
+import { getResident, type ResidentDirectoryEntry } from "@/lib/residents/queries";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { dateInZone } from "@/lib/time";
 
 /**
  * Loads the resident once per request for both the page and its metadata. A resident outside
@@ -36,6 +49,11 @@ export async function generateMetadata(props: PageProps<"/residents/[id]">): Pro
   return { title: resident ? resident.full_name : "Resident" };
 }
 
+/**
+ * A resident's page: the essentials, the clinical timeline, the assessment summary, and a tab
+ * for every record type. The resident is checked before anything streams, so a resident
+ * outside scope is a real 404; the record itself streams in behind the header.
+ */
 export default async function ResidentPage(props: PageProps<"/residents/[id]">) {
   const { id } = await props.params;
   const resident = await loadResident(id);
@@ -58,73 +76,75 @@ export default async function ResidentPage(props: PageProps<"/residents/[id]">) 
         <ResidentStatusBadge status={resident.status} stayEndReason={resident.stay_end_reason} />
       </PageHeader>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <FactCard icon={CalendarDays} title="Demographics">
-          <Fact label="Date of birth">
-            {formatDate(resident.date_of_birth)} ({ageOn(resident.date_of_birth)})
-          </Fact>
-          <Fact label="Sex">{sexLabel(resident.sex)}</Fact>
-        </FactCard>
+      <Suspense fallback={<ResidentRecordSkeleton />}>
+        <ResidentRecord resident={resident} />
+      </Suspense>
+    </div>
+  );
+}
 
-        <FactCard icon={MapPin} title="Stay">
-          <Fact label="Facility">{resident.facility_name}</Fact>
-          <Fact label="Unit">{resident.unit_name}</Fact>
-          <Fact label="Room">{resident.room_number ?? "Not assigned"}</Fact>
-          <Fact label="Admitted">{formatDate(resident.admission_date)}</Fact>
-          {resident.status === "former" && resident.stay_ended_on && (
-            <Fact label="Stay ended">
-              {formatDate(resident.stay_ended_on)}
-              {resident.stay_end_reason &&
-                `, ${STAY_END_REASON_LABELS[resident.stay_end_reason].toLowerCase()}`}
-            </Fact>
-          )}
-        </FactCard>
+/** Everything below the header. Every read goes through the signed-in session (ADR 0003). */
+async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }) {
+  const supabase = await createSupabaseServerClient();
+  const record = await getClinicalRecord(supabase, resident.id);
 
-        <FactCard icon={Stethoscope} title="Care">
-          <Fact label="Code status">{CODE_STATUS_LABELS[resident.code_status]}</Fact>
-          <Fact label="Diet">{DIET_LABELS[resident.diet]}</Fact>
-          <Fact label="Mobility">{MOBILITY_LABELS[resident.mobility]}</Fact>
-        </FactCard>
+  const today = dateInZone(new Date());
+  const conflicts = findAllergyConflicts(record.allergies, record.medication_orders);
+  const summary = summarizeAssessments(record.assessments, {
+    today,
+    residentStatus: resident.status,
+  });
+  const timeline = buildTimeline(record);
+
+  return (
+    <>
+      <AllergyConflictAlert residentId={resident.id} conflicts={conflicts} />
+
+      <ResidentSummaryCards
+        resident={resident}
+        allergies={record.allergies}
+        conflicts={conflicts}
+      />
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div className="order-last lg:order-none">
+          <ClinicalTimeline residentId={resident.id} entries={timeline} today={today} />
+        </div>
+        <AssessmentSummary entries={summary} residentStatus={resident.status} />
       </div>
 
-      <p className="text-sm text-muted-foreground">
-        The clinical timeline and record tabs (conditions, medication orders, vitals, allergies, lab
-        results, care plan, incidents, progress notes, appointments, family contacts) arrive with
-        the clinical schema.
-      </p>
-    </div>
-  );
-}
-
-function FactCard({
-  icon: Icon,
-  title,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Icon className="size-4 text-muted-foreground" aria-hidden />
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">{children}</dl>
-      </CardContent>
-    </Card>
-  );
-}
-
-function Fact({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="contents">
-      <dt className="text-muted-foreground">{label}</dt>
-      <dd>{children}</dd>
-    </div>
+      <RecordTabs
+        counts={{
+          conditions: record.conditions.length,
+          medications: record.medication_orders.length,
+          vitals: record.vitals.length,
+          allergies: record.allergies.length,
+          labs: record.lab_results.length,
+          "care-plan": record.care_plans.length,
+          incidents: record.incidents.length,
+          notes: record.progress_notes.length,
+          appointments: record.appointments.length,
+          family: record.family_contacts.length,
+        }}
+        panels={{
+          conditions: <ConditionsTable conditions={record.conditions} />,
+          medications: (
+            <MedicationsTab
+              orders={record.medication_orders}
+              administrations={record.administrations}
+              conflicts={conflicts}
+            />
+          ),
+          vitals: <VitalsTab vitals={record.vitals} />,
+          allergies: <AllergiesTable allergies={record.allergies} conflicts={conflicts} />,
+          labs: <LabResultsTab labResults={record.lab_results} />,
+          "care-plan": <CarePlanTab carePlans={record.care_plans} conditions={record.conditions} />,
+          incidents: <IncidentsTable incidents={record.incidents} />,
+          notes: <ProgressNotesList notes={record.progress_notes} />,
+          appointments: <AppointmentsTable appointments={record.appointments} />,
+          family: <FamilyContactsTab contacts={record.family_contacts} />,
+        }}
+      />
+    </>
   );
 }

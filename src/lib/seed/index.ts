@@ -16,7 +16,7 @@ import { buildOrganization } from "./organization";
 import { createRandom } from "./random";
 import { buildRecords } from "./records";
 import { buildResidents } from "./residents";
-import { dateInZone } from "./time";
+import { dateInZone } from "../time";
 import { CLINICAL_TABLES, type ClinicalTable, type Seed } from "./types";
 
 export type { ClinicalTable, Seed, SeedRow, SeedStaffMember, TableName } from "./types";

@@ -29,7 +29,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             scopeDescription: staff.scopeDescription,
           }}
         />
-        <SidebarInset>
+        <SidebarInset className="min-w-0">
           <SyntheticDataBanner />
           <AppHeader />
           <div className="flex flex-1 flex-col gap-6 p-4 pt-2 md:p-6 md:pt-2">{children}</div>

@@ -24,7 +24,7 @@ import {
   medicationInstructions,
   progressNote,
 } from "./text";
-import { addDays, addMinutes, atZoned, daysBetween, toIso, weekday } from "./time";
+import { addDays, addMinutes, atZoned, daysBetween, toIso, weekday } from "../time";
 import type { ClinicalTable, Seed, SeedRow, SeedStaffMember } from "./types";
 import {
   ALLERGY_POOL,

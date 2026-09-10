@@ -37,3 +37,50 @@ export function ageOn(dateOfBirth: string, on: Date = new Date()): number {
   if (beforeBirthday) age -= 1;
   return age;
 }
+
+const shortDateTimeFormat = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: DEMO_TIME_ZONE,
+});
+
+/** Formats an ISO timestamp as, for example, "Sep 9, 2026, 7:31 AM". */
+export function formatShortDateTime(value: string | Date): string {
+  const date = typeof value === "string" ? new Date(value) : value;
+  if (Number.isNaN(date.getTime())) return String(value);
+  return shortDateTimeFormat.format(date);
+}
+
+const timeFormat = new Intl.DateTimeFormat("en-US", {
+  timeStyle: "short",
+  timeZone: DEMO_TIME_ZONE,
+});
+
+/** Formats an ISO timestamp as its wall-clock time, for example "7:31 AM". */
+export function formatTime(value: string | Date): string {
+  const date = typeof value === "string" ? new Date(value) : value;
+  if (Number.isNaN(date.getTime())) return String(value);
+  return timeFormat.format(date);
+}
+
+export type StaffName = { first_name: string; last_name: string; credentials: string | null };
+
+/** "Maria Alvarez, RN", or null when no staff member is recorded or visible. */
+export function formatStaffName(staff: StaffName | null | undefined): string | null {
+  if (!staff) return null;
+  const name = `${staff.first_name} ${staff.last_name}`.trim();
+  return staff.credentials ? `${name}, ${staff.credentials}` : name;
+}
+
+const monthDayFormat = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: DEMO_TIME_ZONE,
+});
+
+/** Formats an ISO timestamp as a chart tick, for example "Sep 9". */
+export function formatMonthDay(value: string | Date): string {
+  const date = typeof value === "string" ? new Date(value) : value;
+  if (Number.isNaN(date.getTime())) return String(value);
+  return monthDayFormat.format(date);
+}

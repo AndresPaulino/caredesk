@@ -15,7 +15,7 @@ import {
 } from "./index";
 import { SIMULATED_STAFF_COUNT } from "./organization";
 import { ADMINISTRATION_DAYS } from "./records";
-import { addDays, atZoned, dateInZone } from "./time";
+import { addDays, atZoned, dateInZone } from "../time";
 import { CLINICAL_TABLES } from "./types";
 import {
   MEDICATION_CATALOG_CODES,

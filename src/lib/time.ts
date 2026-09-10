@@ -1,4 +1,4 @@
-import { DEMO_TIME_ZONE } from "../format";
+import { DEMO_TIME_ZONE } from "./format";
 
 /**
  * Calendar dates are `YYYY-MM-DD` strings; instants are `Date`s. Facilities keep Eastern time,

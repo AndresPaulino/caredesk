@@ -6,13 +6,25 @@
 
 **Blocked by:** 03 (Clinical schema and the deterministic seed)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] The header shows demographics, facility, unit, room, admission date, status, code status, diet, and mobility; former residents show how and when their stay ended
-- [ ] The clinical timeline merges assessments, lab results, incidents, and progress notes newest first, each entry labeled by type and attributed to its staff member
-- [ ] Tabs exist for conditions, medication orders with their administrations, vitals, allergies, lab results, care plan with goals, incidents, progress notes, appointments, and family contacts
-- [ ] An assessment summary lists every assessment kind with last-done and next-due dates and marks overdue kinds
-- [ ] An allergy conflicting with an active medication order is flagged on the header and on both relevant tabs
-- [ ] Every read goes through the signed-in user's session so the page returns "not found" for an out-of-scope resident
-- [ ] The page works at phone width without horizontal scrolling
-- [ ] Integration tests, run as the nurse against the seeded database, assert the assessment summary's last-done and overdue logic and the allergy conflict detection on known seed residents
+- [x] The header shows demographics, facility, unit, room, admission date, status, code status, diet, and mobility; former residents show how and when their stay ended
+- [x] The clinical timeline merges assessments, lab results, incidents, and progress notes newest first, each entry labeled by type and attributed to its staff member
+- [x] Tabs exist for conditions, medication orders with their administrations, vitals, allergies, lab results, care plan with goals, incidents, progress notes, appointments, and family contacts
+- [x] An assessment summary lists every assessment kind with last-done and next-due dates and marks overdue kinds
+- [x] An allergy conflicting with an active medication order is flagged on the header and on both relevant tabs
+- [x] Every read goes through the signed-in user's session so the page returns "not found" for an out-of-scope resident
+- [x] The page works at phone width without horizontal scrolling
+- [x] Integration tests, run as the nurse against the seeded database, assert the assessment summary's last-done and overdue logic and the allergy conflict detection on known seed residents
+
+## Comments
+
+**2026-09-10, agent.** Implemented and verified against the hosted project.
+
+- **Reads**: `src/lib/residents/clinical-record.ts` loads all thirteen clinical tables for one resident in twelve parallel queries through the caller's session (ADR 0003); every row that names a staff member carries them as `staff`, null when that staff member is outside scope. The page (`src/app/(app)/residents/[id]/page.tsx`) checks the resident first, so an out-of-scope or malformed id is a real 404 with "Resident not found"; the record streams in behind the header inside a Suspense boundary.
+- **Logic** in `src/lib/clinical/`: `assessment-summary.ts` (last done per kind; next due is last done plus the kind's interval; overdue once today is past it, or when a kind everyone is expected to have was never done; due soon within 14 days; nothing due for a former resident), `allergy-conflicts.ts` (the one rule the seed also uses: an active, unarchived order whose name contains the substance of a documented medication allergy), `timeline.ts` (assessments, lab results grouped per draw and credited to whoever drew them, incidents, progress notes; newest first), and `labels.ts`. The calendar helpers moved from `src/lib/seed/time.ts` to `src/lib/time.ts` so clinical code can share them.
+- **UI (ADR 0004)**: header as a grid of `@shadcn/card` (demographics; stay, with how and when a former resident's stay ended; care; allergies with conflicts marked), a destructive `alert` above the cards when a conflict exists, the clinical timeline and assessment summary designed by hand, and ten record tabs on `@shadcn/tabs` with the ticket 02 data table pattern (browser-side sorting). `@shadcn/chart` (recharts 3) draws blood pressure with pulse, oxygen saturation against its 90 percent floor, and a per-test lab trend with the reference range as a band; series colors are the validated categorical slots with dark-mode steps. The active tab lives in the URL (`?tab=labs`; `residentHref(id, tab)` in `src/lib/residents/record-tabs.ts`) so ticket 11's source chips can open a record's tab. The tab list scrolls at phone width and wraps on wide screens; `SidebarInset` gained `min-w-0` so wide content can never widen the frame.
+- **Tests**: 77 pass across 12 files. Unit tests cover the summary rules (dates, the due-soon boundary, never done, archived rows, former residents, Eastern-time dates), the conflict rule and grouping, the timeline merge and lab grouping, and tab parsing. `src/lib/residents/clinical-record.integration.test.ts` runs as the Meadows nurse against the seed: every table's ids match the seed for the fullest resident, with staff attribution; nothing comes back for a Harbor resident; the summary equals the seed's prediction for a resident overdue for something and for one who is not, with each kind's last-done id checked against the seed; the seed has no conflicts, and an order the nurse inserts naming a seeded allergen is flagged, then removed with the service role. Vitest now runs test files one at a time (`fileParallelism: false`) because that test writes to the shared database.
+- **Verified live** on a dev server with headless Chrome holding the nurse's session: the in-scope page, a former resident (Deceased, everything "Not due"), 404 for a Harbor resident and for a malformed id, `?tab=labs` opening on that tab, every tab click rewriting the URL, no console errors or hydration warnings, and no horizontal overflow at 400 px or 1280 px. The lab trend chart was checked with three temporary glucose results inserted with the service role and deleted afterwards. `pnpm check` and `pnpm build` are green.
+
+Notes for later tickets: the seed gives each resident one lab draw, so the lab trend chart (which needs two results of a test) shows only after ticket 05 or the simulator adds more. Ticket 06 adds its audit tab to `RECORD_TABS`. Ticket 09's hero conflict will appear on the header card, the alert, and both tabs without further work. A pre-existing shell artifact: in full-page phone screenshots of every page the sidebar's staff avatar appears floating at the left edge; worth a look on a real phone.

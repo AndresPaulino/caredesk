@@ -114,6 +114,18 @@ _Avoid_: visit, booking
 The chronological view of a resident's assessments, results, incidents, and notes.
 _Avoid_: history, chart
 
+**Assessment summary**:
+The list on a resident's page of every assessment kind with when it was last done, when the next is due, and whether it is overdue.
+_Avoid_: compliance panel, due list, exam tracker
+
+**Allergy conflict**:
+An active medication order whose name contains the substance of one of the resident's documented medication allergies.
+_Avoid_: drug interaction, contraindication, alert
+
+**Record tab**:
+One of the ten sections of a resident's page that holds a single record type, addressable from a link.
+_Avoid_: section, panel, view
+
 ### Change tracking
 
 **Audit event**:

@@ -14,6 +14,7 @@ import conditionsCatalog from "../../../data/vocabulary/conditions.json" with { 
 import demographics from "../../../data/vocabulary/demographics.json" with { type: "json" };
 import medicationsCatalog from "../../../data/vocabulary/medications.json" with { type: "json" };
 import observationsCatalog from "../../../data/vocabulary/observations.json" with { type: "json" };
+import { conflictsWithAllergy } from "../clinical/allergy-conflicts";
 import type { MedicationFrequency } from "../clinical/medication-schedule";
 import type { Enums } from "../supabase/database.types";
 
@@ -422,10 +423,8 @@ export const ALLERGY_POOL: readonly AllergyEntry[] = allergies
     })),
   }));
 
-/** True when an order for `medicationName` would conflict with an allergy to `substance`. */
-export function conflictsWithAllergy(medicationName: string, substance: string): boolean {
-  return medicationName.toLowerCase().includes(substance.toLowerCase());
-}
+// The conflict rule lives with the clinical code so the seed and the resident page agree.
+export { conflictsWithAllergy };
 
 // ---------------------------------------------------------------------------------------------
 // Care plans

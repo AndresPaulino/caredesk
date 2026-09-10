@@ -9,7 +9,7 @@ import type { Enums } from "../supabase/database.types";
 import type { Organization } from "./organization";
 import { stableId, type Random } from "./random";
 import { pronounsFor, type ResidentContext } from "./text";
-import { addDays, atZoned, daysBetween } from "./time";
+import { addDays, atZoned, daysBetween } from "../time";
 import type { SeedRow } from "./types";
 import {
   CODES,
