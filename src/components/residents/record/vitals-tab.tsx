@@ -10,6 +10,7 @@ import { formatShortDateTime, formatStaffName } from "@/lib/format";
 import type { ClinicalRecord } from "@/lib/residents/clinical-record";
 import { cn } from "@/lib/utils";
 
+import { RecordVitalsButton } from "../care/vitals-form";
 import { RecordEmpty, RecordPanel, WrappedText } from "./record-panel";
 import { VitalsCharts } from "./vitals-chart";
 
@@ -126,7 +127,16 @@ const columns = helper.columns([
   }),
 ]);
 
-export function VitalsTab({ vitals }: { vitals: ClinicalRecord["vitals"] }) {
+export function VitalsTab({
+  residentId,
+  vitals,
+  canRecord,
+}: {
+  residentId: string;
+  vitals: ClinicalRecord["vitals"];
+  /** False for a former resident, whose record takes no new care. */
+  canRecord: boolean;
+}) {
   const rows: Vitals[] = vitals.map((set) => ({ ...set, outOfRange: outOfRangeReadings(set) }));
 
   return (
@@ -135,6 +145,7 @@ export function VitalsTab({ vitals }: { vitals: ClinicalRecord["vitals"] }) {
       <RecordPanel
         title="Vitals"
         description="Every set of readings, newest first. A reading outside its normal range is marked."
+        actions={canRecord && <RecordVitalsButton residentId={residentId} />}
       >
         {rows.length === 0 ? (
           <RecordEmpty

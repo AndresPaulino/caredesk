@@ -9,6 +9,7 @@ import { INCIDENT_KIND_LABELS } from "@/lib/clinical/labels";
 import { formatShortDateTime, formatStaffName } from "@/lib/format";
 import type { ClinicalRecord } from "@/lib/residents/clinical-record";
 
+import { ReportIncidentButton } from "../care/incident-form";
 import { RecordEmpty, RecordPanel, WrappedText } from "./record-panel";
 
 type Incident = ClinicalRecord["incidents"][number];
@@ -46,11 +47,20 @@ const columns = helper.columns([
   }),
 ]);
 
-export function IncidentsTable({ incidents }: { incidents: Incident[] }) {
+export function IncidentsTable({
+  residentId,
+  incidents,
+  canRecord,
+}: {
+  residentId: string;
+  incidents: Incident[];
+  canRecord: boolean;
+}) {
   return (
     <RecordPanel
       title="Incidents"
       description="Falls, medication errors, and behavioral events, newest first."
+      actions={canRecord && <ReportIncidentButton residentId={residentId} />}
     >
       {incidents.length === 0 ? (
         <RecordEmpty

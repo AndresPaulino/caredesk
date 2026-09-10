@@ -93,6 +93,43 @@ residents they can see; there is no delete policy anywhere, because records are 
 Composite foreign keys such as `(medication_order_id, resident_id)` keep a child record on the
 same resident as its parent.
 
+The tables that name the staff member who did the work (`vitals.taken_by`,
+`administrations.administered_by`, `progress_notes.written_by`, `incidents.reported_by`,
+`appointments.scheduled_by`) also require, on insert, that it be the caller
+(`current_staff_id()`): a nurse records care in their own name, never a colleague's. Medication
+orders are the exception, because `prescribed_by` is a physician and the nurse enters the order
+on their behalf. The seeder and the simulator use the service role and set the actor themselves.
+
+## Recording care
+
+The write flows on the resident page (ticket 05) go through `src/lib/care/`:
+
+- `schemas.ts` holds one zod schema per form. The browser validates a submission against it
+  for instant feedback and the server action validates it again before writing, so a form and
+  its action can never disagree about what is valid. Times typed into a form are Eastern
+  wall-clock times and become instants there.
+- `record.ts` is the seam: one function per write, over the caller's own Supabase client, so
+  scope is decided by the policies above and nothing else. An update that matches no visible
+  row comes back as "not found", a policy rejection as "forbidden". Removing an appointment,
+  contact, or allergy stamps `archived_at`; nothing is deleted.
+- `actions.ts` holds the server actions: authenticate, parse, call `record.ts`, then
+  `refresh()` so the page shows the change in the same round trip.
+- `options.ts` reads what the forms offer to choose from (physicians, units, rooms with
+  occupancy) through the caller's session, and `vocabulary.ts` derives the formulary and the
+  allergen list from the clinical vocabulary the seed uses.
+
+Two rules live in the database itself so they hold for every path. A trigger
+(`enforce_room_capacity`, `security definer` so its count is complete whatever the caller's
+scope) rejects placing a current resident in a room whose beds are all taken, raising a check
+violation with the hint `room_full`, which the resident form shows next to the room field. A
+check constraint (`residents_former_holds_no_room`) frees the bed when a stay ends.
+
+`src/lib/care/record.integration.test.ts` runs every write as the Meadows nurse against the
+seed, checks the record the page reads, archives and confirms the row is still there with the
+service role, moves a resident into a full room and a free one, and repeats the writes for a
+Harbor resident to see them rejected and for the admin to see them land. It puts the seed back
+when it is done.
+
 `src/lib/scope/policies.integration.test.ts` signs in as each demo account and asserts, for
 residents and every clinical table, that the visible row count equals the count the generator
 predicts for that account's scope; that an out-of-scope resident is "not found" by id and absent

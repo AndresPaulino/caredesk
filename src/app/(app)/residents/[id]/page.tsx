@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { PageHeader } from "@/components/app-shell/page-header";
 import { AllergyConflictAlert } from "@/components/residents/allergy-conflict-alert";
+import { EditResidentDetailsButton } from "@/components/residents/care/resident-details-form";
 import { AssessmentSummary } from "@/components/residents/assessment-summary";
 import { ClinicalTimeline } from "@/components/residents/clinical-timeline";
 import { AllergiesTable } from "@/components/residents/record/allergies-table";
@@ -21,7 +22,10 @@ import { RecordTabs } from "@/components/residents/record-tabs";
 import { ResidentRecordSkeleton } from "@/components/residents/resident-record-skeleton";
 import { ResidentStatusBadge } from "@/components/residents/resident-status-badge";
 import { ResidentSummaryCards } from "@/components/residents/resident-summary-cards";
+import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/current-staff";
+import { listPhysicians, listPlacementOptions } from "@/lib/care/options";
+import { ALLERGEN_OPTIONS, MEDICATION_OPTIONS } from "@/lib/care/vocabulary";
 import { findAllergyConflicts } from "@/lib/clinical/allergy-conflicts";
 import { summarizeAssessments } from "@/lib/clinical/assessment-summary";
 import { buildTimeline } from "@/lib/clinical/timeline";
@@ -73,7 +77,18 @@ export default async function ResidentPage(props: PageProps<"/residents/[id]">) 
         title={`${resident.first_name} ${resident.last_name}`}
         description={`${ageOn(resident.date_of_birth)} · ${sexLabel(resident.sex)} · ${location}`}
       >
-        <ResidentStatusBadge status={resident.status} stayEndReason={resident.stay_end_reason} />
+        <div className="flex flex-wrap items-center gap-3">
+          <ResidentStatusBadge status={resident.status} stayEndReason={resident.stay_end_reason} />
+          <Suspense
+            fallback={
+              <Button variant="outline" size="sm" disabled>
+                Edit details
+              </Button>
+            }
+          >
+            <EditDetails resident={resident} />
+          </Suspense>
+        </div>
       </PageHeader>
 
       <Suspense fallback={<ResidentRecordSkeleton />}>
@@ -83,12 +98,27 @@ export default async function ResidentPage(props: PageProps<"/residents/[id]">) 
   );
 }
 
+/**
+ * The edit button, with the units and rooms the caller may move the resident to. Loaded
+ * behind the header so the essentials render first.
+ */
+async function EditDetails({ resident }: { resident: ResidentDirectoryEntry }) {
+  const supabase = await createSupabaseServerClient();
+  const placement = await listPlacementOptions(supabase, resident.facility_id);
+  return <EditResidentDetailsButton resident={resident} placement={placement} />;
+}
+
 /** Everything below the header. Every read goes through the signed-in session (ADR 0003). */
 async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }) {
   const supabase = await createSupabaseServerClient();
-  const record = await getClinicalRecord(supabase, resident.id);
+  const [record, physicians] = await Promise.all([
+    getClinicalRecord(supabase, resident.id),
+    listPhysicians(supabase, resident.facility_id),
+  ]);
 
   const today = dateInZone(new Date());
+  // A former resident's record is kept, not added to.
+  const canRecord = resident.status === "current";
   const conflicts = findAllergyConflicts(record.allergies, record.medication_orders);
   const summary = summarizeAssessments(record.assessments, {
     today,
@@ -130,19 +160,58 @@ async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }
           conditions: <ConditionsTable conditions={record.conditions} />,
           medications: (
             <MedicationsTab
+              residentId={resident.id}
               orders={record.medication_orders}
               administrations={record.administrations}
               conflicts={conflicts}
+              canRecord={canRecord}
+              formOptions={{
+                physicians,
+                medications: MEDICATION_OPTIONS,
+                conditions: record.conditions
+                  .filter((condition) => condition.resolved_on === null)
+                  .map((condition) => ({ id: condition.id, description: condition.description })),
+                allergySubstances: record.allergies.flatMap((allergy) =>
+                  allergy.substance ? [allergy.substance] : [],
+                ),
+              }}
             />
           ),
-          vitals: <VitalsTab vitals={record.vitals} />,
-          allergies: <AllergiesTable allergies={record.allergies} conflicts={conflicts} />,
+          vitals: (
+            <VitalsTab residentId={resident.id} vitals={record.vitals} canRecord={canRecord} />
+          ),
+          allergies: (
+            <AllergiesTable
+              residentId={resident.id}
+              allergies={record.allergies}
+              conflicts={conflicts}
+              allergens={ALLERGEN_OPTIONS}
+            />
+          ),
           labs: <LabResultsTab labResults={record.lab_results} />,
           "care-plan": <CarePlanTab carePlans={record.care_plans} conditions={record.conditions} />,
-          incidents: <IncidentsTable incidents={record.incidents} />,
-          notes: <ProgressNotesList notes={record.progress_notes} />,
-          appointments: <AppointmentsTable appointments={record.appointments} />,
-          family: <FamilyContactsTab contacts={record.family_contacts} />,
+          incidents: (
+            <IncidentsTable
+              residentId={resident.id}
+              incidents={record.incidents}
+              canRecord={canRecord}
+            />
+          ),
+          notes: (
+            <ProgressNotesList
+              residentId={resident.id}
+              notes={record.progress_notes}
+              canRecord={canRecord}
+            />
+          ),
+          appointments: (
+            <AppointmentsTable
+              residentId={resident.id}
+              appointments={record.appointments}
+              canRecord={canRecord}
+            />
+          ),
+          family: <FamilyContactsTab residentId={resident.id} contacts={record.family_contacts} />,
         }}
       />
     </>

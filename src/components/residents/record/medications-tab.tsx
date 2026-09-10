@@ -13,7 +13,13 @@ import {
 import { MEDICATION_FREQUENCY_LABELS } from "@/lib/clinical/medication-schedule";
 import { formatDate, formatShortDateTime, formatStaffName } from "@/lib/format";
 import type { ClinicalRecord } from "@/lib/residents/clinical-record";
+import { useMemo } from "react";
 
+import {
+  AddMedicationOrderButton,
+  OrderRowActions,
+  type MedicationOrderFormOptions,
+} from "../care/medication-order-form";
 import { RecordEmpty, RecordPanel, WrappedText } from "./record-panel";
 
 type Order = ClinicalRecord["medication_orders"][number] & { conflicts: AllergyConflict[] };
@@ -71,6 +77,15 @@ const orderColumns = orderHelper.columns([
   }),
 ]);
 
+/** Mark given, refused, held, or discontinue, on each active order. */
+function orderActionsColumn(residentId: string) {
+  return orderHelper.display({
+    id: "actions",
+    header: () => <span className="sr-only">Actions</span>,
+    cell: ({ row }) => <OrderRowActions residentId={residentId} order={row.original} />,
+  });
+}
+
 const administrationHelper = createDataTableColumnHelper<Administration>();
 
 const administrationColumns = administrationHelper.columns([
@@ -112,14 +127,25 @@ const administrationColumns = administrationHelper.columns([
 ]);
 
 export function MedicationsTab({
+  residentId,
   orders,
   administrations,
   conflicts,
+  canRecord,
+  formOptions,
 }: {
+  residentId: string;
   orders: ClinicalRecord["medication_orders"];
   administrations: ClinicalRecord["administrations"];
   conflicts: AllergyConflict[];
+  /** False for a former resident, whose record takes no new care. */
+  canRecord: boolean;
+  formOptions: MedicationOrderFormOptions;
 }) {
+  const allOrderColumns = useMemo(
+    () => (canRecord ? [...orderColumns, orderActionsColumn(residentId)] : orderColumns),
+    [residentId, canRecord],
+  );
   const conflictsFor = conflictsByOrder(conflicts);
   const orderRows: Order[] = orders.map((order) => ({
     ...order,
@@ -135,7 +161,10 @@ export function MedicationsTab({
     <div className="space-y-8">
       <RecordPanel
         title="Medication orders"
-        description="Active orders first. An order that names a documented allergen is flagged."
+        description="Active orders first. An order that names a documented allergen is flagged. Mark a dose given with one click."
+        actions={
+          canRecord && <AddMedicationOrderButton residentId={residentId} options={formOptions} />
+        }
       >
         {orderRows.length === 0 ? (
           <RecordEmpty
@@ -144,7 +173,7 @@ export function MedicationsTab({
             description="No prescription has been recorded for this resident."
           />
         ) : (
-          <DataTable columns={orderColumns} data={orderRows} getRowId={(row) => row.id} />
+          <DataTable columns={allOrderColumns} data={orderRows} getRowId={(row) => row.id} />
         )}
       </RecordPanel>
 

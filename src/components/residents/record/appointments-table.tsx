@@ -9,6 +9,9 @@ import { APPOINTMENT_KIND_LABELS, APPOINTMENT_STATUS_LABELS } from "@/lib/clinic
 import { formatShortDateTime, formatStaffName } from "@/lib/format";
 import type { ClinicalRecord } from "@/lib/residents/clinical-record";
 
+import { useMemo } from "react";
+
+import { AppointmentRowActions, ScheduleAppointmentButton } from "../care/appointment-form";
 import { RecordEmpty, RecordPanel, WrappedText } from "./record-panel";
 
 type Appointment = ClinicalRecord["appointments"][number];
@@ -56,11 +59,34 @@ const columns = helper.columns([
   }),
 ]);
 
-export function AppointmentsTable({ appointments }: { appointments: Appointment[] }) {
+function actionsColumn(residentId: string) {
+  return helper.display({
+    id: "actions",
+    header: () => <span className="sr-only">Actions</span>,
+    cell: ({ row }) => (
+      <div className="flex justify-end">
+        <AppointmentRowActions residentId={residentId} appointment={row.original} />
+      </div>
+    ),
+  });
+}
+
+export function AppointmentsTable({
+  residentId,
+  appointments,
+  canRecord,
+}: {
+  residentId: string;
+  appointments: Appointment[];
+  canRecord: boolean;
+}) {
+  const allColumns = useMemo(() => [...columns, actionsColumn(residentId)], [residentId]);
+
   return (
     <RecordPanel
       title="Appointments"
       description="Visits outside the facility, upcoming first, then past ones."
+      actions={canRecord && <ScheduleAppointmentButton residentId={residentId} />}
     >
       {appointments.length === 0 ? (
         <RecordEmpty
@@ -69,7 +95,7 @@ export function AppointmentsTable({ appointments }: { appointments: Appointment[
           description="No outside visit has been scheduled for this resident."
         />
       ) : (
-        <DataTable columns={columns} data={appointments} getRowId={(row) => row.id} />
+        <DataTable columns={allColumns} data={appointments} getRowId={(row) => row.id} />
       )}
     </RecordPanel>
   );

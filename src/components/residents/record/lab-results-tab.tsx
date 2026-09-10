@@ -78,7 +78,7 @@ export function LabResultsTab({ labResults }: { labResults: LabResult[] }) {
       {trends.length > 0 && <LabTrendChart trends={trends} />}
       <RecordPanel
         title="Lab results"
-        description="Every resulted test, newest first, against its reference range."
+        description="Every resulted test, newest first, against its reference range. Results arrive from the laboratory and are read-only here."
       >
         {labResults.length === 0 ? (
           <RecordEmpty

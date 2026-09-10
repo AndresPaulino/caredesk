@@ -37,7 +37,10 @@ export function CarePlanTab({
   const conditionById = new Map(conditions.map((condition) => [condition.id, condition]));
 
   return (
-    <RecordPanel title="Care plan" description="Goals and the interventions meant to reach them.">
+    <RecordPanel
+      title="Care plan"
+      description="Goals and the interventions meant to reach them. The plan is authored at the care conference and is read-only here."
+    >
       {carePlans.length === 0 ? (
         <RecordEmpty
           icon={ClipboardList}

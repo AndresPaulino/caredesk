@@ -54,6 +54,15 @@ export function dateInZone(instant: Date): string {
   return `${clock.year}-${pad(clock.month)}-${pad(clock.day)}`;
 }
 
+/**
+ * The wall-clock time of an instant in the facilities' time zone, in the form a
+ * `datetime-local` input takes: `2026-09-10T14:30`.
+ */
+export function dateTimeLocalInZone(instant: Date): string {
+  const clock = wallClock(instant);
+  return `${clock.year}-${pad(clock.month)}-${pad(clock.day)}T${pad(clock.hour)}:${pad(clock.minute)}`;
+}
+
 /** The instant at a wall-clock time on a calendar date in the facilities' time zone. */
 export function atZoned(date: string, hour = 0, minute = 0): Date {
   const [year, month, day] = date.split("-").map(Number);

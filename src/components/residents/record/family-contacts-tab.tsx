@@ -1,16 +1,34 @@
 import { Mail, Phone, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { FAMILY_RELATIONSHIP_LABELS } from "@/lib/clinical/labels";
 import type { Tables } from "@/lib/supabase/database.types";
 
+import { AddFamilyContactButton, FamilyContactActions } from "../care/family-contact-form";
 import { RecordEmpty, RecordPanel } from "./record-panel";
 
 /** Who to call, primary contact first. */
-export function FamilyContactsTab({ contacts }: { contacts: Tables<"family_contacts">[] }) {
+export function FamilyContactsTab({
+  residentId,
+  contacts,
+}: {
+  residentId: string;
+  contacts: Tables<"family_contacts">[];
+}) {
   return (
-    <RecordPanel title="Family contacts" description="Relatives and guardians on record.">
+    <RecordPanel
+      title="Family contacts"
+      description="Relatives and guardians on record."
+      actions={<AddFamilyContactButton residentId={residentId} />}
+    >
       {contacts.length === 0 ? (
         <RecordEmpty
           icon={Users}
@@ -29,6 +47,9 @@ export function FamilyContactsTab({ contacts }: { contacts: Tables<"family_conta
                 <CardDescription>
                   {FAMILY_RELATIONSHIP_LABELS[contact.relationship]}
                 </CardDescription>
+                <CardAction>
+                  <FamilyContactActions residentId={residentId} contact={contact} />
+                </CardAction>
               </CardHeader>
               <CardContent className="space-y-1.5 text-sm">
                 <p className="flex items-center gap-2">

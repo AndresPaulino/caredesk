@@ -241,6 +241,37 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     expect(update.data).toEqual([]);
   });
 
+  it("a nurse records care in their own name, never a colleague's", async () => {
+    const meadows = account("nurse-meadows");
+    const nurse = clients.get(meadows.key)!;
+    const mine = residentsVisibleTo(seed, meadows).find((row) => row.status === "current")!;
+    const colleague = seed.staff.find(
+      (member) =>
+        member.role === "nurse" && member.facility_id === mine.facility_id && !member.account,
+    )!;
+
+    const note = await nurse.from("progress_notes").insert({
+      resident_id: mine.id,
+      written_by: colleague.id,
+      written_at: new Date().toISOString(),
+      body: "This note must never be written in a colleague's name.",
+    });
+    expect(note.error?.code).toBe("42501");
+
+    const vitals = await nurse.from("vitals").insert({
+      resident_id: mine.id,
+      taken_by: colleague.id,
+      taken_at: new Date().toISOString(),
+      systolic: 120,
+      diastolic: 80,
+      pulse: 72,
+      temperature_f: 98.2,
+      respiratory_rate: 16,
+      oxygen_saturation: 97,
+    });
+    expect(vitals.error?.code).toBe("42501");
+  });
+
   it("nobody but the service role can reset the demo data", async () => {
     const { error } = await clients.get("admin")!.rpc("reset_demo_data");
     expect(error?.code).toBe("42501");

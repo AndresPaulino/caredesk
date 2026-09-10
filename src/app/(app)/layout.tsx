@@ -4,6 +4,7 @@ import { AppHeader } from "@/components/app-shell/app-header";
 import { AppSidebar } from "@/components/app-shell/app-sidebar";
 import { SyntheticDataBanner } from "@/components/app-shell/synthetic-data-banner";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { requireStaff } from "@/lib/auth/current-staff";
 
@@ -34,6 +35,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <AppHeader />
           <div className="flex flex-1 flex-col gap-6 p-4 pt-2 md:p-6 md:pt-2">{children}</div>
         </SidebarInset>
+        {/* Confirms each recorded change (ticket 05). */}
+        <Toaster position="bottom-right" />
       </SidebarProvider>
     </TooltipProvider>
   );

@@ -275,6 +275,12 @@ export function medicationsTreating(conditionCode: string): MedicationEntry[] {
 
 export const MEDICATION_CATALOG_CODES: ReadonlySet<string> = new Set(medicationByCode.keys());
 
+/** Every medication a care home can order: the catalog minus the hospital-only entries, by name. */
+export const FORMULARY: readonly MedicationEntry[] = medications
+  .filter((entry) => !EXCLUDED_MEDICATION_CODES.has(entry.code))
+  .map(toMedicationEntry)
+  .sort((a, b) => a.description.localeCompare(b.description));
+
 export type BackgroundMedicationRule = {
   code: string;
   /** Chance of the order when the gate (if any) is open. */

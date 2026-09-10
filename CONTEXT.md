@@ -188,6 +188,10 @@ _Avoid_: showcase patient, featured resident
 The catalog of conditions, medications, procedures, allergies, and observation ranges derived from Synthea, from which the seed draws.
 _Avoid_: reference data, lookup tables, dictionary
 
+**Formulary**:
+The medications in the clinical vocabulary that a care home can order, which the medication order form offers.
+_Avoid_: drug list, catalog, medication database
+
 **Simulator**:
 The process that has simulated staff write realistic changes while the demo runs.
 _Avoid_: bot, cron, background job, generator

@@ -11,9 +11,12 @@ import {
   ALLERGY_SEVERITY_LABELS,
   ALLERGY_TYPE_LABELS,
 } from "@/lib/clinical/labels";
+import type { AllergenOption } from "@/lib/care/vocabulary";
 import { formatDate } from "@/lib/format";
 import type { Tables } from "@/lib/supabase/database.types";
+import { useMemo } from "react";
 
+import { AddAllergyButton, AllergyRowActions } from "../care/allergy-form";
 import { RecordEmpty, RecordPanel, WrappedText } from "./record-panel";
 
 type Allergy = Tables<"allergies"> & { conflicts: AllergyConflict[] };
@@ -71,23 +74,41 @@ const columns = helper.columns([
   }),
 ]);
 
+function actionsColumn(residentId: string) {
+  return helper.display({
+    id: "actions",
+    header: () => <span className="sr-only">Actions</span>,
+    cell: ({ row }) => (
+      <div className="flex justify-end">
+        <AllergyRowActions residentId={residentId} allergy={row.original} />
+      </div>
+    ),
+  });
+}
+
 export function AllergiesTable({
+  residentId,
   allergies,
   conflicts,
+  allergens,
 }: {
+  residentId: string;
   allergies: Tables<"allergies">[];
   conflicts: AllergyConflict[];
+  allergens: readonly AllergenOption[];
 }) {
   const conflictsFor = conflictsByAllergy(conflicts);
   const rows: Allergy[] = allergies.map((allergy) => ({
     ...allergy,
     conflicts: conflictsFor.get(allergy.id) ?? [],
   }));
+  const allColumns = useMemo(() => [...columns, actionsColumn(residentId)], [residentId]);
 
   return (
     <RecordPanel
       title="Allergies"
       description="Documented allergies and intolerances. A medication allergy that an active order names is flagged."
+      actions={<AddAllergyButton residentId={residentId} allergens={allergens} />}
     >
       {rows.length === 0 ? (
         <RecordEmpty
@@ -96,7 +117,7 @@ export function AllergiesTable({
           description="No allergy or intolerance has been documented for this resident."
         />
       ) : (
-        <DataTable columns={columns} data={rows} getRowId={(row) => row.id} />
+        <DataTable columns={allColumns} data={rows} getRowId={(row) => row.id} />
       )}
     </RecordPanel>
   );

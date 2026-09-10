@@ -54,7 +54,10 @@ const columns = helper.columns([
 
 export function ConditionsTable({ conditions }: { conditions: Condition[] }) {
   return (
-    <RecordPanel title="Conditions" description="Active diagnoses first, then resolved ones.">
+    <RecordPanel
+      title="Conditions"
+      description="Active diagnoses first, then resolved ones. Diagnoses come from the physician's record and are read-only here."
+    >
       {conditions.length === 0 ? (
         <RecordEmpty
           icon={HeartPulse}
