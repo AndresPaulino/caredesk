@@ -126,6 +126,36 @@ _Avoid_: drug interaction, contraindication, alert
 One of the ten sections of a resident's page that holds a single record type, addressable from a link.
 _Avoid_: section, panel, view
 
+### Dashboard
+
+**Dashboard tile**:
+One of the six numbers on the dashboard, each computed within the viewer's scope and each a set of residents: census and occupancy, medications due this shift, overdue assessments, out-of-range vitals, incidents in the last seven days, and appointments today and tomorrow.
+_Avoid_: widget, KPI, stat card, metric
+
+**Focus**:
+A dashboard tile's residents applied to the resident list as a filter, named in the URL.
+_Avoid_: smart filter, segment, saved view, preset
+
+**Shift**:
+One of the three nursing shifts in the facilities' time zone: day (7 am to 3 pm), evening (3 pm to 11 pm), night (11 pm to 7 am).
+_Avoid_: watch, rotation
+
+**Scheduled dose**:
+One expected administration of a medication order, at the standard time for the order's frequency. As-needed orders have none.
+_Avoid_: pass, MAR slot
+
+**Outstanding dose**:
+A scheduled dose with no administration, given, refused, or held, recorded within two hours of its time. It is due while its shift lasts and overdue once more than an hour past its time.
+_Avoid_: missed dose, late dose, gap
+
+**Out-of-range vitals**:
+A set of vitals with at least one reading outside its normal range.
+_Avoid_: abnormal vitals, alert, flag
+
+**Occupancy**:
+Current residents as a share of beds, for a unit, a facility, or the operator.
+_Avoid_: utilization, fill rate, capacity
+
 ### Change tracking
 
 **Audit event**:

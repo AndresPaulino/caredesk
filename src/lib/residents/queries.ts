@@ -3,6 +3,7 @@ import "server-only";
 import type { SupabaseServerClient } from "@/lib/supabase/server";
 import type { Views } from "@/lib/supabase/database.types";
 
+import { focusFor } from "./focus";
 import { RESIDENT_PAGE_SIZE, type ResidentListParams } from "./list-params";
 
 export type ResidentDirectoryEntry = Views<"resident_directory">;
@@ -16,29 +17,23 @@ export type ResidentListResult = {
 
 /**
  * One page of the resident directory, filtered and sorted from the URL state. Scope is not a
- * parameter: the caller's session decides which rows exist at all (ADR 0003).
+ * parameter: the caller's session decides which rows exist at all (ADR 0003). With a focus,
+ * the page comes from `resident_dashboard_at()`, the directory with the dashboard's flags
+ * computed as of `asOf`, narrowed to the residents the focus's tile counted.
  */
 export async function listResidents(
   supabase: SupabaseServerClient,
   params: ResidentListParams,
+  asOf: Date = new Date(),
 ): Promise<ResidentListResult> {
-  let query = supabase
-    .from("resident_directory")
-    .select("*", { count: "exact" })
-    .is("archived_at", null);
-
-  if (params.q) query = query.ilike("search_text", `%${escapeLike(params.q)}%`);
-  if (params.facility) query = query.eq("facility_id", params.facility);
-  if (params.unit) query = query.eq("unit_id", params.unit);
-  if (params.status !== "all") query = query.eq("status", params.status);
-
-  const ascending = params.dir === "asc";
-  for (const column of sortColumns(params.sort)) {
-    query = query.order(column, { ascending, nullsFirst: false });
-  }
-
-  const from = (params.page - 1) * RESIDENT_PAGE_SIZE;
-  const { data, count, error } = await query.range(from, from + RESIDENT_PAGE_SIZE - 1);
+  const { data, count, error } = params.focus
+    ? await refine(
+        supabase
+          .rpc("resident_dashboard_at", { as_of: asOf.toISOString() }, { count: "exact" })
+          .eq(focusFor(params.focus).flag, true),
+        params,
+      )
+    : await refine(supabase.from("resident_directory").select("*", { count: "exact" }), params);
   if (error) throw new Error(`Could not load residents: ${error.message}`);
 
   const total = count ?? 0;
@@ -92,6 +87,33 @@ export async function listScopeOptions(supabase: SupabaseServerClient): Promise<
       name: unit.name,
     })),
   };
+}
+
+/** The part of a query builder the list's filters, sort, and page need. */
+type ListQuery<T> = {
+  is: (column: string, value: null) => T;
+  eq: (column: string, value: string) => T;
+  ilike: (column: string, pattern: string) => T;
+  order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => T;
+  range: (from: number, to: number) => T;
+};
+
+/** The URL state applied to a query over the directory's columns. */
+function refine<T extends ListQuery<T>>(base: T, params: ResidentListParams): T {
+  let query = base.is("archived_at", null);
+
+  if (params.q) query = query.ilike("search_text", `%${escapeLike(params.q)}%`);
+  if (params.facility) query = query.eq("facility_id", params.facility);
+  if (params.unit) query = query.eq("unit_id", params.unit);
+  if (params.status !== "all") query = query.eq("status", params.status);
+
+  const ascending = params.dir === "asc";
+  for (const column of sortColumns(params.sort)) {
+    query = query.order(column, { ascending, nullsFirst: false });
+  }
+
+  const from = (params.page - 1) * RESIDENT_PAGE_SIZE;
+  return query.range(from, from + RESIDENT_PAGE_SIZE - 1);
 }
 
 type DirectoryColumn = keyof ResidentDirectoryEntry;

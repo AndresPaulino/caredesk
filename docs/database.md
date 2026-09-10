@@ -183,6 +183,43 @@ and a field-by-field before-and-after list, using the labels and formats in `col
 `src/lib/audit/triggers.integration.test.ts` proves the actor rules, the archive-as-change
 rule, the scope, and the append-only rule against the hosted project.
 
+## Dashboard
+
+The six tiles (ticket 07) are counts over the caller's scope, computed in the database so a
+nurse's numbers and an admin's come from the same query under different policies:
+
+- `resident_dashboard_at(as_of)` is the resident directory (current residents) with one
+  boolean per tile, computed as of an instant: `overdue_assessment` (the assessment summary's
+  rule, using `assessment_kinds`), `out_of_range_vitals` (a set in the last 24 hours with a
+  reading outside `vital_ranges`), `recent_incident` (seven days), `upcoming_appointment` (a
+  scheduled appointment on that date or the next), `medication_due` (a scheduled dose in the
+  current shift with nothing recorded within two hours of its time), and
+  `medication_overdue` (such a dose in the last 24 hours more than an hour past its time).
+  The app calls it with now; the tests call it with the seed's anchor so the answer is
+  deterministic. The resident list reads it too, when a tile's link opens the list with a
+  `focus`, so the number on the tile and the people behind it are one query.
+- `dashboard_tiles_at(as_of)` counts those flags and adds beds, incidents, appointments by
+  day, and the shift the medication tile covers.
+- `unit_occupancy` is beds and current residents per unit in scope, for the census chart.
+- `shift_window(at)` and `vitals_out_of_range(vitals)` are the pieces the two functions share;
+  the latter has no `search_path` setting, against the convention, because a SQL function
+  with one is never inlined and this one runs once per scanned row.
+
+The thresholds are reference data: `vital_ranges`, `medication_dose_times` (the standard hours
+for each frequency; weekly on Monday), and `shifts`. `src/lib/clinical/` keeps a copy of each
+(`vital-ranges.ts`, `medication-schedule.ts`, `shifts.ts`), `src/lib/dashboard/rules.ts` states
+the same rules in TypeScript, and `src/lib/dashboard/dashboard.integration.test.ts` proves the
+database agrees with them: for the nurse and the admin, every count from the seed equals the
+function's, and every focus lists the same residents.
+
+The activity feed reads `audit_events` newest first through `src/lib/audit/events.ts` and then
+subscribes to inserts over Realtime (`src/components/dashboard/activity-feed.tsx`). Realtime
+evaluates the events policy for each subscriber, so a nurse is told about their units only;
+the browser then reads each announced event back through the caller's session (a server
+action) to tell it as a sentence, which applies the policy a second time. The integration test
+subscribes as the Meadows nurse, writes an event for a Harbor resident and one for a Meadows
+resident, and hears only the second.
+
 ## Types
 
 `src/lib/supabase/database.types.ts` is maintained by hand in the shape `supabase gen types`

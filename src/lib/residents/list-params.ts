@@ -1,8 +1,10 @@
 import { z } from "zod";
 
+import { residentFocusKeys, type ResidentFocusKey } from "./focus";
+
 /**
- * The resident list is driven entirely by the URL, so a filtered list can be linked to
- * (dashboard tiles do this in ticket 07) and the browser's back button works.
+ * The resident list is driven entirely by the URL, so a filtered list can be linked to (the
+ * dashboard tiles link to a focus) and the browser's back button works.
  */
 
 export const RESIDENT_PAGE_SIZE = 25;
@@ -18,6 +20,8 @@ export type SortDirection = (typeof sortDirections)[number];
 const uuid = z.uuid();
 
 const residentListParamsSchema = z.object({
+  /** A dashboard tile's residents, from `src/lib/residents/focus.ts`. */
+  focus: z.enum(residentFocusKeys).optional().catch(undefined),
   q: z.string().trim().max(80).catch("").default(""),
   facility: uuid.optional().catch(undefined),
   unit: uuid.optional().catch(undefined),
@@ -27,7 +31,9 @@ const residentListParamsSchema = z.object({
   page: z.coerce.number().int().min(1).catch(1).default(1),
 });
 
-export type ResidentListParams = z.output<typeof residentListParamsSchema>;
+export type ResidentListParams = z.output<typeof residentListParamsSchema> & {
+  focus?: ResidentFocusKey;
+};
 
 export const DEFAULT_RESIDENT_LIST_PARAMS: ResidentListParams = residentListParamsSchema.parse({});
 
@@ -37,6 +43,7 @@ type RawSearchParams = Record<string, string | string[] | undefined>;
 export function parseResidentListParams(raw: RawSearchParams): ResidentListParams {
   const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
   return residentListParamsSchema.parse({
+    focus: first(raw.focus) || undefined,
     q: first(raw.q),
     facility: first(raw.facility) || undefined,
     unit: first(raw.unit) || undefined,
@@ -54,6 +61,7 @@ export function residentListHref(
 ): string {
   const merged = { ...params, ...overrides };
   const search = new URLSearchParams();
+  if (merged.focus) search.set("focus", merged.focus);
   if (merged.q) search.set("q", merged.q);
   if (merged.facility) search.set("facility", merged.facility);
   if (merged.unit) search.set("unit", merged.unit);

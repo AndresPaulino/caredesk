@@ -57,6 +57,14 @@ describe("parseResidentListParams", () => {
   it("takes the first value when a parameter is repeated", () => {
     expect(parseResidentListParams({ q: ["smith", "jones"] }).q).toBe("smith");
   });
+
+  it("reads a dashboard focus and drops one it does not know", () => {
+    expect(parseResidentListParams({ focus: "overdue-assessments" }).focus).toBe(
+      "overdue-assessments",
+    );
+    expect(parseResidentListParams({ focus: "everything" }).focus).toBeUndefined();
+    expect(parseResidentListParams({ focus: "" }).focus).toBeUndefined();
+  });
 });
 
 describe("residentListHref", () => {
@@ -70,5 +78,22 @@ describe("residentListHref", () => {
       { sort: "admission", dir: "desc" },
     );
     expect(href).toBe("/residents?q=mary+o%27neil&status=all&sort=admission&dir=desc&page=2");
+  });
+
+  it("puts a focus first, so a tile's link reads as what it opens", () => {
+    expect(residentListHref(DEFAULT_RESIDENT_LIST_PARAMS, { focus: "recent-incidents" })).toBe(
+      "/residents?focus=recent-incidents",
+    );
+    expect(
+      residentListHref({ ...DEFAULT_RESIDENT_LIST_PARAMS, focus: "recent-incidents", q: "doe" }),
+    ).toBe("/residents?focus=recent-incidents&q=doe");
+    expect(
+      residentListHref(
+        { ...DEFAULT_RESIDENT_LIST_PARAMS, focus: "recent-incidents" },
+        {
+          focus: undefined,
+        },
+      ),
+    ).toBe("/residents");
   });
 });

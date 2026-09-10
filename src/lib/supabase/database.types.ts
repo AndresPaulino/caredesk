@@ -380,6 +380,74 @@ type ResidentDirectoryRow = {
   updated_at: string;
 };
 
+type VitalRangeRow = {
+  reading: string;
+  low: number;
+  high: number;
+  sort_order: number;
+};
+
+type MedicationDoseTimeRow = {
+  frequency: MedicationFrequency;
+  hour: number;
+  weekday: number | null;
+};
+
+type ShiftRow = {
+  key: string;
+  name: string;
+  start_hour: number;
+  end_hour: number;
+  sort_order: number;
+};
+
+type UnitOccupancyRow = {
+  unit_id: string;
+  unit_code: string;
+  unit_name: string;
+  facility_id: string;
+  facility_code: string;
+  facility_name: string;
+  beds: number;
+  residents: number;
+};
+
+/** One row of `resident_dashboard_at()`: the directory plus a flag per dashboard tile. */
+type ResidentDashboardRow = ResidentDirectoryRow & {
+  overdue_assessment: boolean;
+  out_of_range_vitals: boolean;
+  recent_incident: boolean;
+  upcoming_appointment: boolean;
+  medication_due: boolean;
+  medication_overdue: boolean;
+};
+
+/** The one row of `dashboard_tiles_at()`. */
+type DashboardTilesRow = {
+  residents: number;
+  beds: number;
+  medication_due: number;
+  medication_overdue: number;
+  overdue_assessment: number;
+  out_of_range_vitals: number;
+  incidents: number;
+  incident_residents: number;
+  appointments_today: number;
+  appointments_tomorrow: number;
+  appointment_residents: number;
+  shift_key: string;
+  shift_name: string;
+  shift_starts_at: string;
+  shift_ends_at: string;
+};
+
+type ShiftWindowRow = {
+  key: string;
+  name: string;
+  starts_at: string;
+  ends_at: string;
+};
+
 /** Columns with defaults or generated values become optional on insert. */
 type Insertable<Row, Optional extends keyof Row> = Omit<Row, Optional> &
   Partial<Pick<Row, Optional>>;
@@ -722,10 +790,32 @@ export type Database = {
           StaffRelationship<"actor_id"> & { foreignKeyName: "audit_events_actor_id_fkey" },
         ];
       };
+      vital_ranges: {
+        Row: VitalRangeRow;
+        Insert: VitalRangeRow;
+        Update: Partial<VitalRangeRow>;
+        Relationships: [];
+      };
+      medication_dose_times: {
+        Row: MedicationDoseTimeRow;
+        Insert: Insertable<MedicationDoseTimeRow, "weekday">;
+        Update: Partial<MedicationDoseTimeRow>;
+        Relationships: [];
+      };
+      shifts: {
+        Row: ShiftRow;
+        Insert: ShiftRow;
+        Update: Partial<ShiftRow>;
+        Relationships: [];
+      };
     };
     Views: {
       resident_directory: {
         Row: ResidentDirectoryRow;
+        Relationships: [];
+      };
+      unit_occupancy: {
+        Row: UnitOccupancyRow;
         Relationships: [];
       };
     };
@@ -739,6 +829,10 @@ export type Database = {
       reset_demo_data: { Args: Record<PropertyKey, never>; Returns: undefined };
       current_actor_id: { Args: Record<PropertyKey, never>; Returns: string };
       audit_skipped: { Args: Record<PropertyKey, never>; Returns: boolean };
+      vitals_out_of_range: { Args: { v: VitalsRow }; Returns: boolean };
+      shift_window: { Args: { at: string }; Returns: ShiftWindowRow[] };
+      resident_dashboard_at: { Args: { as_of?: string }; Returns: ResidentDashboardRow[] };
+      dashboard_tiles_at: { Args: { as_of?: string }; Returns: DashboardTilesRow[] };
     };
     Enums: {
       staff_role: StaffRole;

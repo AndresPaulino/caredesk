@@ -16,14 +16,26 @@ import {
   type AuditTrailEntry,
   type AuditValues,
 } from "./describe";
+import { FEED_LIMIT } from "./feed";
 
 /**
- * A resident's audit trail, read through the caller's session. The events policy is the
- * resident's own scope (ADR 0003), so a resident outside scope has no events, the same as one
- * who does not exist. The actor and the names behind foreign keys (rooms, units, staff,
- * medication orders) are read through their own policies; a name outside the caller's scope
- * comes back missing and is shown as such.
+ * Audit events read through the caller's session and told as a story. The events policy is
+ * the resident's own scope (ADR 0003), so a resident outside scope has no events, the same as
+ * one who does not exist. The actor, the resident, and the names behind foreign keys (rooms,
+ * units, staff, medication orders) are read through their own policies; a name outside the
+ * caller's scope comes back missing and is shown as such.
+ *
+ * Three readers share one loader: the audit trail on a resident's page, the activity feed on
+ * the dashboard (the most recent events across the caller's whole scope), and the feed's
+ * live updates (events by id, as Realtime announces them).
  */
+
+type Client = SupabaseClient<Database>;
+
+export type AuditEventResident = { id: string; first_name: string; last_name: string } | null;
+
+/** A trail entry that also names the resident it belongs to, for readers spanning residents. */
+export type ActivityEntry = AuditTrailEntry & { resident: AuditEventResident };
 
 export type AuditTrail = {
   /** Newest first, at most `limit` of them. */
@@ -32,41 +44,101 @@ export type AuditTrail = {
   total: number;
 };
 
-const ACTOR_COLUMNS = "id, first_name, last_name, credentials";
-
 export const AUDIT_TRAIL_LIMIT = 200;
 
+// Written out in the call so supabase-js sees a literal and types the embedded actor and resident.
+const eventsQuery = (supabase: Client, options: { count?: "exact" } = {}) =>
+  supabase.from("audit_events").select(
+    `*, actor:staff!audit_events_actor_id_fkey (id, first_name, last_name, credentials),
+       resident:residents!audit_events_resident_id_fkey (id, first_name, last_name)`,
+    options,
+  );
+
+type EventsQuery = ReturnType<typeof eventsQuery>;
+
+const newestFirst = (query: EventsQuery) =>
+  query.order("occurred_at", { ascending: false }).order("id", { ascending: false });
+
+/** One resident's audit trail, newest first. */
 export async function getAuditTrail(
-  supabase: SupabaseClient<Database>,
+  supabase: Client,
   residentId: string,
   { limit = AUDIT_TRAIL_LIMIT }: { limit?: number } = {},
 ): Promise<AuditTrail> {
-  const { data, count, error } = await supabase
-    .from("audit_events")
-    .select(`*, actor:staff!audit_events_actor_id_fkey (${ACTOR_COLUMNS})`, { count: "exact" })
-    .eq("resident_id", residentId)
-    .order("occurred_at", { ascending: false })
-    .order("id", { ascending: false })
-    .limit(limit);
-  if (error) throw new Error(`Could not load the audit trail: ${error.message}`);
+  const { entries, count } = await loadEntries(
+    supabase,
+    eventsQuery(supabase, { count: "exact" }).eq("resident_id", residentId),
+    (query) => newestFirst(query).limit(limit),
+    "the audit trail",
+  );
+  return { entries, total: count ?? entries.length };
+}
 
-  const events: AuditEvent[] = (data ?? []).map((row) => ({
-    id: row.id,
-    occurred_at: row.occurred_at,
-    table_name: row.table_name,
-    record_id: row.record_id,
-    resident_id: row.resident_id,
-    operation: row.operation,
-    old_values: asValues(row.old_values),
-    new_values: asValues(row.new_values),
-    changed_columns: row.changed_columns,
-    actor: row.actor,
+/** The most recent events across every resident in the caller's scope, newest first. */
+export async function listRecentActivity(
+  supabase: Client,
+  { limit = FEED_LIMIT }: { limit?: number } = {},
+): Promise<ActivityEntry[]> {
+  const { entries } = await loadEntries(
+    supabase,
+    eventsQuery(supabase),
+    (query) => newestFirst(query).limit(limit),
+    "the activity feed",
+  );
+  return entries;
+}
+
+/** The events with these ids that the caller may see, newest first. */
+export async function getActivityEntries(
+  supabase: Client,
+  ids: readonly string[],
+): Promise<ActivityEntry[]> {
+  if (ids.length === 0) return [];
+  const { entries } = await loadEntries(
+    supabase,
+    eventsQuery(supabase).in("id", [...ids]),
+    (query) => newestFirst(query),
+    "the activity feed",
+  );
+  return entries;
+}
+
+async function loadEntries(
+  supabase: Client,
+  base: EventsQuery,
+  refine: (query: EventsQuery) => EventsQuery,
+  label: string,
+): Promise<{ entries: ActivityEntry[]; count: number | null }> {
+  const { data, count, error } = await refine(base);
+  if (error) throw new Error(`Could not load ${label}: ${error.message}`);
+
+  const rows = (data ?? []).map((row) => ({
+    event: {
+      id: row.id,
+      occurred_at: row.occurred_at,
+      table_name: row.table_name,
+      record_id: row.record_id,
+      resident_id: row.resident_id,
+      operation: row.operation,
+      old_values: asValues(row.old_values),
+      new_values: asValues(row.new_values),
+      changed_columns: row.changed_columns,
+      actor: row.actor,
+    } satisfies AuditEvent,
+    resident: row.resident,
   }));
 
-  const references = await resolveReferences(supabase, events);
+  const references = await resolveReferences(
+    supabase,
+    rows.map((row) => row.event),
+  );
   return {
-    entries: events.map((event) => ({ ...event, story: describeAuditEvent(event, references) })),
-    total: count ?? events.length,
+    entries: rows.map(({ event, resident }) => ({
+      ...event,
+      resident,
+      story: describeAuditEvent(event, references),
+    })),
+    count,
   };
 }
 
@@ -100,7 +172,7 @@ export function referencedIds(
 }
 
 async function resolveReferences(
-  supabase: SupabaseClient<Database>,
+  supabase: Client,
   events: readonly AuditEvent[],
 ): Promise<AuditReferences> {
   const ids = referencedIds(events);
