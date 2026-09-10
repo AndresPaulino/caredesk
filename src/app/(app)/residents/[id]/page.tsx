@@ -4,6 +4,7 @@ import { Suspense, cache } from "react";
 import { z } from "zod";
 
 import { PageHeader } from "@/components/app-shell/page-header";
+import { AssistantCurrentResident } from "@/components/assistant/assistant-current-resident";
 import { AllergyConflictAlert } from "@/components/residents/allergy-conflict-alert";
 import { EditResidentDetailsButton } from "@/components/residents/care/resident-details-form";
 import { AssessmentSummary } from "@/components/residents/assessment-summary";
@@ -76,6 +77,7 @@ export default async function ResidentPage(props: PageProps<"/residents/[id]">) 
 
   return (
     <div className="space-y-6">
+      <AssistantCurrentResident id={resident.id} name={resident.full_name} />
       <PageHeader
         title={`${resident.first_name} ${resident.last_name}`}
         description={`${ageOn(resident.date_of_birth)} · ${sexLabel(resident.sex)} · ${location}`}

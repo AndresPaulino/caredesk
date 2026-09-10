@@ -4,6 +4,7 @@ import { Activity, HeartPulse, LayoutDashboard, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { AssistantTrigger } from "@/components/assistant/assistant-trigger";
 import {
   Sidebar,
   SidebarContent,
@@ -27,7 +28,7 @@ const navigation = [
 
 const secondary = [{ title: "System health", href: "/health", icon: Activity }] as const;
 
-/** The left rail: brand, navigation, and the signed-in staff member. Collapses to icons. */
+/** The left rail: brand, navigation, the assistant, and the signed-in staff member. Collapses to icons. */
 export function AppSidebar({ staff }: { staff: StaffMenuProps["staff"] }) {
   const pathname = usePathname();
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
@@ -67,6 +68,7 @@ export function AppSidebar({ staff }: { staff: StaffMenuProps["staff"] }) {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <AssistantTrigger />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

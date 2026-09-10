@@ -1,7 +1,8 @@
 import "server-only";
 
-import type { SupabaseServerClient } from "@/lib/supabase/server";
 import type { Views } from "@/lib/supabase/database.types";
+import { escapeLike } from "@/lib/supabase/like";
+import type { SupabaseServerClient } from "@/lib/supabase/server";
 
 import { focusFor } from "./focus";
 import { RESIDENT_PAGE_SIZE, type ResidentListParams } from "./list-params";
@@ -129,9 +130,4 @@ function sortColumns(sort: ResidentListParams["sort"]): DirectoryColumn[] {
     case "name":
       return ["last_name", "first_name"];
   }
-}
-
-/** `%` and `_` are wildcards in `ilike`; a typed search term should match them literally. */
-function escapeLike(term: string): string {
-  return term.replace(/[\\%_]/g, (char) => `\\${char}`);
 }

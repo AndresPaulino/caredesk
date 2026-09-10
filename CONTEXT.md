@@ -196,6 +196,18 @@ _Avoid_: citation, reference, evidence
 The set of residents a staff member may see, derived from their role and unit assignments.
 _Avoid_: permissions, visibility, access level
 
+**Current resident**:
+The resident whose page the assistant drawer was opened from, passed with each question so pronouns resolve.
+_Avoid_: context resident, selected resident, active patient
+
+**Status line**:
+The lines in the drawer that name each tool as the assistant runs it, kept under the answer as a record of what it looked up.
+_Avoid_: progress indicator, spinner, activity log
+
+**Suggested prompt**:
+One of the four questions an empty thread offers, each aimed at a hero resident.
+_Avoid_: starter, example question, canned prompt
+
 **Resident directory**:
 The scoped view of residents with their facility, unit, and room names that the list, search, and detail pages read.
 _Avoid_: roster, census list, patient list
