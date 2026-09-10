@@ -277,7 +277,16 @@ describe("the seed", () => {
     expect(withAccount.map((member) => member.account!.key).sort()).toEqual(
       DEMO_ACCOUNTS.map((account) => account.key).sort(),
     );
-    expect(seed.staff.filter((member) => member.is_simulated)).toHaveLength(SIMULATED_STAFF_COUNT);
+    const simulated = seed.staff.filter((member) => member.is_simulated);
+    expect(simulated).toHaveLength(SIMULATED_STAFF_COUNT);
+    // Spread over every facility, each a nurse with units to act on (ticket 08).
+    expect(new Set(simulated.map((member) => member.facility_id)).size).toBe(
+      seed.facilities.length,
+    );
+    for (const member of simulated) {
+      expect(member.role).toBe("nurse");
+      expect(member.unit_ids.length).toBeGreaterThan(0);
+    }
     expect(seed.staff.filter((member) => member.role === "physician")).toHaveLength(12);
     for (const unit of seed.units) {
       expect(seed.staff.some((m) => m.role === "nurse" && m.unit_ids.includes(unit.id))).toBe(true);

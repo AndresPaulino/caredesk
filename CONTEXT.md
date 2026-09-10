@@ -227,5 +227,9 @@ The process that has simulated staff write realistic changes while the demo runs
 _Avoid_: bot, cron, background job, generator
 
 **Shift rhythm**:
-The time-of-day pattern the simulator follows: an intake burst in the morning, labs at midday, discharges in the afternoon.
+The time-of-day pattern the simulator follows: vitals and resident details in the morning, the medication pass at midday and in the evening, notes and scheduling in the afternoon, and a quiet night.
 _Avoid_: schedule, cadence
+
+**Pace**:
+The multiplier on the simulator's interval between actions. Pace 1 is real time, one action every 30 to 90 seconds by day; pace 10 is ten times faster.
+_Avoid_: speed, rate, throttle, tempo

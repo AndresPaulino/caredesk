@@ -27,6 +27,7 @@ Then seed the demo data and sign in:
 
 ```sh
 pnpm db:seed                 # six facilities, ~1,000 residents with clinical records, three demo logins
+pnpm simulate                # optional: simulated nurses record care until Ctrl-C, so the feed moves
 ```
 
 The seed is generated, not stored: about 59,000 rows drawn from the committed clinical
@@ -63,15 +64,16 @@ present and are skipped otherwise.
 
 ### Scripts
 
-| Command          | What it does                                            |
-| ---------------- | ------------------------------------------------------- |
-| `pnpm dev`       | Development server                                      |
-| `pnpm build`     | Production build                                        |
-| `pnpm check`     | Lint, format check, typecheck, and unit tests, as in CI |
-| `pnpm test`      | Unit tests (Vitest)                                     |
-| `pnpm db:push`   | Apply pending migrations to the hosted project          |
-| `pnpm db:status` | Compare local and remote migration history              |
-| `pnpm db:seed`   | Reset and rebuild the whole dataset and the demo logins |
+| Command          | What it does                                               |
+| ---------------- | ---------------------------------------------------------- |
+| `pnpm dev`       | Development server                                         |
+| `pnpm build`     | Production build                                           |
+| `pnpm check`     | Lint, format check, typecheck, and unit tests, as in CI    |
+| `pnpm test`      | Unit tests (Vitest)                                        |
+| `pnpm db:push`   | Apply pending migrations to the hosted project             |
+| `pnpm db:status` | Compare local and remote migration history                 |
+| `pnpm db:seed`   | Reset and rebuild the whole dataset and the demo logins    |
+| `pnpm simulate`  | Start the simulator (`--pace 10` faster, `--for 2m` timed) |
 
 ## Credits
 

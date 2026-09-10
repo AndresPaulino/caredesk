@@ -1,7 +1,8 @@
 /**
  * The operator's shape: six facilities, four units each, thirty rooms per unit (ten of them
  * semi-private), and the staff who work there: the three demo accounts, two physicians and
- * eight nurses per facility, ten of the nurses flagged as simulated staff for the simulator.
+ * eight nurses per facility, ten of the nurses flagged as simulated staff for the simulator,
+ * spread over every facility (two at the first four, one at the last two).
  */
 import { DEMO_ACCOUNTS } from "../demo-accounts";
 
@@ -131,8 +132,10 @@ export function buildOrganization(random: Random): Organization {
     asciiSlug(`${first}.${last}`) + "@willowbrook.example";
 
   let simulatedLeft = SIMULATED_STAFF_COUNT;
-  for (const facility of facilities) {
+  facilities.forEach((facility, facilityIndex) => {
     const facilityUnits = unitsByFacility.get(facility.id)!;
+    // The simulated nurses left, shared evenly over the facilities left: 2, 2, 2, 2, 1, 1.
+    const simulatedHere = Math.ceil(simulatedLeft / (facilities.length - facilityIndex));
     for (let i = 0; i < PHYSICIANS_PER_FACILITY; i++) {
       const sex = staffRandom.chance(0.5) ? "female" : "male";
       const { first, last } = newName(sex);
@@ -157,7 +160,7 @@ export function buildOrganization(random: Random): Organization {
       // to attribute records to and the simulator has people at every facility.
       const primary = facilityUnits[i % facilityUnits.length];
       const secondary = facilityUnits[(i + 1) % facilityUnits.length];
-      const simulated = simulatedLeft > 0 && i < 2;
+      const simulated = i < simulatedHere;
       if (simulated) simulatedLeft -= 1;
       staff.push({
         id: stableId(`staff:${facility.code}:nurse:${i}`),
@@ -173,7 +176,7 @@ export function buildOrganization(random: Random): Organization {
         account: null,
       });
     }
-  }
+  });
 
   const assignments: SeedRow<"staff_unit_assignments">[] = staff.flatMap((member) =>
     member.unit_ids.map((unit_id) => ({ staff_id: member.id, unit_id })),

@@ -46,14 +46,14 @@ residents, and their clinical records, close to 59,000 rows in all. It records t
 only when that fails, because a reset signs the account out everywhere; a routine reseed leaves
 open browser sessions alone.
 
-The generator lives in `src/lib/seed/` and is shared with the tests and, later, the simulator:
+The generator lives in `src/lib/seed/` and is shared with the tests and the simulator:
 
 - `vocabulary.ts` reads the catalogs under `data/vocabulary/` (ADR 0002) and decides which
   entries a care-home record uses and how often. Synthea's prevalence describes a general
   elderly population, so the care-home prevalence of each condition is set there.
 - `organization.ts` builds the six facilities, four units each, thirty rooms per unit (ten
   semi-private), the demo accounts, and two physicians and eight nurses per facility, ten of the
-  nurses flagged as simulated staff.
+  nurses, spread over every facility, flagged as simulated staff for the simulator.
 - `residents.ts` places about 150 current residents per facility (94 percent of beds) plus
   about 100 former residents, with names from the pools, ages centered in the mid-eighties, and
   the conditions that shape the rest of the record.
@@ -219,6 +219,45 @@ the browser then reads each announced event back through the caller's session (a
 action) to tell it as a sentence, which applies the policy a second time. The integration test
 subscribes as the Meadows nurse, writes an event for a Harbor resident and one for a Meadows
 resident, and hears only the second.
+
+## Simulator
+
+`pnpm simulate` (`scripts/simulator/run.ts`) has the ten simulated nurses record care until it
+is stopped (ticket 08): vitals, administrations, progress notes, incidents, resident details, and
+appointments, each on a resident of the nurse's own units. It shares the seed's text templates,
+the clinical rules in `src/lib/clinical/`, and the dashboard's dose rules, so a simulated record
+is indistinguishable from a seeded one, and it writes through the audit trigger's service-role
+path (above), so the feed names the nurse. `--pace 10` runs it ten times faster, `--for 2m` stops
+it after two minutes, `--seed 7` replays the same choices; Ctrl-C stops it after the action in
+flight, and it exits 1 if any write was rejected.
+
+- `src/lib/simulator/rhythm.ts` is the shift rhythm: five bands of the day weight the six kinds
+  of action (vitals and resident details in the morning, the medication pass at midday and in
+  the evening, notes and scheduling in the afternoon), and the night is quiet: no paperwork,
+  mostly notes and checks, intervals two and a half times longer. At pace 1 an action lands every
+  30 to 90 seconds by day.
+- `actions.ts` plans one action of a kind for a nurse, or none when nothing of that kind is
+  plausible, in which case the loop tries the hour's next likeliest kind: only current residents
+  on the nurse's own units; a dose only against an active order, and only when it is outstanding
+  around now (up to three hours late, an hour early) or an as-needed order not given in six
+  hours; vitals a small step from the resident's last set, drifting back toward typical, within
+  bounds a resident could have, an excursion four percent of the time; incidents at a low rate
+  weighted by fall risk; room moves into a free bed on the nurse's units; diet, mobility, and
+  code status one step at a time.
+- `simulator.ts` is the loop: pick a nurse, load their units, try the hour's kinds in weighted
+  order until one is plausible, write it, wait. A rejected write is counted and logged, never
+  retried; a round that throws waits ten seconds and moves on.
+- `supabase-store.ts` reads with one service-role client and writes with one client per nurse
+  whose requests carry `x-caredesk-actor`, so the audit trigger attributes each change to that
+  nurse. It reads in pages of a thousand rows, PostgREST's cap on one response.
+  `memory-store.ts` is the store the unit tests run over, with a fake clock.
+
+`src/lib/simulator/rhythm.test.ts` and `simulator.test.ts` cover action selection by time of day
+and every plausibility rule over the in-memory store; `simulator.integration.test.ts` writes
+every kind of action through the service role as a simulated nurse, checks that the audit event
+names that nurse, runs a few rounds of the loop, and puts the rows back. The policy and
+dashboard tests compare the database with the seed, so reseed after a simulator run before
+`pnpm check`.
 
 ## Types
 

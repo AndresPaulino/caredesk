@@ -4,12 +4,24 @@
 
 **Blocked by:** 07 (Dashboard tiles and the live activity feed)
 
-**Status:** ready-for-agent
+**Status:** ready-for-human (review)
 
-- [ ] Ten simulated staff exist in the seed, spread across facilities and units, and are flagged as simulated
-- [ ] A standalone command-line process shares the domain and generator modules with the seeder, writes through the service role with the acting simulated nurse set as actor, and produces audit events that look identical to real ones
-- [ ] A shift rhythm weights action types by time of day (intake and vitals in the morning, lab draws and administrations midday, notes and discharges in the afternoon, quiet overnight)
-- [ ] A pace option scales the interval between actions; the default is one action every 30 to 90 seconds
-- [ ] Plausibility rules hold: no administration of a discontinued order, no activity for former residents, vitals within plausible bounds for the resident, incidents at a realistic low rate, and simulated nurses only act within their own units
-- [ ] Unit tests with a fake clock and an in-memory store cover action selection by time of day and every plausibility rule
-- [ ] Running the simulator against the seeded database for two minutes at fast pace produces visible feed activity and no rejected writes
+- [x] Ten simulated staff exist in the seed, spread across facilities and units, and are flagged as simulated
+- [x] A standalone command-line process shares the domain and generator modules with the seeder, writes through the service role with the acting simulated nurse set as actor, and produces audit events that look identical to real ones
+- [x] A shift rhythm weights action types by time of day (intake and vitals in the morning, lab draws and administrations midday, notes and discharges in the afternoon, quiet overnight)
+- [x] A pace option scales the interval between actions; the default is one action every 30 to 90 seconds
+- [x] Plausibility rules hold: no administration of a discontinued order, no activity for former residents, vitals within plausible bounds for the resident, incidents at a realistic low rate, and simulated nurses only act within their own units
+- [x] Unit tests with a fake clock and an in-memory store cover action selection by time of day and every plausibility rule
+- [x] Running the simulator against the seeded database for two minutes at fast pace produces visible feed activity and no rejected writes
+
+## Comments
+
+**2026-09-10, agent.** Built. Notes for review:
+
+- `pnpm simulate` (`scripts/simulator/run.ts`) over `src/lib/simulator/`: a pure core (`rhythm.ts`, `actions.ts`, `simulator.ts`) over a two-method store port (`loadUnits`, `apply`), with `supabase-store.ts` for the hosted project and `memory-store.ts` for the tests. Writes go through one service-role client per nurse carrying `x-caredesk-actor`, so the trigger from ticket 06 produces the audit event and the feed shows the nurse. The core shares the seed's text templates and random generator, the clinical rules in `src/lib/clinical/`, and the dashboard's dose rules (`scheduledDoses`, `outstandingDoses`), so "mark medications given" gives exactly the doses the medications tile counts as outstanding, and the tile goes down as the simulator works.
+- The ten simulated nurses were already in the seed but at five facilities (two each; Bayview had none). They are now spread 2, 2, 2, 2, 1, 1 over the six. Ids and names are unchanged; the hosted project was reseeded.
+- The ticket's rhythm parenthetical names lab draws and discharges, which are not among the six action kinds the spec lists for the simulator. The rhythm maps them onto those kinds: vitals and resident details in the morning, the medication pass at midday (and again in the evening), notes and scheduling in the afternoon, a quiet night with intervals two and a half times longer and no paperwork. No admissions or discharges are simulated, deliberately: a discharge would remove a resident (possibly a hero from ticket 09) mid-demo, and a reseed is the way to reset the census. CONTEXT.md's "Shift rhythm" entry now describes what was built, and "Pace" was added.
+- Resident detail updates are room moves within the nurse's units (into a free bed, checked against the snapshot so the capacity trigger never fires) and one-step changes to diet, mobility, and code status, so the feed reads "moved the resident to Room 214, Unit B" and "changed the resident's diet". Incidents run at about 1.5 percent of actions, weighted by fall risk, which is the seed's share of incidents among records.
+- `--pace <n>` divides the interval (default one action every 30 to 90 seconds by day), `--for <duration>` stops after a while, `--seed <n>` replays the same choices, and the process exits 1 if any write was rejected. Ctrl-C stops after the action in flight.
+- Tests: `rhythm.test.ts` and `simulator.test.ts` (fake clock, in-memory store) cover selection by time of day, the night's quiet, and every plausibility rule (own units only, no former residents, no discontinued orders, each dose once, vitals bounds and excursions, incident rate, free beds only, appointments in office hours), plus the loop (rejected write counted and continued, deadline, abort, thrown error, replay from a seed). `simulator.integration.test.ts` writes each kind through the service role, checks the audit event names the nurse, runs five rounds, and puts the rows back. The policy and dashboard tests compare the database with the seed, so a simulator run has to be followed by a reseed before `pnpm check`; the run below was.
+- Verification on 2026-09-10: `pnpm simulate --pace 10 --for 2m` against the reseeded project recorded 17 actions (7 administrations, 6 appointments, 3 notes, 1 vitals) by 9 of the 10 nurses with 0 rejected writes; the 17 audit events all name a simulated nurse, none touch a former resident or a resident outside the nurse's units, the admin's session reads all 17 and the Meadows nurse's reads the 3 on her units. The mix leaned to as-needed doses and appointments because at 2:42 pm the seed had already recorded the 1 pm pass; the 9 am and 9 pm passes are where the medication tile moves. The project was reseeded afterward and `pnpm check` passed (183 tests), except that the ticket 07 Realtime test fails when the check starts within a minute of a reseed (Realtime replays the reseed's WAL first) and passed alone a minute later.
