@@ -429,4 +429,49 @@ describe("describing an audit event", () => {
     expect(medicationShortName("Insulin Glargine")).toBe("Insulin Glargine");
     expect(medicationShortName("")).toBe("");
   });
+  it("reads an assistant access event as what was asked or looked up, not as a change", () => {
+    const threadId = "0d1a3b1e-2c7a-4d5e-9f10-1b2c3d4e5f60";
+    const question = describeAuditEvent(
+      event({
+        table_name: "assistant_messages",
+        operation: "access",
+        new_values: { kind: "question", threadId, question: "When was his last podiatry exam?" },
+      }),
+      NO_REFERENCES,
+    );
+    expect(question).toEqual({
+      summary: "asked the assistant about the resident: “When was his last podiatry exam?”",
+      kind: "accessed",
+      recordLabel: "Assistant question",
+      tab: null,
+      changes: [
+        {
+          column: "question",
+          label: "Question",
+          before: null,
+          after: "When was his last podiatry exam?",
+        },
+      ],
+    });
+
+    const lookup = describeAuditEvent(
+      event({
+        table_name: "assistant_messages",
+        operation: "access",
+        resident_id: null,
+        new_values: {
+          kind: "tool_call",
+          threadId,
+          tool: "find_residents",
+          input: { query: "Doe" },
+          summary: "searched residents for “Doe”",
+          tab: null,
+        },
+      }),
+      NO_REFERENCES,
+    );
+    expect(lookup.summary).toBe("searched residents for “Doe” through the assistant");
+    expect(lookup.kind).toBe("accessed");
+    expect(lookup.recordLabel).toBe("Assistant lookup");
+  });
 });

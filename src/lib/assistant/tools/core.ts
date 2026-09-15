@@ -1,7 +1,5 @@
 import "server-only";
 
-import type { SupabaseClient } from "@supabase/supabase-js";
-
 import { ASSESSMENT_KIND_BY_KEY, type AssessmentKind } from "@/lib/clinical/assessment-kinds";
 import {
   summarizeAssessments,
@@ -25,12 +23,19 @@ import {
   sexLabel,
 } from "@/lib/residents/labels";
 import { getResident, type ResidentDirectoryEntry } from "@/lib/residents/queries";
-import type { RecordTabKey } from "@/lib/residents/record-tabs";
-import type { Database, Enums, Tables } from "@/lib/supabase/database.types";
+import type { Enums, Tables } from "@/lib/supabase/database.types";
 import { escapeLike } from "@/lib/supabase/like";
 import { dateInZone, daysBetween } from "@/lib/time";
 
-import { residentSearchTerms } from "./search";
+import { residentSearchTerms } from "../search";
+
+import {
+  sourceFor,
+  withStaff,
+  type AssistantClient,
+  type SourceRef,
+  type ToolContext,
+} from "./shared";
 
 /**
  * The assistant's core tools: the only way it touches data (ADR 0001). Each is a plain
@@ -38,29 +43,14 @@ import { residentSearchTerms } from "./search";
  * back exactly as it does for the pages (ADR 0003): a resident outside the caller's scope is
  * not found, the same as one who does not exist, and no tool can widen that. The model-facing
  * wrappers live in `tool-definitions.ts`; these functions are the seam the integration tests
- * exercise without the model.
+ * exercise without the model. The record tools (`records.ts`), the audit tools (`audit.ts`),
+ * and the conflict check (`conflicts.ts`) follow the same shape.
  *
  * Results are shaped for two readers. The model gets labels and calendar dates it can quote
  * ("Once daily", "2026-05-02", 131 days ago). Source chips get identifiers: every result about
  * a resident carries a `source` naming the resident and the record tab, and every record its
  * id, so an answer can link to what it relied on.
  */
-
-export type AssistantClient = SupabaseClient<Database>;
-
-export type ToolContext = {
-  supabase: AssistantClient;
-  /** The instant the question was asked; "today" and "days ago" are measured from it. */
-  now: Date;
-};
-
-/** Where a result came from: enough for a source chip to link to the resident page and tab. */
-export type SourceRef = {
-  residentId: string;
-  residentName: string;
-  /** The record tab holding these records, or null for the resident page itself. */
-  tab: RecordTabKey | null;
-};
 
 export const FIND_RESIDENTS_LIMIT = 10;
 export const ASSESSMENTS_LIMIT = 20;
@@ -70,12 +60,6 @@ export const VITALS_MAX_LIMIT = 50;
 
 /** Administrations read for one resident before grouping by order. A chart holds far fewer. */
 const ADMINISTRATIONS_CAP = 200;
-
-const STAFF_COLUMNS = "id, first_name, last_name, credentials, role";
-
-/** `*` plus the staff member behind one foreign key, as `staff`. */
-const withStaff = <Key extends string>(foreignKey: Key) =>
-  `*, staff:staff!${foreignKey} (${STAFF_COLUMNS})` as const;
 
 // ---------------------------------------------------------------------------------------------
 // find_residents
@@ -246,7 +230,7 @@ export async function getResidentSummary(
   };
 }
 
-async function loadConditions(
+export async function loadConditions(
   supabase: AssistantClient,
   residentId: string,
 ): Promise<Tables<"conditions">[]> {
@@ -616,10 +600,4 @@ export async function getAllergies(
     })),
     total: rows.length,
   };
-}
-
-// ---------------------------------------------------------------------------------------------
-
-function sourceFor(resident: ResidentDirectoryEntry, tab: RecordTabKey | null): SourceRef {
-  return { residentId: resident.id, residentName: resident.full_name, tab };
 }

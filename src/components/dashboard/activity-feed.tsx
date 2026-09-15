@@ -1,6 +1,6 @@
 "use client";
 
-import { Archive, History, Pencil, Plus, type LucideIcon } from "lucide-react";
+import { Archive, History, Pencil, Plus, Sparkles, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -22,8 +22,9 @@ import { dateInZone, dayHeading, groupByDay } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 /**
- * The activity feed: who did what to whom, as it happens. The server renders the most recent
- * events; from then on the browser listens for inserts on audit_events over Supabase Realtime,
+ * The activity feed: who did what to whom, as it happens, assistant questions and lookups
+ * included. The server renders the most recent events; from then on the browser listens for
+ * inserts on audit_events over Supabase Realtime,
  * which applies the events policy per subscriber, so a nurse hears only about their units.
  * Each announced event is read back through the caller's session (`loadFeedEntries`) to be
  * told as a sentence with the names the policies allow, then prepended.
@@ -33,12 +34,14 @@ const ICONS: Readonly<Record<AuditStoryKind, LucideIcon>> = {
   added: Plus,
   changed: Pencil,
   removed: Archive,
+  accessed: Sparkles,
 };
 
 const TONES: Readonly<Record<AuditStoryKind, string>> = {
   added: "text-muted-foreground",
   changed: "text-muted-foreground",
   removed: "border-destructive/40 text-destructive",
+  accessed: "border-dashed text-muted-foreground",
 };
 
 /** Realtime can announce several events for one action; they are read back in one call. */
@@ -129,7 +132,7 @@ export function ActivityFeed({
           Activity
         </CardTitle>
         <CardDescription>
-          Changes to resident records as they happen. {scopeDescription}.
+          Changes to resident records and use of the assistant, as they happen. {scopeDescription}.
         </CardDescription>
         <div className="col-start-2 row-span-2 row-start-1 self-start justify-self-end">
           <ConnectionBadge connection={connection} />
@@ -192,7 +195,7 @@ function FeedItem({ entry, fresh }: { entry: FeedEntry; fresh: boolean }) {
       <div className="min-w-0 flex-1">
         <p className="text-sm">
           <span className="font-medium">{entry.actor ?? "A staff member outside your scope"}</span>{" "}
-          {entry.resident ? (
+          {entry.resident && entry.href ? (
             <>
               {sentence.before}
               <Link href={entry.href} className="font-medium underline-offset-4 hover:underline">

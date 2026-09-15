@@ -1,63 +1,51 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { loadAssistantThread } from "@/lib/assistant/actions";
 import {
   createEventParser,
+  mergeSources,
   type AssistantEvent,
+  type AssistantMessage,
   type AssistantRequest,
   type CurrentResident,
-  type ThreadMessageParam,
-  type ToolStatus,
+  type ThreadMessage,
+  type ToolStep,
+  type UserMessage,
 } from "@/lib/assistant/protocol";
 
 /**
- * The thread as the drawer shows it, and the one way to add to it: `ask` posts the question
- * with the thread so far, then applies the streamed events to the pending answer as they
- * arrive. The thread lives in memory for now; ticket 11 saves it.
+ * The thread as the drawer shows it, and the ways it changes: `ask` posts a question in the
+ * current thread (or starts one) and applies the streamed events to the pending answer as
+ * they arrive; `resume` loads a saved thread; `reset` starts an empty one. The server saves
+ * every turn, so what is here is what a resumed thread shows again.
  */
 
-export type ToolStep = { id: string; label: string; status: ToolStatus };
+export type { AssistantMessage, ThreadMessage, ToolStep, UserMessage };
 
-export type ThreadError = Extract<AssistantEvent, { type: "error" }>;
+export type ThreadStatus = "idle" | "streaming" | "loading";
 
-export type UserMessage = { id: string; role: "user"; content: string };
-
-export type AssistantMessage = {
-  id: string;
-  role: "assistant";
-  content: string;
-  /** Each tool the assistant ran for this answer, in order. */
-  steps: ToolStep[];
-  /** The current resident as the server resolved it for this question. */
-  resident: CurrentResident | null;
-  error: Pick<ThreadError, "kind" | "message"> | null;
-  /** Set when the answer ended before the assistant was finished. */
-  cutShort: "max_tokens" | "max_iterations" | "stopped" | null;
-  pending: boolean;
-};
-
-export type ThreadMessage = UserMessage | AssistantMessage;
-
-export type ThreadStatus = "idle" | "streaming";
+export type ThreadHandle = { id: string; title: string };
 
 export function useAssistantThread() {
+  const [thread, setThread] = useState<ThreadHandle | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
   const [status, setStatus] = useState<ThreadStatus>("idle");
-  const messagesRef = useRef<ThreadMessage[]>([]);
+  const threadRef = useRef<ThreadHandle | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    messagesRef.current = messages;
-  }, [messages]);
+    threadRef.current = thread;
+  }, [thread]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  const ask = useCallback(async (question: string, residentId: string | null) => {
+  const ask = useCallback(async (question: string, resident: CurrentResident | null) => {
     const content = question.trim();
     if (!content || abortRef.current) return;
 
-    const userMessage: UserMessage = { id: newId(), role: "user", content };
-    const answerId = newId();
-    const history = toParams([...messagesRef.current, userMessage]);
+    let questionId = newId();
+    let answerId = newId();
+    const userMessage: UserMessage = { id: questionId, role: "user", content, resident };
     setMessages((current) => [
       ...current,
       userMessage,
@@ -66,7 +54,7 @@ export function useAssistantThread() {
         role: "assistant",
         content: "",
         steps: [],
-        resident: null,
+        sources: [],
         error: null,
         cutShort: null,
         pending: true,
@@ -84,7 +72,11 @@ export function useAssistantThread() {
       );
 
     try {
-      const request: AssistantRequest = { messages: history, residentId };
+      const request: AssistantRequest = {
+        threadId: threadRef.current?.id ?? null,
+        question: content,
+        residentId: resident?.id ?? null,
+      };
       const response = await fetch("/api/assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -102,14 +94,38 @@ export function useAssistantThread() {
       const reader = response.body.getReader();
       const apply = (event: AssistantEvent) => {
         switch (event.type) {
-          case "context":
-            update((message) => ({ ...message, resident: event.resident }));
+          case "context": {
+            // Adopt the server's thread and ids so a resumed thread and this one agree.
+            const previousQuestionId = questionId;
+            const previousAnswerId = answerId;
+            questionId = event.questionId;
+            answerId = event.answerId;
+            setThread(event.thread);
+            threadRef.current = event.thread;
+            setMessages((current) =>
+              current.map((message) => {
+                if (message.id === previousQuestionId && message.role === "user") {
+                  return { ...message, id: questionId, resident: event.resident };
+                }
+                if (message.id === previousAnswerId && message.role === "assistant") {
+                  return { ...message, id: answerId };
+                }
+                return message;
+              }),
+            );
             break;
+          }
           case "text":
             update((message) => ({ ...message, content: message.content + event.text }));
             break;
           case "tool":
-            update((message) => ({ ...message, steps: upsertStep(message.steps, event) }));
+            update((message) => ({
+              ...message,
+              steps: upsertStep(message.steps, event),
+              sources: event.sources
+                ? mergeSources(message.sources, event.sources)
+                : message.sources,
+            }));
             break;
           case "done":
             update((message) => ({
@@ -162,21 +178,37 @@ export function useAssistantThread() {
 
   const reset = useCallback(() => {
     abortRef.current?.abort();
+    setThread(null);
+    threadRef.current = null;
     setMessages([]);
   }, []);
 
-  return { messages, status, ask, stop, reset };
-}
+  /** Loads a saved thread in place of the current one. False when it could not be found. */
+  const resume = useCallback(async (id: string): Promise<boolean> => {
+    abortRef.current?.abort();
+    setStatus("loading");
+    try {
+      const loaded = await loadAssistantThread(id);
+      if (!loaded) return false;
+      setThread({ id: loaded.id, title: loaded.title });
+      threadRef.current = { id: loaded.id, title: loaded.title };
+      setMessages(loaded.messages);
+      return true;
+    } finally {
+      setStatus("idle");
+    }
+  }, []);
 
-/** The thread as the route takes it: text turns only, skipping answers that never came. */
-function toParams(messages: ThreadMessage[]): ThreadMessageParam[] {
-  return messages.flatMap((message) =>
-    message.content.trim() ? [{ role: message.role, content: message.content }] : [],
-  );
+  return { thread, messages, status, ask, stop, reset, resume };
 }
 
 function upsertStep(steps: ToolStep[], event: Extract<AssistantEvent, { type: "tool" }>) {
-  const step: ToolStep = { id: event.id, label: event.label, status: event.status };
+  const step: ToolStep = {
+    id: event.id,
+    name: event.name,
+    label: event.label,
+    status: event.status,
+  };
   return steps.some((existing) => existing.id === event.id)
     ? steps.map((existing) => (existing.id === event.id ? step : existing))
     : [...steps, step];

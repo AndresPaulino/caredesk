@@ -33,6 +33,26 @@ describe("toFeedEntry", () => {
     ).toEqual(entry("e1", "2026-09-10T14:00:00Z"));
   });
 
+  it("has nowhere to link for an event that concerns no resident", () => {
+    const made = toFeedEntry({
+      id: "e2",
+      occurred_at: "2026-09-10T14:00:00Z",
+      resident_id: null,
+      actor: { id: "s1", first_name: "Maria", last_name: "Alvarez", credentials: "RN" },
+      resident: null,
+      story: {
+        summary: "asked the assistant: “Which residents on Unit B have an allergy conflict?”",
+        kind: "accessed",
+        recordLabel: "Assistant question",
+        tab: null,
+        changes: [],
+      },
+    });
+    expect(made.href).toBeNull();
+    expect(made.resident).toBeNull();
+    expect(splitSummary(made.summary)).toEqual({ before: `${made.summary} for `, after: "" });
+  });
+
   it("leaves the actor and resident unnamed when the reader may not see them", () => {
     const made = toFeedEntry({
       id: "e1",

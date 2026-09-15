@@ -208,6 +208,10 @@ _Avoid_: progress indicator, spinner, activity log
 One of the four questions an empty thread offers, each aimed at a hero resident.
 _Avoid_: starter, example question, canned prompt
 
+**Assistant access event**:
+An audit event recording that a staff member asked the assistant a question, or that a tool ran on their behalf to answer it, attributed to that staff member and to the resident it concerned.
+_Avoid_: AI log, usage log, telemetry, chat history
+
 **Resident directory**:
 The scoped view of residents with their facility, unit, and room names that the list, search, and detail pages read.
 _Avoid_: roster, census list, patient list

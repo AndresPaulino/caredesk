@@ -65,6 +65,7 @@ async function run(client: Anthropic): Promise<AssistantEvent[]> {
     resident: { id: "e8448534-7876-5654-87e7-379be4967688", name: "Harold Doe" },
     messages: [{ role: "user", content: "When was his last podiatry exam?" }],
     emit: (event) => events.push(event),
+    onAccess: async () => {},
   });
   return events;
 }
@@ -95,7 +96,7 @@ describe("one turn of the assistant", () => {
     ]);
   });
 
-  it("hands the runner the configured model, streaming, adaptive thinking at medium effort, the six tools, and the prompt", async () => {
+  it("hands the runner the configured model, streaming, adaptive thinking at medium effort, the fourteen tools, and the prompt", async () => {
     const { client, toolRunner } = fakeClient(
       iterations(streamOf(["Done."], { stop_reason: "end_turn" })),
     );

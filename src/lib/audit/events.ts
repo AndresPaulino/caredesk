@@ -2,7 +2,7 @@ import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import type { Database } from "../supabase/database.types";
+import type { Database, Tables } from "../supabase/database.types";
 
 import {
   isAuditedTable,
@@ -12,7 +12,9 @@ import {
 } from "./columns";
 import {
   describeAuditEvent,
+  type AuditActor,
   type AuditEvent,
+  type AuditOperation,
   type AuditTrailEntry,
   type AuditValues,
 } from "./describe";
@@ -21,13 +23,16 @@ import { FEED_LIMIT } from "./feed";
 /**
  * Audit events read through the caller's session and told as a story. The events policy is
  * the resident's own scope (ADR 0003), so a resident outside scope has no events, the same as
- * one who does not exist. The actor, the resident, and the names behind foreign keys (rooms,
- * units, staff, medication orders) are read through their own policies; a name outside the
- * caller's scope comes back missing and is shown as such.
+ * one who does not exist; an assistant access event that concerns no resident is readable by
+ * the staff member it is attributed to and by admins. The actor, the resident, and the names
+ * behind foreign keys (rooms, units, staff, medication orders) are read through their own
+ * policies; a name outside the caller's scope comes back missing and is shown as such.
  *
- * Three readers share one loader: the audit trail on a resident's page, the activity feed on
- * the dashboard (the most recent events across the caller's whole scope), and the feed's
- * live updates (events by id, as Realtime announces them).
+ * Four readers share one loader: the audit trail on a resident's page and the assistant's
+ * audit trail tool (one resident, with filters), the activity feed on the dashboard and the
+ * assistant's activity tool (the most recent events across the caller's scope, or across the
+ * units and facilities asked about), and the feed's live updates (events by id, as Realtime
+ * announces them).
  */
 
 type Client = SupabaseClient<Database>;
@@ -40,35 +45,69 @@ export type ActivityEntry = AuditTrailEntry & { resident: AuditEventResident };
 export type AuditTrail = {
   /** Newest first, at most `limit` of them. */
   entries: AuditTrailEntry[];
-  /** How many events the resident has in all. */
+  /** How many events match in all. */
+  total: number;
+};
+
+export type Activity = {
+  /** Newest first, at most `limit` of them. */
+  entries: ActivityEntry[];
+  /** How many events match in all. */
   total: number;
 };
 
 export const AUDIT_TRAIL_LIMIT = 200;
 
-// Written out in the call so supabase-js sees a literal and types the embedded actor and resident.
-const eventsQuery = (supabase: Client, options: { count?: "exact" } = {}) =>
-  supabase.from("audit_events").select(
-    `*, actor:staff!audit_events_actor_id_fkey (id, first_name, last_name, credentials),
-       resident:residents!audit_events_resident_id_fkey (id, first_name, last_name)`,
-    options,
-  );
+export type AuditEventFilters = {
+  /** Only events at or after this instant (ISO 8601). */
+  since?: string;
+  /** Only events before this instant (ISO 8601). */
+  until?: string;
+  /** Only events on these tables; every table by default. */
+  tables?: readonly string[];
+  /** Only these operations; every operation by default. */
+  operations?: readonly AuditOperation[];
+};
 
-type EventsQuery = ReturnType<typeof eventsQuery>;
+/** Which residents' events to read, by the units or facilities they are on. */
+export type ActivityScope = {
+  unitIds?: readonly string[];
+  facilityIds?: readonly string[];
+};
 
-const newestFirst = (query: EventsQuery) =>
-  query.order("occurred_at", { ascending: false }).order("id", { ascending: false });
+const ACTOR_EMBED =
+  "actor:staff!audit_events_actor_id_fkey (id, first_name, last_name, credentials)";
 
-/** One resident's audit trail, newest first. */
+// Written out in each call so supabase-js sees a literal and types the embedded actor and resident.
+const eventsQuery = (supabase: Client) =>
+  supabase
+    .from("audit_events")
+    .select(`*, ${ACTOR_EMBED}, resident:residents (id, first_name, last_name)`, {
+      count: "exact",
+    });
+
+/** The same, joined inward so a filter on the resident's unit or facility excludes the event. */
+const scopedEventsQuery = (supabase: Client) =>
+  supabase
+    .from("audit_events")
+    .select(
+      `*, ${ACTOR_EMBED}, resident:residents!inner (id, first_name, last_name, unit_id, facility_id)`,
+      { count: "exact" },
+    );
+
+type EventsQuery = ReturnType<typeof eventsQuery> | ReturnType<typeof scopedEventsQuery>;
+
+/** One resident's audit trail, newest first, optionally within a window or on some tables. */
 export async function getAuditTrail(
   supabase: Client,
   residentId: string,
-  { limit = AUDIT_TRAIL_LIMIT }: { limit?: number } = {},
+  { limit = AUDIT_TRAIL_LIMIT, ...filters }: { limit?: number } & AuditEventFilters = {},
 ): Promise<AuditTrail> {
   const { entries, count } = await loadEntries(
     supabase,
-    eventsQuery(supabase, { count: "exact" }).eq("resident_id", residentId),
-    (query) => newestFirst(query).limit(limit),
+    newestFirst(applyFilters(eventsQuery(supabase).eq("resident_id", residentId), filters)).limit(
+      limit,
+    ),
     "the audit trail",
   );
   return { entries, total: count ?? entries.length };
@@ -79,13 +118,44 @@ export async function listRecentActivity(
   supabase: Client,
   { limit = FEED_LIMIT }: { limit?: number } = {},
 ): Promise<ActivityEntry[]> {
-  const { entries } = await loadEntries(
+  return (await listActivity(supabase, { limit })).entries;
+}
+
+/**
+ * Recent events across the caller's scope, or across the units and facilities named, newest
+ * first, with how many match in all. An empty unit or facility list means no residents, so no
+ * events; leave both out for the whole scope.
+ */
+export async function listActivity(
+  supabase: Client,
+  {
+    limit = FEED_LIMIT,
+    scope,
+    ...filters
+  }: { limit?: number; scope?: ActivityScope } & AuditEventFilters = {},
+): Promise<Activity> {
+  const unitIds = scope?.unitIds;
+  const facilityIds = scope?.facilityIds;
+  if ((unitIds && unitIds.length === 0) || (facilityIds && facilityIds.length === 0)) {
+    return { entries: [], total: 0 };
+  }
+
+  let query: EventsQuery;
+  if (unitIds || facilityIds) {
+    let scoped = scopedEventsQuery(supabase);
+    if (unitIds) scoped = scoped.in("resident.unit_id", [...unitIds]);
+    if (facilityIds) scoped = scoped.in("resident.facility_id", [...facilityIds]);
+    query = scoped;
+  } else {
+    query = eventsQuery(supabase);
+  }
+
+  const { entries, count } = await loadEntries(
     supabase,
-    eventsQuery(supabase),
-    (query) => newestFirst(query).limit(limit),
+    newestFirst(applyFilters(query, filters)).limit(limit),
     "the activity feed",
   );
-  return entries;
+  return { entries, total: count ?? entries.length };
 }
 
 /** The events with these ids that the caller may see, newest first. */
@@ -96,20 +166,40 @@ export async function getActivityEntries(
   if (ids.length === 0) return [];
   const { entries } = await loadEntries(
     supabase,
-    eventsQuery(supabase).in("id", [...ids]),
-    (query) => newestFirst(query),
+    newestFirst(eventsQuery(supabase).in("id", [...ids])),
     "the activity feed",
   );
   return entries;
 }
 
+function applyFilters<Query extends EventsQuery>(query: Query, filters: AuditEventFilters): Query {
+  let refined = query;
+  if (filters.since) refined = refined.gte("occurred_at", filters.since) as Query;
+  if (filters.until) refined = refined.lt("occurred_at", filters.until) as Query;
+  if (filters.tables) refined = refined.in("table_name", [...filters.tables]) as Query;
+  if (filters.operations) refined = refined.in("operation", [...filters.operations]) as Query;
+  return refined;
+}
+
+function newestFirst<Query extends EventsQuery>(query: Query): Query {
+  return query
+    .order("occurred_at", { ascending: false })
+    .order("id", { ascending: false }) as Query;
+}
+
+/** An event row as either query returns it: the columns, the actor, and the resident. */
+type EventRow = Tables<"audit_events"> & { actor: AuditActor; resident: AuditEventResident };
+
 async function loadEntries(
   supabase: Client,
-  base: EventsQuery,
-  refine: (query: EventsQuery) => EventsQuery,
+  query: PromiseLike<{
+    data: EventRow[] | null;
+    count: number | null;
+    error: { message: string } | null;
+  }>,
   label: string,
 ): Promise<{ entries: ActivityEntry[]; count: number | null }> {
-  const { data, count, error } = await refine(base);
+  const { data, count, error } = await query;
   if (error) throw new Error(`Could not load ${label}: ${error.message}`);
 
   const rows = (data ?? []).map((row) => ({
@@ -125,7 +215,13 @@ async function loadEntries(
       changed_columns: row.changed_columns,
       actor: row.actor,
     } satisfies AuditEvent,
-    resident: row.resident,
+    resident: row.resident
+      ? {
+          id: row.resident.id,
+          first_name: row.resident.first_name,
+          last_name: row.resident.last_name,
+        }
+      : null,
   }));
 
   const references = await resolveReferences(

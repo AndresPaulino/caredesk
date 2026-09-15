@@ -1,4 +1,4 @@
-import { Archive, ChevronDown, History, Pencil, Plus } from "lucide-react";
+import { Archive, ChevronDown, History, Pencil, Plus, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -18,12 +18,14 @@ const ICONS: Readonly<Record<AuditStoryKind, LucideIcon>> = {
   added: Plus,
   changed: Pencil,
   removed: Archive,
+  accessed: Sparkles,
 };
 
 const TONES: Readonly<Record<AuditStoryKind, string>> = {
   added: "text-muted-foreground",
   changed: "text-muted-foreground",
   removed: "border-destructive/40 text-destructive",
+  accessed: "border-dashed text-muted-foreground",
 };
 
 /**
@@ -45,13 +47,13 @@ export function AuditTrailTab({
   return (
     <RecordPanel
       title="Audit trail"
-      description="Every change to this resident's record, newest first: who made it, when, and what changed."
+      description="Every change to this resident's record and every assistant question and lookup about them, newest first: who, when, and what."
     >
       {trail.entries.length === 0 ? (
         <RecordEmpty
           icon={History}
           title="No changes recorded"
-          description="Changes made to this resident's record from this page or by other staff appear here as they happen."
+          description="Changes made to this resident's record, and questions asked the assistant about them, appear here as they happen."
         />
       ) : (
         <>

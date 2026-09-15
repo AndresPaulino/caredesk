@@ -23,15 +23,15 @@ export type FeedEntry = {
   kind: AuditStory["kind"];
   recordLabel: string;
   resident: { id: string; name: string } | null;
-  /** The resident's page, on the record's tab. */
-  href: string;
+  /** The resident's page, on the record's tab; null for an event that concerns no resident. */
+  href: string | null;
 };
 
 /** An audit event as the loader in `events.ts` returns it, with its story told. */
 export type DescribedEvent = {
   id: string;
   occurred_at: string;
-  resident_id: string;
+  resident_id: string | null;
   actor: AuditActor;
   resident: { id: string; first_name: string; last_name: string } | null;
   story: AuditStory;
@@ -48,7 +48,7 @@ export function toFeedEntry(event: DescribedEvent): FeedEntry {
     resident: event.resident
       ? { id: event.resident.id, name: `${event.resident.first_name} ${event.resident.last_name}` }
       : null,
-    href: residentHref(event.resident_id, event.story.tab ?? undefined),
+    href: event.resident_id ? residentHref(event.resident_id, event.story.tab ?? undefined) : null,
   };
 }
 

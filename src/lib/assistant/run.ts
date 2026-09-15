@@ -4,15 +4,16 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { BetaMessage } from "@anthropic-ai/sdk/resources/beta";
 
 import { buildSystemPrompt, type PromptStaff } from "./prompt";
-import type { AssistantEvent, CurrentResident, ThreadMessageParam } from "./protocol";
-import { assistantTools } from "./tool-definitions";
+import type { AssistantEvent, CurrentResident, ThreadTurn } from "./protocol";
+import { assistantTools, type ToolAccess } from "./tool-definitions";
 import type { ToolContext } from "./tools";
 
 /**
  * One turn of the assistant: the thread so far goes to Claude through the SDK's tool runner,
  * which calls the tools as the model asks for them and loops until the model answers. Text
- * streams out as it is generated, each tool reports itself as it runs, and the turn ends
- * with either a `done` or an `error` event, so the drawer always has something to show.
+ * streams out as it is generated, each tool reports itself as it runs and is recorded in the
+ * audit trail through `onAccess`, and the turn ends with either a `done` or an `error` event,
+ * so the drawer always has something to show.
  *
  * The model and the caller's client are handed in: the model is one configuration value
  * (`ANTHROPIC_MODEL`), and the client is the signed-in staff member's own session, so the
@@ -30,9 +31,11 @@ export type RunAssistantOptions = ToolContext & {
   model: string;
   staff: PromptStaff;
   resident: CurrentResident | null;
-  messages: ThreadMessageParam[];
+  messages: ThreadTurn[];
   signal?: AbortSignal;
   emit: (event: AssistantEvent) => void;
+  /** Records each tool call as an assistant access event; a rejection fails that call. */
+  onAccess: (access: ToolAccess) => Promise<void>;
 };
 
 export async function runAssistant({
@@ -45,6 +48,7 @@ export async function runAssistant({
   messages,
   signal,
   emit,
+  onAccess,
 }: RunAssistantOptions): Promise<void> {
   const runner = client.beta.messages.toolRunner(
     {
@@ -54,7 +58,7 @@ export async function runAssistant({
       system: buildSystemPrompt({ staff, resident, today: now }),
       thinking: { type: "adaptive" },
       output_config: { effort: "medium" },
-      tools: assistantTools({ supabase, now }, emit),
+      tools: assistantTools({ supabase, now }, { onEvent: emit, onAccess }),
       messages: messages.map((message) => ({ role: message.role, content: message.content })),
       max_iterations: MAX_ITERATIONS,
     },

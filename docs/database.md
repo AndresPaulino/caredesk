@@ -215,6 +215,47 @@ and a field-by-field before-and-after list, using the labels and formats in `col
 `src/lib/audit/triggers.integration.test.ts` proves the actor rules, the archive-as-change
 rule, the scope, and the append-only rule against the hosted project.
 
+## Assistant
+
+The assistant's saved threads and its audit trail (ticket 11) live in the same schema.
+`assistant_threads` is one conversation per row, owned by the staff member who started it
+(`staff_id`), titled by its first question; `assistant_messages` is one turn per row, in
+`position` order, with `role` `user` or `assistant`, the text, the current resident when the
+question was asked (`resident_id`), and, for an answer, the tools it ran (`steps`), the sources
+it relied on (`sources`), how it ended (`ended`), and any error, so the drawer can resume a
+thread exactly as it was shown. Both tables are visible to their owner only: the policies
+compare `staff_id` with `current_staff_id()`, and a message is visible exactly when its thread
+is. Nobody else, the admin included, can read a transcript; the accountable record of AI use is
+the audit trail.
+
+Every question, and every tool the assistant runs to answer it, is an **assistant access
+event**: an `audit_events` row with operation `access` (the fourth value of `audit_operation`,
+added in its own migration because Postgres will not use a new enum value in the transaction
+that adds it), attributed to the asking staff member, with `table_name` `assistant_messages`,
+`record_id` the question's message, and the details in `new_values` (`kind` `question` with
+the question, or `kind` `tool_call` with the tool, its input, a sentence for the trail, and the
+record tab it read; see `src/lib/assistant/access.ts`). `resident_id` is the resident the
+question or lookup concerned, and null when it concerned none (a search, a unit-wide check);
+the check constraint `audit_events_changes_name_a_resident` allows null for `access` alone.
+Such an event is read within the resident's scope like any other; one with no resident is read
+by the staff member it is attributed to and by admins (the events policy has that second
+branch). The one way to write one is `record_assistant_access(message_id, resident, details)`,
+security definer so the insert succeeds for a caller who may only read events, which checks
+that the caller is signed in, that the message is in one of their threads, and that the
+resident, if any, is in their scope. The route writes the question's event before the model
+runs and each tool call's event before that tool's result goes back to the model; a lookup that
+cannot be recorded fails.
+
+The app reads and writes threads through `src/lib/assistant/threads.ts` (`startTurn`,
+`finishAnswer`, `listThreads`, `loadThread`, `recordAccess`) over the caller's own session, and
+the drawer reaches its saved threads through the server actions in
+`src/lib/assistant/actions.ts`. `describeAuditEvent` tells an access event as "asked the
+assistant about the resident: “…”" or "read the resident's vitals through the assistant" (story
+kind `accessed`), so the activity feed and the audit trail tab show them with the changes.
+`reset_demo_data()` empties threads and messages with everything else.
+`src/lib/assistant/threads.integration.test.ts` proves the ownership rules, the access event
+rules, and who can read each kind of event against the hosted project.
+
 ## Dashboard
 
 The six tiles (ticket 07) are counts over the caller's scope, computed in the database so a

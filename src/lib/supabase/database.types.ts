@@ -59,7 +59,7 @@ type FamilyRelationship =
   | "friend"
   | "guardian"
   | "other";
-type AuditOperation = "insert" | "update" | "delete";
+type AuditOperation = "insert" | "update" | "delete" | "access";
 
 type FacilityRow = {
   id: string;
@@ -344,7 +344,8 @@ type AuditEventRow = {
   id: string;
   occurred_at: string;
   actor_id: string;
-  resident_id: string;
+  /** Null only for an assistant access event that concerned no resident. */
+  resident_id: string | null;
   table_name: string;
   record_id: string;
   operation: AuditOperation;
@@ -353,6 +354,31 @@ type AuditEventRow = {
   changed_columns: string[];
 };
 
+type AssistantThreadRow = {
+  id: string;
+  staff_id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+  archived_at: string | null;
+};
+type AssistantMessageRole = "user" | "assistant";
+type AssistantMessageEnded = "end_turn" | "max_tokens" | "max_iterations" | "stopped" | "error";
+type AssistantMessageRow = {
+  id: string;
+  thread_id: string;
+  position: number;
+  role: AssistantMessageRole;
+  content: string;
+  resident_id: string | null;
+  steps: Json;
+  sources: Json;
+  ended: AssistantMessageEnded | null;
+  error: Json | null;
+  created_at: string;
+  updated_at: string;
+  archived_at: string | null;
+};
 type ResidentDirectoryRow = {
   id: string;
   first_name: string;
@@ -790,6 +816,32 @@ export type Database = {
           StaffRelationship<"actor_id"> & { foreignKeyName: "audit_events_actor_id_fkey" },
         ];
       };
+      assistant_threads: {
+        Row: AssistantThreadRow;
+        Insert: Insertable<AssistantThreadRow, Bookkeeping>;
+        Update: Partial<AssistantThreadRow>;
+        Relationships: [
+          StaffRelationship<"staff_id"> & { foreignKeyName: "assistant_threads_staff_id_fkey" },
+        ];
+      };
+      assistant_messages: {
+        Row: AssistantMessageRow;
+        Insert: Insertable<
+          AssistantMessageRow,
+          Bookkeeping | "content" | "resident_id" | "steps" | "sources" | "ended" | "error"
+        >;
+        Update: Partial<AssistantMessageRow>;
+        Relationships: [
+          {
+            foreignKeyName: "assistant_messages_thread_id_fkey";
+            columns: ["thread_id"];
+            isOneToOne: false;
+            referencedRelation: "assistant_threads";
+            referencedColumns: ["id"];
+          },
+          ResidentRelationship & { foreignKeyName: "assistant_messages_resident_id_fkey" },
+        ];
+      };
       vital_ranges: {
         Row: VitalRangeRow;
         Insert: VitalRangeRow;
@@ -829,6 +881,10 @@ export type Database = {
       reset_demo_data: { Args: Record<PropertyKey, never>; Returns: undefined };
       current_actor_id: { Args: Record<PropertyKey, never>; Returns: string };
       audit_skipped: { Args: Record<PropertyKey, never>; Returns: boolean };
+      record_assistant_access: {
+        Args: { message_id: string; resident: string | null; details: Json };
+        Returns: string;
+      };
       vitals_out_of_range: { Args: { v: VitalsRow }; Returns: boolean };
       shift_window: { Args: { at: string }; Returns: ShiftWindowRow[] };
       resident_dashboard_at: { Args: { as_of?: string }; Returns: ResidentDashboardRow[] };

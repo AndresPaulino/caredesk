@@ -4,6 +4,7 @@ import {
   CARE_PLAN_GOAL_STATUS_LABELS,
   INCIDENT_KIND_LABELS,
 } from "../clinical/labels";
+import { describeAssistantAccess } from "../assistant/access";
 import { formatShortDateTime, type StaffName } from "../format";
 import type { RecordTabKey } from "../residents/record-tabs";
 import type { Enums } from "../supabase/database.types";
@@ -27,6 +28,8 @@ import {
  *
  * Removals are updates that stamp archived_at (records are archived, never deleted), so they
  * read as "removed"; a hard delete, which only the service role can do, reads as "deleted".
+ * An assistant access event (operation `access`) is not a change at all: it reads as what the
+ * staff member asked or looked up (see `src/lib/assistant/access.ts`).
  */
 
 export type AuditOperation = Enums<"audit_operation">;
@@ -41,7 +44,8 @@ export type AuditEvent = {
   occurred_at: string;
   table_name: string;
   record_id: string;
-  resident_id: string;
+  /** Null only for an assistant access event that concerned no resident. */
+  resident_id: string | null;
   operation: AuditOperation;
   old_values: AuditValues | null;
   new_values: AuditValues | null;
@@ -58,7 +62,7 @@ export type AuditChange = {
 };
 
 /** What happened to the record, for an icon and a tone. */
-export type AuditStoryKind = "added" | "changed" | "removed";
+export type AuditStoryKind = "added" | "changed" | "removed" | "accessed";
 
 export type AuditStory = {
   /** The predicate after the actor's name: "recorded vitals". */
@@ -109,6 +113,17 @@ const RECORD_TABS: Readonly<Record<AuditedTable, RecordTabKey | null>> = {
 };
 
 export function describeAuditEvent(event: AuditEvent, references: AuditReferences): AuditStory {
+  if (event.operation === "access") {
+    const access = describeAssistantAccess(event.new_values, event.resident_id !== null);
+    return {
+      summary: access.summary,
+      kind: "accessed",
+      recordLabel: access.recordLabel,
+      tab: access.tab,
+      changes: access.changes.map((change) => ({ ...change, before: null })),
+    };
+  }
+
   const table = event.table_name;
   if (!isAuditedTable(table)) {
     return {
