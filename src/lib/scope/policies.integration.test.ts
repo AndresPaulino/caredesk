@@ -1,17 +1,19 @@
 /**
  * The proof behind the privacy claim (ADR 0003): each demo account signs in with the
- * publishable key and reads through Row Level Security, exactly as the app does. For every
- * table that holds resident data, each account sees exactly the rows whose resident is in
- * their scope, and writes outside that scope are rejected.
+ * publishable key and reads through Row Level Security, exactly as the app does. Every table
+ * that holds resident data is listed here, and the list is checked against the live schema,
+ * so a table cannot appear without a decision about its scope. For each of them, every
+ * account sees exactly the rows whose resident is in their scope, a nurse's write outside
+ * that scope is rejected, and an anonymous client sees nothing.
  *
- * Runs against the hosted project when `.env.local` is present and the seed has been applied
- * (`pnpm db:seed`). The latest `seed_runs` row says which seed number and anchor were used, so
- * the test rebuilds the same dataset in memory and compares. Skipped when the connection
- * variables are absent, so the unit suite always runs in CI.
+ * Runs against the hosted project when `.env.local` is present; the test setup puts the seed
+ * in place first. The latest `seed_runs` row says which seed number and anchor were used, so
+ * the test rebuilds the same dataset in memory and compares.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { ASSESSMENT_KINDS } from "../clinical/assessment-kinds";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../demo-accounts";
 import {
@@ -19,18 +21,61 @@ import {
   buildSeed,
   residentsVisibleTo,
   rowsVisibleTo,
+  scopedResidentIds,
   tableRowCounts,
   type Seed,
+  type SeedRow,
 } from "../seed";
 
 import type { Database } from "../supabase/database.types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-const hostedProject = Boolean(url && key && !url.includes("placeholder"));
+const secretKey = process.env.SUPABASE_SECRET_KEY;
 
 type Client = SupabaseClient<Database>;
-type CountableTable = keyof Database["public"]["Tables"] | "resident_directory";
+type TableName = keyof Database["public"]["Tables"];
+type ViewName = keyof Database["public"]["Views"];
+
+/**
+ * Every table whose rows belong to a resident. A row is visible exactly when its resident is
+ * in scope, with two refinements: an audit event about nobody in particular (an assistant
+ * lookup) is the actor's and the admin's, and a message is its thread owner's.
+ */
+const RESIDENT_DATA_TABLES = [
+  "residents",
+  ...CLINICAL_TABLES,
+  "audit_events",
+  "assistant_messages",
+] as const satisfies readonly TableName[];
+type ResidentDataTable = (typeof RESIDENT_DATA_TABLES)[number];
+
+/** Everything else the API exposes: the organization, reference tables, seed runs, the owner-only threads, and the two views. */
+const OTHER_RELATIONS = [
+  "facilities",
+  "units",
+  "rooms",
+  "staff",
+  "staff_unit_assignments",
+  "assessment_kinds",
+  "vital_ranges",
+  "medication_dose_times",
+  "shifts",
+  "seed_runs",
+  "assistant_threads",
+  "resident_directory",
+  "unit_occupancy",
+] as const satisfies readonly (TableName | ViewName)[];
+
+// A table or view in the types that neither list names fails to compile here; the live
+// schema is compared with the two lists below.
+type Unclassified = Exclude<
+  TableName | ViewName,
+  ResidentDataTable | (typeof OTHER_RELATIONS)[number]
+>;
+const everyRelationClassified: [Unclassified] extends [never]
+  ? true
+  : { unclassified: Unclassified } = true;
 
 async function signIn(account: DemoAccount): Promise<Client> {
   const client = createClient<Database>(url!, key!, {
@@ -44,7 +89,7 @@ async function signIn(account: DemoAccount): Promise<Client> {
   return client;
 }
 
-async function countRows(client: Client, table: CountableTable) {
+async function countRows(client: Client, table: TableName | ViewName) {
   // A head-only count works on any relation; the client's overloads differ only in row type.
   const { count, error } = await client
     .from(table as "residents")
@@ -53,18 +98,92 @@ async function countRows(client: Client, table: CountableTable) {
   return count ?? 0;
 }
 
+/** The tables and views PostgREST exposes, from its schema description (secret key only). */
+async function exposedRelations(): Promise<string[]> {
+  const response = await fetch(`${url}/rest/v1/`, {
+    headers: { apikey: secretKey!, Authorization: `Bearer ${secretKey}` },
+  });
+  if (!response.ok) throw new Error(`Could not read the API schema: HTTP ${response.status}`);
+  const spec = (await response.json()) as { definitions?: Record<string, unknown> };
+  return Object.keys(spec.definitions ?? {}).sort();
+}
+
 const account = (key: DemoAccount["key"]) => DEMO_ACCOUNTS.find((a) => a.key === key)!;
 
-describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
+describeHosted("scope policies on the hosted project", { secretKey: true }, () => {
   const clients = new Map<DemoAccount["key"], Client>();
+  let service: Client;
   let seed: Seed;
+  /** What the two tables the seed leaves empty hold right now, for the scope oracle. */
+  let events: Array<{ resident_id: string | null; actor_id: string }>;
+  let messages: Array<{ thread_id: string }>;
+  let threadOwners: Map<string, string>;
+
+  const staffIdOf = (demo: DemoAccount) =>
+    seed.staff.find((member) => member.account?.key === demo.key)!.id;
+
+  /** How many rows of a resident-data table an account may see, by the scope rule. */
+  function expectedCount(table: ResidentDataTable, demo: DemoAccount): number {
+    const inScope = scopedResidentIds(seed, demo);
+    switch (table) {
+      case "residents":
+        return inScope.size;
+      case "audit_events":
+        return events.filter((event) =>
+          event.resident_id
+            ? inScope.has(event.resident_id)
+            : demo.role === "admin" || event.actor_id === staffIdOf(demo),
+        ).length;
+      case "assistant_messages":
+        return messages.filter((message) => threadOwners.get(message.thread_id) === staffIdOf(demo))
+          .length;
+      default:
+        return rowsVisibleTo(seed, table, demo).length;
+    }
+  }
+
+  /**
+   * A row for a resident outside the Meadows nurse's scope, valid in every other respect:
+   * one of the Harbor nurse's seeded rows under a new id, or a hand-made row for the two
+   * tables the seed leaves empty.
+   */
+  function outOfScopeRow(table: ResidentDataTable, resident: SeedRow<"residents">) {
+    const id = crypto.randomUUID();
+    switch (table) {
+      case "residents":
+        return { ...resident, id, room_id: null };
+      case "audit_events":
+        return {
+          id,
+          actor_id: staffIdOf(account("nurse-meadows")),
+          resident_id: resident.id,
+          table_name: "progress_notes",
+          record_id: crypto.randomUUID(),
+          operation: "insert",
+          new_values: {},
+        };
+      case "assistant_messages":
+        return {
+          id,
+          thread_id: crypto.randomUUID(),
+          position: 0,
+          role: "user",
+          content: "This must never be written.",
+          resident_id: resident.id,
+        };
+      default:
+        return { ...rowsVisibleTo(seed, table, account("nurse-harbor"))[0], id };
+    }
+  }
 
   beforeAll(async () => {
     for (const demo of DEMO_ACCOUNTS) clients.set(demo.key, await signIn(demo));
+    service = createClient<Database>(url!, secretKey!, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
 
     // Rebuild exactly the dataset the last `pnpm db:seed` wrote.
-    const { data: run, error } = await clients
-      .get("admin")!
+    const { data: run, error } = await service
       .from("seed_runs")
       .select("seed_number, anchor, row_counts")
       .order("completed_at", { ascending: false })
@@ -73,6 +192,20 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     if (error || !run) throw new Error("No seed run recorded; run `pnpm db:seed` first.");
     seed = buildSeed({ seed: run.seed_number, anchor: new Date(run.anchor) });
     expect(tableRowCounts(seed)).toEqual(run.row_counts);
+
+    // The seed writes no events, threads, or messages; the test setup reseeds when any are
+    // left over, so these snapshots are normally empty. They are taken anyway so the scope
+    // oracle is honest about whatever is there.
+    const [eventRows, messageRows, threadRows] = await Promise.all([
+      service.from("audit_events").select("resident_id, actor_id").limit(1000),
+      service.from("assistant_messages").select("thread_id").limit(1000),
+      service.from("assistant_threads").select("id, staff_id").limit(1000),
+    ]);
+    events = eventRows.data ?? [];
+    messages = messageRows.data ?? [];
+    threadOwners = new Map((threadRows.data ?? []).map((thread) => [thread.id, thread.staff_id]));
+    expect(events.length, "more audit events than the oracle reads; reseed").toBeLessThan(1000);
+    expect(messages.length, "more messages than the oracle reads; reseed").toBeLessThan(1000);
   });
 
   afterAll(async () => {
@@ -86,6 +219,11 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     expect(await countRows(admin, "units")).toBe(seed.units.length);
     expect(await countRows(admin, "rooms")).toBe(seed.rooms.length);
     expect(await countRows(admin, "staff")).toBe(seed.staff.length);
+  });
+
+  it("classifies every table and view the API exposes as resident data or not", async () => {
+    expect(everyRelationClassified).toBe(true);
+    expect(await exposedRelations()).toEqual([...RESIDENT_DATA_TABLES, ...OTHER_RELATIONS].sort());
   });
 
   it("the assessment kinds in the database match the ones the code knows", async () => {
@@ -114,13 +252,13 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
       expect(await countRows(client, "resident_directory")).toBe(expected.length);
     });
 
-    it(`${demo.scopeLabel}: sees exactly the clinical rows of residents in scope`, async () => {
+    it(`${demo.scopeLabel}: sees exactly the rows in scope of every table holding resident data`, async () => {
       const client = clients.get(demo.key)!;
       const counts = await Promise.all(
-        CLINICAL_TABLES.map(async (table) => [table, await countRows(client, table)] as const),
+        RESIDENT_DATA_TABLES.map(async (table) => [table, await countRows(client, table)] as const),
       );
       for (const [table, count] of counts) {
-        expect(count, table).toBe(rowsVisibleTo(seed, table, demo).length);
+        expect(count, table).toBe(expectedCount(table, demo));
       }
     });
   }
@@ -165,6 +303,23 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     expect(vitals.data).toEqual([]);
   });
 
+  it("a nurse's insert for a resident outside their scope is rejected on every table holding resident data", async () => {
+    const harborResident = residentsVisibleTo(seed, account("nurse-harbor")).find(
+      (row) => row.status === "current",
+    )!;
+    const nurse = clients.get("nurse-meadows")!;
+    for (const table of RESIDENT_DATA_TABLES) {
+      const row = outOfScopeRow(table, harborResident);
+      // The union of every table's Insert type is wider than any one table's; the builder pairs them.
+      const { data, error } = await nurse
+        .from(table)
+        .insert(row as never)
+        .select("id");
+      expect(error?.code, table).toBe("42501");
+      expect(data, table).toBeNull();
+    }
+  });
+
   it("a nurse cannot change a resident outside their scope", async () => {
     const harborResident = residentsVisibleTo(seed, account("nurse-harbor"))[0];
     const nurse = clients.get("nurse-meadows")!;
@@ -204,33 +359,9 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     expect(error?.code ?? "42501").toBe("42501");
   });
 
-  it("a nurse cannot record care for a resident outside their scope", async () => {
+  it("a nurse cannot change a record of a resident outside their scope", async () => {
     const harbor = account("nurse-harbor");
-    const harborResident = residentsVisibleTo(seed, harbor)[0];
     const meadowsNurse = clients.get("nurse-meadows")!;
-    const meadowsStaffId = seed.staff.find((m) => m.account?.key === "nurse-meadows")!.id;
-
-    const note = await meadowsNurse.from("progress_notes").insert({
-      resident_id: harborResident.id,
-      written_by: meadowsStaffId,
-      written_at: new Date().toISOString(),
-      body: "This note must never be written.",
-    });
-    expect(note.error?.code).toBe("42501");
-
-    const vitals = await meadowsNurse.from("vitals").insert({
-      resident_id: harborResident.id,
-      taken_by: meadowsStaffId,
-      taken_at: new Date().toISOString(),
-      systolic: 120,
-      diastolic: 80,
-      pulse: 72,
-      temperature_f: 98.2,
-      respiratory_rate: 16,
-      oxygen_saturation: 97,
-    });
-    expect(vitals.error?.code).toBe("42501");
-
     const condition = rowsVisibleTo(seed, "conditions", harbor)[0];
     const update = await meadowsNurse
       .from("conditions")
@@ -278,11 +409,10 @@ describe.skipIf(!hostedProject)("scope policies on the hosted project", () => {
     expect(await countRows(clients.get("admin")!, "residents")).toBe(seed.residents.length);
   });
 
-  it("an anonymous client sees nothing", async () => {
+  it("an anonymous client sees nothing in any table holding resident data", async () => {
     const anonymous = createClient<Database>(url!, key!, { auth: { persistSession: false } });
-    expect(await countRows(anonymous, "residents")).toBe(0);
-    expect(await countRows(anonymous, "facilities")).toBe(0);
-    expect(await countRows(anonymous, "vitals")).toBe(0);
-    expect(await countRows(anonymous, "progress_notes")).toBe(0);
+    for (const table of [...RESIDENT_DATA_TABLES, "facilities", "staff"] as const) {
+      expect(await countRows(anonymous, table), table).toBe(0);
+    }
   });
 });

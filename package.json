@@ -13,6 +13,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test",
     "db:push": "node scripts/db/remote.mjs db push",
     "db:status": "node scripts/db/remote.mjs migration list",
@@ -41,6 +42,7 @@
     "zod": "^4.6.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22.20.2",
     "@types/react": "^19",

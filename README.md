@@ -50,8 +50,8 @@ The login page lists them. The password for every account is `willowbrook-demo`.
 A nurse sees only residents on their units: a resident outside that scope is absent from search
 and returns "not found" by direct link. The rule is enforced by Row Level Security in the
 database, not by the screens (ADR 0003). `pnpm test` includes policy tests that read as each
-account and assert exactly that; they run against the hosted project when `.env.local` is
-present and are skipped otherwise.
+account and assert exactly that, for every table that holds resident data; they run against the
+hosted project when `.env.local` is present and are skipped otherwise.
 
 ### Environment variables
 
@@ -64,6 +64,28 @@ present and are skipped otherwise.
 | `DATABASE_URL`                         | for `pnpm db:push`     | Supabase dashboard, Connect, Session pooler. See [docs/database.md](docs/database.md) |
 | `SUPABASE_SECRET_KEY`                  | for seed and simulator | Same API page. Never used by the web app                                              |
 
+### Tests
+
+`pnpm test` runs the unit tests and, when `.env.local` names the hosted project, the
+integration tests too: the assistant's tools, the scope policies, the audit triggers, the
+dashboard, saved threads, and the simulator, all against the seeded database as the demo
+accounts. Before they run, the test setup refuses to start while `pnpm simulate` is running,
+reseeds if the database has drifted from the last `pnpm db:seed` (an audit event, a thread, or
+a changed row count all count; `CAREDESK_RESEED=always` or `never` overrides the check), and
+waits until Realtime is streaming. Without `.env.local` the database-backed suites are skipped
+and the first line of the run says which variables are missing.
+
+`pnpm test:e2e` is the one browser test and the only test that calls the model: it builds the
+app, serves it on port 3010 (`E2E_PORT` changes it), signs in as the Meadows nurse, opens Harold
+Doe, asks the assistant one question, and expects an answer with a source chip. It needs the
+hosted project and `ANTHROPIC_API_KEY`, and skips itself with a reason otherwise.
+
+CI runs lint, the format check, typecheck, the unit tests, and the build on every push and pull
+request. On pushes to `main` it also runs the integration tests and then the browser test
+against the hosted project, one run at a time, once the four secrets are set on the repository:
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and
+`ANTHROPIC_API_KEY`. Until then the run says so in a notice and stays green.
+
 ### Scripts
 
 | Command          | What it does                                               |
@@ -71,7 +93,8 @@ present and are skipped otherwise.
 | `pnpm dev`       | Development server                                         |
 | `pnpm build`     | Production build                                           |
 | `pnpm check`     | Lint, format check, typecheck, and unit tests, as in CI    |
-| `pnpm test`      | Unit tests (Vitest)                                        |
+| `pnpm test`      | Unit tests, plus the integration tests with `.env.local`   |
+| `pnpm test:e2e`  | The browser smoke test (Playwright); it calls the model    |
 | `pnpm db:push`   | Apply pending migrations to the hosted project             |
 | `pnpm db:status` | Compare local and remote migration history                 |
 | `pnpm db:seed`   | Reset and rebuild the whole dataset and the demo logins    |

@@ -10,8 +10,9 @@
  * audit events the writes above produced.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { findAllergyConflicts } from "../clinical/allergy-conflicts";
 import { buildTimeline } from "../clinical/timeline";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../demo-accounts";
@@ -49,7 +50,6 @@ import type { Database } from "../supabase/database.types";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && key && secretKey && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -82,7 +82,7 @@ const VITALS = {
   notes: "Recorded by the integration test.",
 };
 
-describe.skipIf(!hostedProject)("recording care on the hosted project", () => {
+describeHosted("recording care on the hosted project", { secretKey: true }, () => {
   let nurse: Client;
   let admin: Client;
   let serviceRole: Client;

@@ -26,6 +26,7 @@ import {
   type SimulatorSummary,
   type StepResult,
 } from "../../src/lib/simulator";
+import { acquireSimulatorLock } from "../../src/lib/simulator/lock";
 import { BASE_INTERVAL_MS } from "../../src/lib/simulator/rhythm";
 
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
@@ -62,6 +63,15 @@ if (args.for && durationMs === null) {
 const seed = args.seed ? Number(args.seed) : Date.now();
 if (!Number.isInteger(seed)) {
   console.error(`--seed must be an integer, got ${args.seed}`);
+  process.exit(1);
+}
+
+// One simulator at a time, and none while the tests run: the lock file names this process
+// until it exits, and the test setup refuses to start while it is there.
+try {
+  process.once("exit", acquireSimulatorLock());
+} catch (error) {
+  console.error(error instanceof Error ? error.message : error);
   process.exit(1);
 }
 

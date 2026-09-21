@@ -73,6 +73,16 @@ anchor, so links keep working from one reseed to the next. The same seed and anc
 same rows; `src/lib/seed/seed.test.ts` proves that, along with the row budget, catalog
 references, and the former-resident rule.
 
+The tests start from the seed and nothing else. Before the suite runs, the test setup
+(`src/test/global-setup.ts`) compares the database with the last `seed_runs` row: every table's
+row count, plus `audit_events`, `assistant_threads`, and `assistant_messages`, which a fresh
+seed leaves empty. Any difference means a reseed, so a simulator run, a manual check in the
+drawer, or a test that failed before its cleanup never leaks into the next run.
+`CAREDESK_RESEED=always` reseeds regardless and `CAREDESK_RESEED=never` uses the database as it
+is. The setup then subscribes to `audit_events` as the admin and writes and removes one note
+until Realtime announces it, because the first subscription after a reseed, or after the project
+has sat idle, can take a while to deliver anything; the feed tests rely on that.
+
 ### Hero residents
 
 Ten residents are hand-authored in `src/lib/seed/heroes.ts` so the demo script always has its
@@ -329,8 +339,10 @@ flight, and it exits 1 if any write was rejected.
 and every plausibility rule over the in-memory store; `simulator.integration.test.ts` writes
 every kind of action through the service role as a simulated nurse, checks that the audit event
 names that nurse, runs a few rounds of the loop, and puts the rows back. The policy and
-dashboard tests compare the database with the seed, so reseed after a simulator run before
-`pnpm check`.
+dashboard tests compare the database with the seed, so the test setup reseeds after a simulator
+run (see Seeding), and it refuses to start while one is running: the simulator writes its
+process id to `.caredesk-simulator.lock` at the repo root for as long as it runs, and a lock
+left by a process that is gone is cleared on sight (`src/lib/simulator/lock.ts`).
 
 ## Types
 

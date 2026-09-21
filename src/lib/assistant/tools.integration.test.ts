@@ -11,6 +11,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../demo-accounts";
 import { HERO_BY_KEY, buildSeed, heroResidentId, type Seed } from "../seed";
 import { dateInZone, daysBetween } from "../time";
@@ -30,7 +31,6 @@ import type { Database } from "../supabase/database.types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-const hostedProject = Boolean(url && key && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -52,7 +52,7 @@ const margaret = heroResidentId("allergy-conflict");
 
 const ids = (rows: ReadonlyArray<{ id: string }>) => rows.map((row) => row.id).sort();
 
-describe.skipIf(!hostedProject)("the assistant's core tools on the hosted project", () => {
+describeHosted("the assistant's core tools on the hosted project", {}, () => {
   const contexts = new Map<DemoAccount["key"], ToolContext>();
   const as = (account: DemoAccount["key"]) => contexts.get(account)!;
   let seed: Seed;

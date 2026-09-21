@@ -9,8 +9,9 @@
  * service role when done.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { getActivityEntries, getAuditTrail } from "../audit/events";
 import { toFeedEntry } from "../audit/feed";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../demo-accounts";
@@ -30,7 +31,6 @@ import type { Database } from "../supabase/database.types";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && key && secretKey && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -50,7 +50,7 @@ const harold = heroResidentId("doe-meadows");
 const walter = heroResidentId("doe-harbor");
 const account = (key: DemoAccount["key"]) => DEMO_ACCOUNTS.find((a) => a.key === key)!;
 
-describe.skipIf(!hostedProject)("assistant threads and access events on the hosted project", () => {
+describeHosted("assistant threads and access events", { secretKey: true }, () => {
   let nurse: Client;
   let harborNurse: Client;
   let admin: Client;

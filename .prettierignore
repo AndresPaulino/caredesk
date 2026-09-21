@@ -4,3 +4,5 @@ pnpm-lock.yaml
 data/vocabulary/
 .scratch/
 supabase/.temp/
+playwright-report/
+test-results/

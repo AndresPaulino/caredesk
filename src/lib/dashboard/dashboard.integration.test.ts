@@ -12,6 +12,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { SCHEDULED_HOURS, WEEKLY_DOSE_DAY } from "../clinical/medication-schedule";
 import { SHIFTS, shiftAt } from "../clinical/shifts";
 import { VITAL_RANGES, type VitalReading } from "../clinical/vital-ranges";
@@ -28,7 +29,6 @@ import type { Database } from "../supabase/database.types";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && key && secretKey && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -141,7 +141,7 @@ function expectedDashboard(seed: Seed, account: DemoAccount, asOf: Date) {
   return { tiles, flags };
 }
 
-describe.skipIf(!hostedProject)("the dashboard on the hosted project", () => {
+describeHosted("the dashboard on the hosted project", { secretKey: true }, () => {
   const clients = new Map<DemoAccount["key"], Client>();
   let seed: Seed;
   let asOf: Date;

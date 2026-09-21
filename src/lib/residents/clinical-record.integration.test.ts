@@ -11,6 +11,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { findAllergyConflicts } from "../clinical/allergy-conflicts";
 import { summarizeAssessments } from "../clinical/assessment-summary";
 import { buildTimeline } from "../clinical/timeline";
@@ -32,7 +33,6 @@ import type { Database } from "../supabase/database.types";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && key && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -61,7 +61,7 @@ const normalize = (summary: ReturnType<typeof summarizeAssessments>) =>
       : null,
   }));
 
-describe.skipIf(!hostedProject)("the resident page's reads as the nurse", () => {
+describeHosted("the resident page's reads as the nurse", {}, () => {
   let nurse: Client;
   let seed: Seed;
   let today: string;

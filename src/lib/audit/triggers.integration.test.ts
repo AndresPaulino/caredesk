@@ -9,8 +9,9 @@
  * the same skip flag the seeder uses, so the cleanup leaves no events of its own.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import {
   addAllergy,
   archiveRecord,
@@ -38,7 +39,6 @@ import type { Database } from "../supabase/database.types";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && key && secretKey && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -80,7 +80,7 @@ const VITALS = {
   notes: "Recorded by the audit trigger test.",
 };
 
-describe.skipIf(!hostedProject)("audit triggers on the hosted project", () => {
+describeHosted("audit triggers on the hosted project", { secretKey: true }, () => {
   let nurse: Client;
   let harborNurse: Client;
   let admin: Client;

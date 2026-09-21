@@ -6,10 +6,11 @@ on:
 
 jobs:
   check:
-    name: Lint, typecheck, test, build
+    name: Lint, typecheck, unit tests, build
     runs-on: ubuntu-latest
     env:
-      # Placeholder values so configuration validation passes. No network calls are made.
+      # Placeholder values so configuration validation passes. The database-backed suites skip
+      # themselves and say why (src/test/global-setup.ts); no network calls are made.
       NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_placeholder
       ANTHROPIC_API_KEY: sk-ant-placeholder
@@ -34,3 +35,88 @@ jobs:
       - run: pnpm test
 
       - run: pnpm build
+
+  # The hosted project is one database shared by everyone, so the suites that use it run only
+  # for pushes to main, one run at a time, and only once its secrets are configured
+  # (Settings > Secrets and variables > Actions: the four names below).
+  hosted-project:
+    name: Hosted project secrets
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.check.outputs.configured }}
+    steps:
+      - id: check
+        env:
+          CONFIGURED: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL != '' && secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY != '' && secrets.SUPABASE_SECRET_KEY != '' && secrets.ANTHROPIC_API_KEY != '' }}
+        run: |
+          echo "configured=$CONFIGURED" >> "$GITHUB_OUTPUT"
+          if [ "$CONFIGURED" != "true" ]; then
+            echo "::notice::The hosted project secrets are not configured, so the integration and smoke suites did not run. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY, and ANTHROPIC_API_KEY as repository secrets."
+          fi
+
+  integration:
+    name: Integration tests on the hosted project
+    needs: [check, hosted-project]
+    if: needs.hosted-project.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: hosted-project
+      cancel-in-progress: false
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # The test setup reseeds the hosted project first, so nothing depends on leftover state.
+      - run: pnpm test
+
+  smoke:
+    name: Browser smoke test
+    needs: [hosted-project, integration]
+    if: needs.hosted-project.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: hosted-project
+      cancel-in-progress: false
+    env:
+      CI: true
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm exec playwright install --with-deps chromium
+
+      # Builds the app, serves it, signs in, and asks the assistant one question.
+      - run: pnpm test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

@@ -12,6 +12,11 @@ out/
 dist/
 coverage/
 
+# Test output and the running simulator's lock
+playwright-report/
+test-results/
+.caredesk-simulator.lock
+
 # OS and editor
 .DS_Store
 

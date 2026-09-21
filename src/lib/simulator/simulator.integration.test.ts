@@ -5,8 +5,9 @@
  * row back when it is done, with the same audit skip flag the seeder uses.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { createRandom } from "../seed/random";
 
 import { planAction } from "./actions";
@@ -24,7 +25,6 @@ import type { Database } from "../supabase/database.types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const secretKey = process.env.SUPABASE_SECRET_KEY;
-const hostedProject = Boolean(url && secretKey && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -37,7 +37,7 @@ type Written = {
   before?: ResidentChanges;
 };
 
-describe.skipIf(!hostedProject)("the simulator on the hosted project", () => {
+describeHosted("the simulator on the hosted project", { secretKey: true }, () => {
   let nurses: NurseRoster[];
   let store: SimulatorStore;
   /** The service role with auditing skipped, for the cleanup. */

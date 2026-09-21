@@ -6,8 +6,9 @@
  * Skipped without `.env.local`.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it } from "vitest";
 
+import { describeHosted } from "../../test/hosted-project";
 import { DEMO_ACCOUNTS, type DemoAccount } from "../demo-accounts";
 import { getResident } from "../residents/queries";
 
@@ -17,7 +18,6 @@ import type { Database } from "../supabase/database.types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-const hostedProject = Boolean(url && key && !url.includes("placeholder"));
 
 type Client = SupabaseClient<Database>;
 
@@ -33,7 +33,7 @@ async function signIn(account: DemoAccount): Promise<Client> {
   return client;
 }
 
-describe.skipIf(!hostedProject)("the hero residents on the hosted project", () => {
+describeHosted("the hero residents on the hosted project", {}, () => {
   const clients = new Map<DemoAccount["key"], Client>();
 
   beforeAll(async () => {
