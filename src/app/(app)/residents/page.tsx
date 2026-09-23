@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/app-shell/page-header";
 import { ResidentFilters } from "@/components/residents/resident-filters";
 import { ResidentTable } from "@/components/residents/resident-table";
 import { requireStaff } from "@/lib/auth/current-staff";
+import { listResidentFlags } from "@/lib/residents/flags";
 import { focusFor } from "@/lib/residents/focus";
 import { parseResidentListParams } from "@/lib/residents/list-params";
 import { listResidents, listScopeOptions } from "@/lib/residents/queries";
@@ -19,6 +20,7 @@ export default async function ResidentsPage(props: PageProps<"/residents">) {
     listScopeOptions(supabase),
     listResidents(supabase, params, new Date()),
   ]);
+  const flags = await listResidentFlags(supabase, result.residents);
   const focus = params.focus ? focusFor(params.focus) : null;
 
   return (
@@ -36,6 +38,8 @@ export default async function ResidentsPage(props: PageProps<"/residents">) {
       <ResidentFilters params={params} options={options} />
       <ResidentTable
         residents={result.residents}
+        flags={flags}
+        showFacility={staff.role === "admin"}
         params={params}
         total={result.total}
         pageCount={result.pageCount}

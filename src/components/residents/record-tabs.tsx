@@ -34,11 +34,19 @@ export function RecordTabs({
   return (
     <Tabs value={active} onValueChange={(value) => selectTab(value as RecordTabKey)}>
       <div className="-mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
-        <TabsList aria-label="Record types" className="md:h-auto md:flex-wrap">
+        <TabsList
+          variant="line"
+          aria-label="Record types"
+          className="w-full justify-start gap-1 border-b md:h-auto md:flex-wrap"
+        >
           {RECORD_TABS.map((tab) => {
             const count = counts[tab.key];
             return (
-              <TabsTrigger key={tab.key} value={tab.key} className="px-2.5">
+              <TabsTrigger
+                key={tab.key}
+                value={tab.key}
+                className="flex-none px-2.5 data-active:text-primary"
+              >
                 {tab.label}
                 {count !== undefined && (
                   <span className="text-xs text-muted-foreground tabular-nums">{count}</span>
@@ -49,7 +57,7 @@ export function RecordTabs({
         </TabsList>
       </div>
       {RECORD_TABS.map((tab) => (
-        <TabsContent key={tab.key} value={tab.key} className="pt-2">
+        <TabsContent key={tab.key} value={tab.key} className="pt-4">
           {panels[tab.key]}
         </TabsContent>
       ))}

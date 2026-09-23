@@ -1,18 +1,27 @@
+import Link from "next/link";
 import { Suspense } from "react";
 
 import { PageHeader } from "@/components/app-shell/page-header";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { DashboardTiles } from "@/components/dashboard/dashboard-tiles";
 import { OccupancyChart } from "@/components/dashboard/occupancy-chart";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { listRecentActivity } from "@/lib/audit/events";
 import { toFeedEntry } from "@/lib/audit/feed";
 import { requireStaff, type CurrentStaff } from "@/lib/auth/current-staff";
 import { describeShift, shiftAt } from "@/lib/clinical/shifts";
-import { groupOccupancy } from "@/lib/dashboard/occupancy";
+import { formatOccupancy, groupOccupancy } from "@/lib/dashboard/occupancy";
 import { getDashboardTiles, listUnitOccupancy } from "@/lib/dashboard/queries";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DEMO_TIME_ZONE } from "@/lib/format";
 import { dateInZone } from "@/lib/time";
 
 /**
@@ -28,7 +37,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title={`Welcome, ${staff.firstName}`}
+        title={`${greeting(asOf)}, ${staff.firstName}`}
         description={`${describeShift(shift)}. ${staff.scopeDescription}.`}
       />
 
@@ -61,10 +70,19 @@ async function Tiles({ staff, asOf }: { staff: CurrentStaff; asOf: Date }) {
       <DashboardTiles tiles={tiles} shift={shiftAt(asOf)} />
       <Card>
         <CardHeader>
-          <CardTitle>Census and occupancy by {byFacility ? "facility" : "unit"}</CardTitle>
+          <CardTitle>Census</CardTitle>
           <CardDescription>
             Current residents and free beds{byFacility ? " at each facility" : " on each unit"}.
           </CardDescription>
+          <CardAction className="text-right">
+            <Link href="/residents" className="text-2xl font-bold tabular-nums hover:underline">
+              {tiles.residents.toLocaleString("en-US")}
+            </Link>
+            <p className="text-xs text-muted-foreground">
+              of {tiles.beds.toLocaleString("en-US")} beds,{" "}
+              {formatOccupancy(tiles.beds > 0 ? tiles.residents / tiles.beds : 0)} occupied
+            </p>
+          </CardAction>
         </CardHeader>
         <CardContent>
           {groups.length === 0 ? (
@@ -90,11 +108,25 @@ async function Feed({ staff, asOf }: { staff: CurrentStaff; asOf: Date }) {
   );
 }
 
+/** "Good morning" by the facilities' clock, not the server's. */
+function greeting(instant: Date): string {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      hourCycle: "h23",
+      timeZone: DEMO_TIME_ZONE,
+    }).format(instant),
+  );
+  if (hour >= 5 && hour < 12) return "Good morning";
+  if (hour >= 12 && hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
 function TilesSkeleton() {
   return (
     <>
       <div className="grid gap-4 @md/main:grid-cols-2 @3xl/main:grid-cols-3">
-        {Array.from({ length: 6 }, (_, index) => (
+        {Array.from({ length: 3 }, (_, index) => (
           <Skeleton key={index} className="h-36 rounded-xl" />
         ))}
       </div>
@@ -104,5 +136,5 @@ function TilesSkeleton() {
 }
 
 function FeedSkeleton() {
-  return <Skeleton className="h-[28rem] rounded-xl" />;
+  return <Skeleton className="h-[28rem] rounded-xl xl:mt-10" />;
 }

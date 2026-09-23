@@ -37,7 +37,11 @@ test.describe("the assistant, end to end", () => {
       .filter({ hasText: nurse.email })
       .getByRole("button", { name: "Sign in" })
       .click();
-    await expect(page.getByRole("heading", { name: `Welcome, ${nurse.firstName}` })).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: new RegExp(`^Good (morning|afternoon|evening), ${nurse.firstName}$`),
+      }),
+    ).toBeVisible();
 
     await page.goto(`/residents/${harold}`);
     await expect(page.getByRole("heading", { name: "Harold Doe" })).toBeVisible();

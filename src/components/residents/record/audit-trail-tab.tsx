@@ -95,7 +95,7 @@ function AuditList({
     <ol className="space-y-6">
       {days.map(({ date, items }) => (
         <li key={date}>
-          <h3 className="mb-3 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+          <h3 className="mb-3 text-sm font-semibold text-muted-foreground">
             {dayHeading(date, today)}
           </h3>
           <ol className="space-y-2">

@@ -24,8 +24,8 @@ import type { Tables } from "@/lib/supabase/database.types";
 /* One test at a time, one series, with its reference range as a wash behind the line. */
 
 const config = {
-  value: { label: "Result", theme: { light: "#2a78d6", dark: "#3987e5" } },
-  range: { label: "Reference range", theme: { light: "#1baf7a", dark: "#199e70" } },
+  value: { label: "Result", theme: { light: "#3b6fd4", dark: "#6f96e6" } },
+  range: { label: "Reference range", theme: { light: "#1f8466", dark: "#4fb896" } },
 } satisfies ChartConfig;
 
 type LabResult = Pick<

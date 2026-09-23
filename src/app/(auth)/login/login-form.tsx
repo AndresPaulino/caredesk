@@ -17,8 +17,8 @@ export function LoginForm({ next }: { next: string }) {
   return (
     <div className="flex flex-col gap-6">
       <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Staff sign-in</CardTitle>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Staff sign-in</CardTitle>
           <CardDescription>What you can see depends on who you are.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -63,7 +63,10 @@ export function LoginForm({ next }: { next: string }) {
           <CardTitle>Demo accounts</CardTitle>
           <CardDescription>
             Pick one to sign in as. The password for every account is{" "}
-            <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">{DEMO_PASSWORD}</code>.
+            <code className="rounded bg-willow-50 px-1 py-0.5 font-mono text-xs text-willow-900">
+              {DEMO_PASSWORD}
+            </code>
+            .
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,9 +78,7 @@ export function LoginForm({ next }: { next: string }) {
               >
                 <div className="min-w-0">
                   <div className="truncate text-sm font-medium">{account.scopeLabel}</div>
-                  <div className="truncate font-mono text-xs text-muted-foreground">
-                    {account.email}
-                  </div>
+                  <div className="truncate text-xs text-muted-foreground">{account.email}</div>
                 </div>
                 <form action={formAction}>
                   <input type="hidden" name="next" value={next} />

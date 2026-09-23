@@ -38,7 +38,7 @@ const ICONS: Readonly<Record<AuditStoryKind, LucideIcon>> = {
 };
 
 const TONES: Readonly<Record<AuditStoryKind, string>> = {
-  added: "text-muted-foreground",
+  added: "border-willow-100 bg-willow-50 text-willow-600",
   changed: "text-muted-foreground",
   removed: "border-destructive/40 text-destructive",
   accessed: "border-dashed text-muted-foreground",
@@ -125,7 +125,8 @@ export function ActivityFeed({
   const days = groupByDay(entries, (entry) => entry.occurredAt);
 
   return (
-    <Card className="@container/feed">
+    // Offset by the height of the "Needs attention" heading so both columns start together.
+    <Card className="@container/feed self-start xl:mt-10">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <History className="size-4 text-muted-foreground" aria-hidden />
@@ -156,7 +157,7 @@ export function ActivityFeed({
           <ol className="-mx-1 max-h-[36rem] space-y-5 overflow-y-auto px-1 @xl/feed:max-h-[44rem]">
             {days.map(({ date, items }) => (
               <li key={date}>
-                <h3 className="sticky top-0 z-10 -mx-1 mb-2 bg-card px-1 py-1 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                <h3 className="sticky top-0 z-10 -mx-1 mb-2 bg-card px-1 py-1 text-sm font-semibold text-muted-foreground">
                   {dayHeading(date, today)}
                 </h3>
                 <ol className="space-y-1">
@@ -180,7 +181,7 @@ function FeedItem({ entry, fresh }: { entry: FeedEntry; fresh: boolean }) {
     <li
       className={cn(
         "flex items-start gap-3 rounded-lg px-2 py-2",
-        fresh && "animate-in bg-muted/60 duration-500 fade-in slide-in-from-top-1",
+        fresh && "animate-in bg-willow-50 duration-500 fade-in slide-in-from-top-1",
       )}
     >
       <span
@@ -229,7 +230,7 @@ function ConnectionBadge({ connection }: { connection: Connection }) {
       <span
         className={cn(
           "size-2 rounded-full",
-          connection === "live" ? "bg-[#0ca30c]" : "bg-muted-foreground/50",
+          connection === "live" ? "bg-primary" : "bg-muted-foreground/50",
           connection === "connecting" && "animate-pulse",
         )}
         aria-hidden

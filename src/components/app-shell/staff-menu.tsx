@@ -44,11 +44,15 @@ export function StaffMenu({ staff }: StaffMenuProps) {
             render={<SidebarMenuButton size="lg" className="aria-expanded:bg-sidebar-accent" />}
           >
             <Avatar>
-              <AvatarFallback>{staff.initials}</AvatarFallback>
+              <AvatarFallback className="bg-sidebar-primary font-semibold text-sidebar-primary-foreground">
+                {staff.initials}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{staff.fullName}</span>
-              <span className="truncate text-xs text-muted-foreground">{staff.roleLabel}</span>
+              <span className="truncate text-xs text-sidebar-muted-foreground">
+                {staff.roleLabel}
+              </span>
             </div>
             <ChevronsUpDown className="ml-auto size-4" aria-hidden />
           </DropdownMenuTrigger>
@@ -62,7 +66,9 @@ export function StaffMenu({ staff }: StaffMenuProps) {
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar>
-                    <AvatarFallback>{staff.initials}</AvatarFallback>
+                    <AvatarFallback className="bg-willow-100 font-semibold text-willow-900">
+                      {staff.initials}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{staff.fullName}</span>

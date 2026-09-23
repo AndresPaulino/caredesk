@@ -2,7 +2,10 @@ import { Badge } from "@/components/ui/badge";
 import { RESIDENT_STATUS_LABELS, STAY_END_REASON_LABELS } from "@/lib/residents/labels";
 import type { Enums } from "@/lib/supabase/database.types";
 
-/** "Current", or for a former resident the way their stay ended. */
+/**
+ * "Current" as quiet text, since it is the normal case; for a former resident, a badge with
+ * the way their stay ended.
+ */
 export function ResidentStatusBadge({
   status,
   stayEndReason,
@@ -11,13 +14,15 @@ export function ResidentStatusBadge({
   stayEndReason: Enums<"stay_end_reason"> | null;
 }) {
   if (status === "current") {
-    return <Badge variant="secondary">{RESIDENT_STATUS_LABELS.current}</Badge>;
+    return <span className="text-sm text-muted-foreground">{RESIDENT_STATUS_LABELS.current}</span>;
   }
   return (
-    <Badge variant="outline">
+    <Badge variant="outline" className="bg-muted">
       {RESIDENT_STATUS_LABELS.former}
       {stayEndReason && (
-        <span className="text-muted-foreground">· {STAY_END_REASON_LABELS[stayEndReason]}</span>
+        <span className="text-muted-foreground">
+          , {STAY_END_REASON_LABELS[stayEndReason].toLowerCase()}
+        </span>
       )}
     </Badge>
   );

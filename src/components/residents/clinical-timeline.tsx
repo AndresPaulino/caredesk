@@ -89,7 +89,7 @@ function TimelineList({
     <ol className="relative space-y-6 before:absolute before:top-2 before:bottom-2 before:left-3 before:w-px before:bg-border">
       {days.map(({ date, items: dayEntries }) => (
         <li key={date}>
-          <h3 className="relative mb-3 ml-9 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+          <h3 className="relative mb-3 ml-9 text-sm font-semibold text-muted-foreground">
             {dayHeading(date, today)}
           </h3>
           <ol className="space-y-5">

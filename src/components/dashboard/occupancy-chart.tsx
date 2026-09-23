@@ -7,14 +7,14 @@ import { formatOccupancy, type OccupancyGroup } from "@/lib/dashboard/occupancy"
 
 /*
  * One horizontal bar per facility (or per unit for a nurse): residents filling beds. Residents
- * are the validated blue slot; the free beds are a lighter step of the same ramp so the bar
+ * are the willow brand colour; the free beds are a lighter step of the same ramp so the bar
  * reads as a meter. The name sits above each bar and the count and percentage at its end,
  * drawn as plain SVG text so nothing wraps, and the bar keeps the width at any screen size.
  */
 
 const config = {
-  residents: { label: "Residents", theme: { light: "#2a78d6", dark: "#3987e5" } },
-  free: { label: "Free beds", theme: { light: "#86b6ef", dark: "#184f95" } },
+  residents: { label: "Residents", theme: { light: "#2f6b5e", dark: "#6fb3a2" } },
+  free: { label: "Free beds", theme: { light: "#c5ddd5", dark: "#2b4b44" } },
 } satisfies ChartConfig;
 
 const ROW_HEIGHT = 46;

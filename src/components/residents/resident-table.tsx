@@ -24,11 +24,16 @@ import {
   type ResidentListParams,
   type ResidentSortKey,
 } from "@/lib/residents/list-params";
+import type { ResidentFlag } from "@/lib/clinical/flags";
 import type { ResidentDirectoryEntry } from "@/lib/residents/queries";
 
+import { ResidentFlags } from "./resident-flags";
 import { ResidentStatusBadge } from "./resident-status-badge";
 
-const helper = createDataTableColumnHelper<ResidentDirectoryEntry>();
+/** A directory row with its wristband flags, computed on the server for this page. */
+type ResidentRow = ResidentDirectoryEntry & { flags: ResidentFlag[] };
+
+const helper = createDataTableColumnHelper<ResidentRow>();
 
 // Column ids double as the sort keys in the URL.
 const columns = helper.columns([
@@ -36,13 +41,22 @@ const columns = helper.columns([
     id: "name" satisfies ResidentSortKey,
     header: ({ column }) => <DataTableColumnHeader column={column} title="Resident" />,
     cell: ({ row }) => (
-      <Link
-        href={`/residents/${row.original.id}`}
-        className="font-medium hover:underline"
-        onClick={(event) => event.stopPropagation()}
-      >
-        {row.original.last_name}, {row.original.first_name}
-      </Link>
+      <div className="flex items-center gap-3">
+        <span
+          aria-hidden
+          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-willow-100 text-xs font-bold text-willow-900"
+        >
+          {row.original.first_name[0]}
+          {row.original.last_name[0]}
+        </span>
+        <Link
+          href={`/residents/${row.original.id}`}
+          className="font-medium hover:underline"
+          onClick={(event) => event.stopPropagation()}
+        >
+          {row.original.last_name}, {row.original.first_name}
+        </Link>
+      </div>
     ),
   }),
   helper.accessor("room_number", {
@@ -54,6 +68,17 @@ const columns = helper.columns([
     id: "unit",
     header: "Unit",
     enableSorting: false,
+  }),
+  helper.accessor("flags", {
+    id: "flags",
+    header: "Flags",
+    enableSorting: false,
+    cell: ({ getValue }) =>
+      getValue().length === 0 ? (
+        <span className="text-muted-foreground">None</span>
+      ) : (
+        <ResidentFlags flags={getValue()} compact className="flex-nowrap" />
+      ),
   }),
   helper.accessor("facility_name", {
     id: "facility" satisfies ResidentSortKey,
@@ -86,16 +111,30 @@ const columns = helper.columns([
 /** The scoped resident list: server-sorted and server-paged, with the state in the URL. */
 export function ResidentTable({
   residents,
+  flags,
+  showFacility,
   params,
   total,
   pageCount,
 }: {
   residents: ResidentDirectoryEntry[];
+  /** Flags per resident id. */
+  flags: Record<string, ResidentFlag[]>;
+  /** A nurse's scope is one facility, so the column would repeat one name on every row. */
+  showFacility: boolean;
   params: ResidentListParams;
   total: number;
   pageCount: number;
 }) {
   const router = useRouter();
+  const rows = useMemo<ResidentRow[]>(
+    () => residents.map((resident) => ({ ...resident, flags: flags[resident.id] ?? [] })),
+    [residents, flags],
+  );
+  const shownColumns = useMemo(
+    () => (showFacility ? columns : columns.filter((column) => column.id !== "facility")),
+    [showFacility],
+  );
 
   const sorting = useMemo<SortingState>(
     () => [{ id: params.sort, desc: params.dir === "desc" }],
@@ -112,8 +151,8 @@ export function ResidentTable({
   return (
     <div className="space-y-3">
       <DataTable
-        columns={columns}
-        data={residents}
+        columns={shownColumns}
+        data={rows}
         getRowId={(resident) => resident.id}
         sorting={sorting}
         onSortingChange={onSortingChange}

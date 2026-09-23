@@ -1,4 +1,4 @@
-import { ClipboardCheck } from "lucide-react";
+import { Check, ClipboardCheck, TriangleAlert } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,6 +24,8 @@ export function AssessmentSummary({
   residentStatus: "current" | "former";
 }) {
   const overdue = entries.filter((entry) => entry.status === "overdue").length;
+  // Work first: overdue, then due soon, then everything that needs nothing.
+  const ordered = entries.toSorted((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
 
   return (
     <Card>
@@ -39,20 +41,23 @@ export function AssessmentSummary({
         </CardDescription>
         {overdue > 0 && (
           <CardAction>
-            <Badge variant="destructive">{overdue} overdue</Badge>
+            <Badge className="bg-critical-soft text-critical">
+              <TriangleAlert aria-hidden />
+              {overdue} overdue
+            </Badge>
           </CardAction>
         )}
       </CardHeader>
       <CardContent>
         <ul className="divide-y">
-          {entries.map((entry) => (
+          {ordered.map((entry) => (
             <li
               key={entry.kind}
               className="flex flex-col gap-1 py-2.5 first:pt-0 last:pb-0"
               data-status={entry.status}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className={entry.status === "overdue" ? "font-medium" : undefined}>
+                <span className={entry.status === "overdue" ? "font-semibold" : undefined}>
                   {entry.name}
                 </span>
                 <StatusBadge entry={entry} />
@@ -83,11 +88,20 @@ export function AssessmentSummary({
   );
 }
 
+const STATUS_ORDER: Record<AssessmentSummaryEntry["status"], number> = {
+  overdue: 0,
+  due_soon: 1,
+  up_to_date: 2,
+  not_due: 3,
+  not_on_record: 4,
+};
+
+/** Colour only where there is work (ADR 0005); "up to date" is a quiet check. */
 function StatusBadge({ entry }: { entry: AssessmentSummaryEntry }) {
   switch (entry.status) {
     case "overdue":
       return (
-        <Badge variant="destructive">
+        <Badge className="bg-critical-soft text-critical">
           {entry.daysUntilDue === null
             ? "Overdue, never done"
             : `Overdue ${plural(-entry.daysUntilDue, "day")}`}
@@ -95,16 +109,21 @@ function StatusBadge({ entry }: { entry: AssessmentSummaryEntry }) {
       );
     case "due_soon":
       return (
-        <Badge variant="secondary">
+        <Badge className="bg-attention-soft text-attention">
           {entry.daysUntilDue === 0 ? "Due today" : `Due in ${plural(entry.daysUntilDue!, "day")}`}
         </Badge>
       );
     case "up_to_date":
-      return <Badge variant="outline">Up to date</Badge>;
+      return (
+        <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+          <Check className="size-3.5" aria-hidden />
+          Up to date
+        </span>
+      );
     case "not_on_record":
-      return <Badge variant="ghost">Not on record</Badge>;
+      return <span className="text-xs text-muted-foreground">Not on record</span>;
     case "not_due":
-      return <Badge variant="ghost">Not due</Badge>;
+      return <span className="text-xs text-muted-foreground">Not due</span>;
   }
 }
 

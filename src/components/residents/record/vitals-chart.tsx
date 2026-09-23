@@ -17,17 +17,18 @@ import type { Tables } from "@/lib/supabase/database.types";
 /*
  * Two small charts rather than one with two axes: blood pressure and pulse share a scale
  * (mmHg and beats per minute both sit in the 50 to 200 band), oxygen saturation does not.
- * Series colors are the validated categorical slots (blue, orange, aqua), stepped for dark mode.
+ * Series colors are willow, brook blue, and ochre, validated for colour-vision deficiency and
+ * kept clear of the status red and amber (ADR 0005).
  */
 
 const pressureConfig = {
-  systolic: { label: "Systolic", theme: { light: "#2a78d6", dark: "#3987e5" } },
-  diastolic: { label: "Diastolic", theme: { light: "#eb6834", dark: "#d95926" } },
-  pulse: { label: "Pulse", theme: { light: "#1baf7a", dark: "#199e70" } },
+  systolic: { label: "Systolic", theme: { light: "#1f8466", dark: "#4fb896" } },
+  diastolic: { label: "Diastolic", theme: { light: "#3b6fd4", dark: "#6f96e6" } },
+  pulse: { label: "Pulse", theme: { light: "#9a7a14", dark: "#c9a53c" } },
 } satisfies ChartConfig;
 
 const saturationConfig = {
-  oxygen_saturation: { label: "Oxygen saturation", theme: { light: "#2a78d6", dark: "#3987e5" } },
+  oxygen_saturation: { label: "Oxygen saturation", theme: { light: "#1f8466", dark: "#4fb896" } },
 } satisfies ChartConfig;
 
 const PRESSURE_SERIES = ["systolic", "diastolic", "pulse"] as const;

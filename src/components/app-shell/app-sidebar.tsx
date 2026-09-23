@@ -19,6 +19,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
+import { ShiftCard } from "./shift-card";
 import { StaffMenu, type StaffMenuProps } from "./staff-menu";
 
 const navigation = [
@@ -28,8 +29,18 @@ const navigation = [
 
 const secondary = [{ title: "System health", href: "/health", icon: Activity }] as const;
 
-/** The left rail: brand, navigation, the assistant, and the signed-in staff member. Collapses to icons. */
-export function AppSidebar({ staff }: { staff: StaffMenuProps["staff"] }) {
+/**
+ * The left rail in willow: brand, the current shift, navigation, the assistant, and the
+ * signed-in staff member. Collapses to icons.
+ */
+export function AppSidebar({
+  staff,
+  serverNow,
+}: {
+  staff: StaffMenuProps["staff"];
+  /** The request's instant, so the shift card's first render matches the server's. */
+  serverNow: string;
+}) {
   const pathname = usePathname();
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
@@ -42,9 +53,11 @@ export function AppSidebar({ staff }: { staff: StaffMenuProps["staff"] }) {
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <HeartPulse className="size-4" aria-hidden />
               </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">CareDesk</span>
-                <span className="truncate text-xs text-muted-foreground">Willowbrook Care</span>
+              <div className="grid flex-1 text-left leading-tight">
+                <span className="truncate text-base font-bold tracking-tight">CareDesk</span>
+                <span className="truncate text-xs text-sidebar-muted-foreground">
+                  Willowbrook Care
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -52,8 +65,11 @@ export function AppSidebar({ staff }: { staff: StaffMenuProps["staff"] }) {
       </SidebarHeader>
 
       <SidebarContent>
+        <ShiftCard serverNow={serverNow} scope={staff.scopeDescription} />
         <SidebarGroup>
-          <SidebarGroupLabel>Operations</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-muted-foreground">
+            Operations
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navigation.map((item) => (

@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { Suspense, cache } from "react";
 import { z } from "zod";
 
-import { PageHeader } from "@/components/app-shell/page-header";
 import { AssistantCurrentResident } from "@/components/assistant/assistant-current-resident";
 import { AllergyConflictAlert } from "@/components/residents/allergy-conflict-alert";
 import { EditResidentDetailsButton } from "@/components/residents/care/resident-details-form";
@@ -22,19 +21,18 @@ import { ProgressNotesList } from "@/components/residents/record/progress-notes-
 import { VitalsTab } from "@/components/residents/record/vitals-tab";
 import { RecordTabs } from "@/components/residents/record-tabs";
 import { ResidentRecordSkeleton } from "@/components/residents/resident-record-skeleton";
-import { ResidentStatusBadge } from "@/components/residents/resident-status-badge";
-import { ResidentSummaryCards } from "@/components/residents/resident-summary-cards";
+import { ResidentBanner } from "@/components/residents/resident-banner";
+import { ResidentFacts } from "@/components/residents/resident-facts";
 import { Button } from "@/components/ui/button";
 import { getAuditTrail } from "@/lib/audit/events";
 import { requireStaff } from "@/lib/auth/current-staff";
 import { listPhysicians, listPlacementOptions } from "@/lib/care/options";
 import { ALLERGEN_OPTIONS, MEDICATION_OPTIONS } from "@/lib/care/vocabulary";
 import { findAllergyConflicts } from "@/lib/clinical/allergy-conflicts";
+import { residentFlags } from "@/lib/clinical/flags";
 import { summarizeAssessments } from "@/lib/clinical/assessment-summary";
 import { buildTimeline } from "@/lib/clinical/timeline";
-import { ageOn } from "@/lib/format";
 import { getClinicalRecord } from "@/lib/residents/clinical-record";
-import { sexLabel } from "@/lib/residents/labels";
 import { getResident, type ResidentDirectoryEntry } from "@/lib/residents/queries";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { dateInZone } from "@/lib/time";
@@ -67,39 +65,28 @@ export default async function ResidentPage(props: PageProps<"/residents/[id]">) 
   const resident = await loadResident(id);
   if (!resident) notFound();
 
-  const location = [
-    resident.room_number ? `Room ${resident.room_number}` : null,
-    resident.unit_name,
-    resident.facility_name,
-  ]
-    .filter(Boolean)
-    .join(", ");
-
   return (
     <div className="space-y-6">
       <AssistantCurrentResident id={resident.id} name={resident.full_name} />
-      <PageHeader
-        title={`${resident.first_name} ${resident.last_name}`}
-        description={`${ageOn(resident.date_of_birth)} · ${sexLabel(resident.sex)} · ${location}`}
+      <Suspense
+        fallback={
+          <>
+            <ResidentBanner resident={resident} flags={undefined} actions={<EditFallback />} />
+            <ResidentRecordSkeleton />
+          </>
+        }
       >
-        <div className="flex flex-wrap items-center gap-3">
-          <ResidentStatusBadge status={resident.status} stayEndReason={resident.stay_end_reason} />
-          <Suspense
-            fallback={
-              <Button variant="outline" size="sm" disabled>
-                Edit details
-              </Button>
-            }
-          >
-            <EditDetails resident={resident} />
-          </Suspense>
-        </div>
-      </PageHeader>
-
-      <Suspense fallback={<ResidentRecordSkeleton />}>
         <ResidentRecord resident={resident} />
       </Suspense>
     </div>
+  );
+}
+
+function EditFallback() {
+  return (
+    <Button variant="outline" size="sm" disabled>
+      Edit details
+    </Button>
   );
 }
 
@@ -131,16 +118,28 @@ async function ResidentRecord({ resident }: { resident: ResidentDirectoryEntry }
     residentStatus: resident.status,
   });
   const timeline = buildTimeline(record);
+  const flags = residentFlags({
+    codeStatus: resident.code_status,
+    allergies: record.allergies,
+    fallRiskAssessments: record.assessments.filter((assessment) => assessment.kind === "fall_risk"),
+    incidents: record.incidents,
+  });
 
   return (
     <>
+      <ResidentBanner
+        resident={resident}
+        flags={flags}
+        actions={
+          <Suspense fallback={<EditFallback />}>
+            <EditDetails resident={resident} />
+          </Suspense>
+        }
+      />
+
       <AllergyConflictAlert residentId={resident.id} conflicts={conflicts} />
 
-      <ResidentSummaryCards
-        resident={resident}
-        allergies={record.allergies}
-        conflicts={conflicts}
-      />
+      <ResidentFacts resident={resident} allergies={record.allergies} conflicts={conflicts} />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <div className="order-last lg:order-none">

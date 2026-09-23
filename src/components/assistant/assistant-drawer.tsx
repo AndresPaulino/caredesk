@@ -75,9 +75,14 @@ export function AssistantDrawer() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent className="gap-0 data-[side=right]:w-full data-[side=right]:sm:max-w-lg">
-        <SheetHeader className="border-b pr-28">
+        <SheetHeader className="border-b bg-willow-50 pr-28">
           <SheetTitle className="flex items-center gap-2">
-            <Sparkles className="size-4 text-muted-foreground" aria-hidden />
+            <span
+              aria-hidden
+              className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground"
+            >
+              <Sparkles className="size-4" />
+            </span>
             Assistant
           </SheetTitle>
           <SheetDescription>
@@ -219,7 +224,7 @@ function SuggestedPrompts({
           <li key={prompt}>
             <Button
               variant="outline"
-              className="h-auto w-full justify-start px-3 py-2 text-left whitespace-normal"
+              className="h-auto w-full justify-start bg-card px-3 py-2.5 text-left font-normal whitespace-normal hover:border-primary/40 hover:bg-willow-50"
               disabled={disabled}
               onClick={() => onPick(prompt)}
             >
@@ -282,7 +287,7 @@ function SourceChips({ sources, onNavigate }: { sources: SourceRef[]; onNavigate
           <li key={`${source.residentId}:${source.tab ?? ""}`}>
             <Badge
               variant="outline"
-              className="h-6"
+              className="h-6 border-willow-100 bg-willow-50 text-willow-900 [a]:hover:bg-willow-100 [a]:hover:text-willow-900"
               render={
                 <Link
                   href={residentHref(source.residentId, tab?.key)}
@@ -376,9 +381,7 @@ function ThreadList({
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-      <h3 className="mb-3 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        Past threads
-      </h3>
+      <h3 className="mb-3 text-sm font-semibold text-muted-foreground">Past threads</h3>
       {failed ? (
         <Alert variant="destructive">
           <CircleAlert aria-hidden />

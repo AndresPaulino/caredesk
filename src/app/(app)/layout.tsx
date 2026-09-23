@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { AppHeader } from "@/components/app-shell/app-header";
 import { AppSidebar } from "@/components/app-shell/app-sidebar";
 import { SyntheticDataBanner } from "@/components/app-shell/synthetic-data-banner";
+import { AssistantBubble } from "@/components/assistant/assistant-bubble";
 import { AssistantDrawer } from "@/components/assistant/assistant-drawer";
 import { AssistantProvider } from "@/components/assistant/assistant-provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -35,16 +36,23 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                 : ROLE_LABELS[staff.role],
               scopeDescription: staff.scopeDescription,
             }}
+            serverNow={new Date().toISOString()}
           />
           <SidebarInset className="min-w-0">
             <SyntheticDataBanner />
             <AppHeader />
-            <div className="flex flex-1 flex-col gap-6 p-4 pt-2 md:p-6 md:pt-2">{children}</div>
+            <div className="flex flex-1 flex-col gap-6 p-4 pb-24 md:p-6 md:pb-28">{children}</div>
           </SidebarInset>
           {/* Opened from the sidebar on any page (ticket 10). */}
           <AssistantDrawer />
+          <AssistantBubble />
           {/* Confirms each recorded change (ticket 05). */}
-          <Toaster position="bottom-right" />
+          {/* Raised above the assistant bubble in the same corner. */}
+          <Toaster
+            position="bottom-right"
+            offset={{ bottom: 96, right: 24 }}
+            mobileOffset={{ bottom: 80 }}
+          />
         </SidebarProvider>
       </AssistantProvider>
     </TooltipProvider>
